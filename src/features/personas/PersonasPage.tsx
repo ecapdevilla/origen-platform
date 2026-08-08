@@ -277,20 +277,19 @@ export function PersonasPage({
     onCreateMedida(nuevaMedida)
     setMedidaForm(initialMedidaForm)
   }
-    return (
+  return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] bg-slate-950 p-8 text-white">
-        <p className="text-sm text-slate-300">Personas</p>
+      <section className="rounded-[2rem] border border-slate-200 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
+        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-300">Personas</p>
 
-        <h1 className="mt-3 text-4xl font-black">Gestión de personas</h1>
+        <h1 className="mt-3 text-3xl font-black sm:text-4xl">Gestión de personas</h1>
 
-        <p className="mt-4 max-w-3xl text-slate-300">
-          Administra los registros, objetivos, estados, constancia, pagos, bienestar y progreso de
-          cada persona.
+        <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300 sm:text-base">
+          Administra los registros, objetivos, estados, constancia, pagos, bienestar y progreso de cada persona.
         </p>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-4">
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Metric title="Total personas" value={String(personas.length)} />
         <Metric title="Activas" value={String(personasActivas)} />
         <Metric title="En registro" value={String(personasRegistro)} />
@@ -298,7 +297,7 @@ export function PersonasPage({
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[420px_1fr]">
-        <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-2xl font-black">
             {editingId ? 'Editar persona' : 'Registrar persona'}
           </h2>
@@ -387,7 +386,7 @@ export function PersonasPage({
         </section>
 
         <section className="space-y-6">
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <h2 className="text-2xl font-black">Listado de personas</h2>
@@ -422,7 +421,7 @@ export function PersonasPage({
               </div>
             </div>
 
-            <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+            <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-slate-200">
               <table className="w-full text-left text-sm">
                 <thead className="bg-slate-50 text-slate-500">
                   <tr>
@@ -501,7 +500,7 @@ export function PersonasPage({
             </div>
           </section>
 
-          <section className="grid gap-4 md:grid-cols-4">
+          <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <Metric title="Históricas" value={String(personasHistoricas)} />
             <Metric title="Constancias" value={String(constancias.length)} />
             <Metric title="Pagos registrados" value={String(movimientos.length)} />
@@ -512,7 +511,7 @@ export function PersonasPage({
 	        {selectedPersona ? (
         <section className="grid gap-6 xl:grid-cols-[1fr_420px]">
           <section className="space-y-6">
-            <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-start">
                 <div>
                   <p className="text-sm font-bold text-slate-500">Perfil seleccionado</p>
@@ -553,7 +552,7 @@ export function PersonasPage({
                 </select>
               </div>
 
-              <div className="mt-6 grid gap-3 md:grid-cols-4">
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 <ProfileCard label="Constancias" value={String(constanciasPersona.length)} />
                 <ProfileCard label="Racha" value={`${racha} días`} />
                 <ProfileCard label="Total pagado" value={formatMoney(totalPagado)} />
@@ -564,7 +563,7 @@ export function PersonasPage({
               </div>
             </section>
 
-            <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <h2 className="text-2xl font-black">Registrar medida corporal</h2>
 
               <p className="mt-1 text-sm text-slate-500">
@@ -630,7 +629,7 @@ export function PersonasPage({
               </form>
             </section>
 
-            <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <h2 className="text-2xl font-black">Historial de medidas</h2>
 
               <div className="mt-5 grid gap-3">
@@ -657,7 +656,7 @@ export function PersonasPage({
           </section>
 
           <aside className="space-y-6">
-            <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <h2 className="text-2xl font-black">Información</h2>
 
               <div className="mt-5 space-y-3">
@@ -671,7 +670,7 @@ export function PersonasPage({
               </div>
             </section>
 
-            <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <h2 className="text-2xl font-black">Plan actual</h2>
 
               <div className="mt-5">
@@ -690,7 +689,7 @@ export function PersonasPage({
               </div>
             </section>
 
-            <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <h2 className="text-2xl font-black">Bienestar reciente</h2>
 
               <div className="mt-5">
@@ -707,7 +706,7 @@ export function PersonasPage({
               </div>
             </section>
 
-            <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <h2 className="text-2xl font-black">Pagos recientes</h2>
 
               <div className="mt-5 space-y-3">
@@ -726,7 +725,7 @@ export function PersonasPage({
               </div>
             </section>
 
-            <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <h2 className="text-2xl font-black">Constancias recientes</h2>
 
               <div className="mt-5 space-y-3">
@@ -747,7 +746,7 @@ export function PersonasPage({
           </aside>
         </section>
       ) : (
-        <section className="rounded-[2rem] bg-white p-10 text-center text-slate-500 shadow-sm">
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm sm:p-10">
           Todavía no hay una persona seleccionada.
         </section>
       )}
@@ -782,17 +781,17 @@ function Input({
 
 function Metric({ title, value }: { title: string; value: string }) {
   return (
-    <div className="rounded-[2rem] bg-white p-6 shadow-sm">
-      <p className="text-sm font-bold text-slate-500">{title}</p>
-      <p className="mt-2 text-2xl font-black">{value}</p>
+    <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
+      <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">{title}</p>
+      <p className="mt-2 text-2xl font-black text-slate-950">{value}</p>
     </div>
   )
 }
 
 function ProfileCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl bg-slate-50 p-4">
-      <p className="text-xs font-black uppercase tracking-wide text-slate-400">{label}</p>
+    <div className="rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4">
+      <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">{label}</p>
       <p className="mt-1 font-black text-slate-900">{value}</p>
     </div>
   )
