@@ -50,32 +50,32 @@ export function LoginPage({ onLogin }: Props) {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 p-6">
-      <section className="grid w-full max-w-6xl overflow-hidden rounded-[2rem] bg-white shadow-sm lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="bg-slate-950 p-8 text-white md:p-12">
-          <p className="text-sm font-bold text-slate-300">ORIGEN</p>
+    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_#f8fafc_0%,_#e2e8f0_100%)] p-3 sm:p-6">
+      <section className="grid w-full max-w-6xl overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_20px_60px_-20px_rgba(15,23,42,0.35)] lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="bg-slate-950 p-6 text-white sm:p-8 lg:p-10">
+          <p className="text-sm font-bold uppercase tracking-[0.3em] text-slate-300">ORIGEN</p>
 
-          <h1 className="mt-6 max-w-xl text-4xl font-black leading-tight md:text-5xl">
+          <h1 className="mt-6 max-w-xl text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
             Cada persona importa. Cada hábito cuenta.
           </h1>
 
-          <p className="mt-6 max-w-xl text-base leading-7 text-slate-300">
+          <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300 sm:text-base">
             Ingresa a tu plataforma de bienestar, constancia, entrenamiento,
             caja, tienda y seguimiento de personas.
           </p>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
             <Card title="Admin" text="Gestión completa" />
             <Card title="Entrenador" text="Acompañamiento" />
             <Card title="Persona" text="Progreso personal" />
           </div>
         </div>
 
-        <div className="p-8 md:p-12">
+        <div className="p-6 sm:p-8 lg:p-10">
           <div>
             <p className="text-sm font-bold text-slate-500">Acceso seguro</p>
 
-            <h2 className="mt-2 text-3xl font-black text-slate-950">
+            <h2 className="mt-2 text-2xl font-black text-slate-950 sm:text-3xl">
               Iniciar sesión
             </h2>
 
@@ -84,7 +84,7 @@ export function LoginPage({ onLogin }: Props) {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
             <div>
               <label
                 htmlFor="correo"
@@ -98,7 +98,7 @@ export function LoginPage({ onLogin }: Props) {
                 type="email"
                 value={correo}
                 onChange={(event) => setCorreo(event.target.value)}
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-slate-950"
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
                 placeholder="correo@ejemplo.com"
                 autoComplete="email"
               />
@@ -117,7 +117,7 @@ export function LoginPage({ onLogin }: Props) {
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none focus:border-slate-950"
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
                 placeholder="Tu contraseña"
                 autoComplete="current-password"
               />
@@ -132,7 +132,7 @@ export function LoginPage({ onLogin }: Props) {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full rounded-2xl px-5 py-4 text-sm font-black text-white ${
+              className={`w-full rounded-2xl px-5 py-3.5 text-sm font-black text-white transition ${
                 loading
                   ? 'cursor-not-allowed bg-slate-400'
                   : 'bg-slate-950 hover:bg-slate-800'
@@ -149,9 +149,9 @@ export function LoginPage({ onLogin }: Props) {
 
 function Card({ title, text }: { title: string; text: string }) {
   return (
-    <div className="rounded-2xl bg-white/10 p-4">
+    <div className="rounded-2xl border border-white/10 bg-white/10 p-3">
       <p className="font-black text-white">{title}</p>
-      <p className="mt-1 text-sm text-slate-300">{text}</p>
+      <p className="mt-1 text-xs leading-5 text-slate-300 sm:text-sm">{text}</p>
     </div>
   )
 }
