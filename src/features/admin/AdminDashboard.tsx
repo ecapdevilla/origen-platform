@@ -64,14 +64,14 @@ export function AdminDashboard({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] bg-slate-950 p-8 text-white">
+      <section className="rounded-[2rem] border border-slate-200 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm text-slate-300">Panel principal</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-300">Panel principal</p>
 
-            <h1 className="mt-3 text-4xl font-black">Bienvenido a ORIGEN</h1>
+            <h1 className="mt-3 text-3xl font-black sm:text-4xl">Bienvenido a ORIGEN</h1>
 
-            <p className="mt-4 max-w-3xl text-slate-300">
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300 sm:text-base">
               Cada persona importa. Cada hábito cuenta. Cada logro merece ser celebrado.
             </p>
           </div>
@@ -79,21 +79,21 @@ export function AdminDashboard({
           <button
             type="button"
             onClick={onGoPersonas}
-            className="rounded-2xl bg-white px-6 py-4 text-sm font-black text-slate-950 hover:bg-slate-100"
+            className="rounded-2xl bg-white px-6 py-4 text-sm font-black text-slate-950 transition hover:bg-slate-100"
           >
             Registrar persona
           </button>
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-4">
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Metric title="Personas" value={String(personas.length)} />
         <Metric title="Activas" value={String(personasActivas.length)} />
         <Metric title="Constancias hoy" value={String(constanciasHoy.length)} />
         <Metric title="Asistencia hoy" value={`${porcentajeAsistencia}%`} />
       </section>
 
-      <section className="grid gap-4 md:grid-cols-4">
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Metric title="Ingresos" value={formatMoney(ingresos)} />
         <Metric title="Gastos" value={formatMoney(gastos)} />
         <Metric title="Caja neta" value={formatMoney(cajaNeta)} />
@@ -272,9 +272,9 @@ export function AdminDashboard({
 
 function Metric({ title, value }: { title: string; value: string }) {
   return (
-    <div className="rounded-[2rem] bg-white p-6 shadow-sm">
-      <p className="text-sm font-bold text-slate-500">{title}</p>
-      <p className="mt-2 text-2xl font-black text-slate-950">{value}</p>
+    <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
+      <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">{title}</p>
+      <p className="mt-3 text-2xl font-black text-slate-950">{value}</p>
     </div>
   )
 }
@@ -289,10 +289,10 @@ function StatusCard({
   description: string
 }) {
   return (
-    <div className="rounded-[2rem] bg-slate-50 p-5">
-      <p className="text-sm font-bold text-slate-500">{title}</p>
+    <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
+      <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">{title}</p>
       <p className="mt-2 text-3xl font-black text-slate-950">{value}</p>
-      <p className="mt-2 text-sm text-slate-500">{description}</p>
+      <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
     </div>
   )
 }

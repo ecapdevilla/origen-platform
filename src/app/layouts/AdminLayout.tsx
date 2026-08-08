@@ -595,15 +595,15 @@ export function AdminLayout({ usuario, onLogout }: Props) {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-100 p-6">
-        <div className="rounded-[2rem] bg-white p-8 text-center shadow-sm">
-          <p className="text-sm font-bold text-slate-500">ORIGEN</p>
+      <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_#f8fafc_0%,_#e2e8f0_100%)] p-4 sm:p-6">
+        <div className="w-full max-w-md rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)]">
+          <p className="text-sm font-bold uppercase tracking-[0.3em] text-slate-500">ORIGEN</p>
 
-          <h1 className="mt-2 text-2xl font-black text-slate-950">
+          <h1 className="mt-3 text-2xl font-black text-slate-950">
             Cargando datos desde Supabase
           </h1>
 
-          <p className="mt-3 text-sm text-slate-500">
+          <p className="mt-3 text-sm leading-6 text-slate-500">
             Estamos preparando personas, constancias, caja, tienda, usuarios y reportes.
           </p>
         </div>
@@ -612,19 +612,19 @@ export function AdminLayout({ usuario, onLogout }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100">
-      <aside className="fixed inset-y-0 left-0 hidden w-80 border-r border-slate-200 bg-white p-6 lg:block">
-        <div className="rounded-[2rem] bg-slate-950 p-6 text-white">
-          <p className="text-sm text-slate-300">ORIGEN</p>
+    <div className="min-h-screen bg-slate-100 text-slate-900">
+      <aside className="fixed inset-y-0 left-0 hidden w-80 border-r border-slate-200 bg-slate-950 p-6 lg:flex lg:flex-col">
+        <div className="rounded-[1.75rem] border border-white/10 bg-white/10 p-6 text-white">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-300">ORIGEN</p>
 
-          <h1 className="mt-2 text-2xl font-black">Admin</h1>
+          <h1 className="mt-3 text-2xl font-black">Panel admin</h1>
 
           <p className="mt-3 text-sm leading-6 text-slate-300">
             Cada persona importa. Cada hábito cuenta.
           </p>
         </div>
 
-        <nav className="mt-6 space-y-2">
+        <nav className="mt-6 flex-1 space-y-2">
           {navigation.map((item) => {
             const isActive = activePage === item.id
 
@@ -635,15 +635,15 @@ export function AdminLayout({ usuario, onLogout }: Props) {
                 onClick={() => setActivePage(item.id)}
                 className={`w-full rounded-2xl px-4 py-3 text-left transition ${
                   isActive
-                    ? 'bg-slate-950 text-white'
-                    : 'text-slate-600 hover:bg-slate-100'
+                    ? 'bg-white text-slate-950 shadow-sm'
+                    : 'text-slate-300 hover:bg-white/10 hover:text-white'
                 }`}
               >
                 <p className="font-black">{item.label}</p>
 
                 <p
                   className={`mt-1 text-xs ${
-                    isActive ? 'text-slate-300' : 'text-slate-400'
+                    isActive ? 'text-slate-500' : 'text-slate-400'
                   }`}
                 >
                   {item.description}
@@ -653,14 +653,14 @@ export function AdminLayout({ usuario, onLogout }: Props) {
           })}
         </nav>
 
-        <div className="absolute bottom-6 left-6 right-6 rounded-[2rem] bg-slate-50 p-5">
-          <p className="text-sm font-black text-slate-900">{usuario.nombre}</p>
-          <p className="mt-1 text-xs text-slate-500">{usuario.correo}</p>
+        <div className="rounded-[1.5rem] border border-white/10 bg-white/10 p-4 text-white">
+          <p className="text-sm font-black">{usuario.nombre}</p>
+          <p className="mt-1 text-xs text-slate-300">{usuario.correo}</p>
 
           <button
             type="button"
             onClick={onLogout}
-            className="mt-4 w-full rounded-2xl bg-white px-4 py-3 text-sm font-black text-slate-700 shadow-sm hover:bg-slate-100"
+            className="mt-4 w-full rounded-2xl bg-white px-4 py-3 text-sm font-black text-slate-900 transition hover:bg-slate-100"
           >
             Cerrar sesión
           </button>
@@ -671,7 +671,7 @@ export function AdminLayout({ usuario, onLogout }: Props) {
         <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 px-4 py-4 backdrop-blur md:px-8">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <p className="text-sm font-bold text-slate-500">Panel administrativo</p>
+              <p className="text-sm font-bold uppercase tracking-[0.3em] text-slate-500">Panel administrativo</p>
 
               <h2 className="text-2xl font-black text-slate-950">
                 {activeNavigation ? activeNavigation.label : 'ORIGEN'}
@@ -691,15 +691,15 @@ export function AdminLayout({ usuario, onLogout }: Props) {
                 ))}
               </select>
 
-              <div className="rounded-2xl bg-slate-100 px-4 py-3">
-                <p className="text-xs font-bold text-slate-500">Sesión</p>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Sesión</p>
                 <p className="text-sm font-black text-slate-900">{usuario.nombre}</p>
               </div>
 
               <button
                 type="button"
                 onClick={onLogout}
-                className="rounded-2xl bg-slate-950 px-5 py-3 text-sm font-black text-white hover:bg-slate-800 lg:hidden"
+                className="rounded-2xl bg-slate-950 px-5 py-3 text-sm font-black text-white transition hover:bg-slate-800 lg:hidden"
               >
                 Salir
               </button>
