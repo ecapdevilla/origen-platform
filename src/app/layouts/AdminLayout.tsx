@@ -16,7 +16,9 @@ import {
   X,
 } from 'lucide-react'
 
+import { ThemeSwitcher } from '@/components/ThemeSwitcher'
 import { AdminDashboard } from '@/features/admin/AdminDashboard'
+
 import {
   crearRegistroBienestarSupabase,
   listarRegistrosBienestar,
@@ -727,19 +729,24 @@ export function AdminLayout({ usuario, onLogout }: Props) {
           })}
         </nav>
 
-        <div className="rounded-[1.5rem] border border-white/10 bg-white/10 p-4 text-white">
-          <p className="text-sm font-black">{usuario.nombre}</p>
-          <p className="mt-1 text-xs text-surface-300">{usuario.correo}</p>
+        <div className="space-y-3">
+          <ThemeSwitcher />
 
-          <button
-            type="button"
-            onClick={onLogout}
-            className="mt-4 w-full rounded-2xl bg-white px-4 py-3 text-sm font-black text-surface-900 transition hover:bg-surface-100"
-          >
-            Cerrar sesión
-          </button>
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/10 p-4 text-white">
+            <p className="text-sm font-black">{usuario.nombre}</p>
+            <p className="mt-1 text-xs text-surface-300">{usuario.correo}</p>
+
+            <button
+              type="button"
+              onClick={onLogout}
+              className="mt-4 w-full rounded-2xl bg-white px-4 py-3 text-sm font-black text-surface-900 transition hover:bg-surface-100"
+            >
+              Cerrar sesión
+            </button>
+          </div>
         </div>
       </aside>
+
 
 
       <div className="lg:pl-80">
