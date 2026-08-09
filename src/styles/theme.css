@@ -1,29 +1,62 @@
 @import "tailwindcss";
 
 /* ============================================================
-   ORIGEN — Sistema de diseño centralizado
+   ORIGEN — SISTEMA DE DISEÑO CENTRALIZADO
    ------------------------------------------------------------
-   Todos los colores de la aplicación se definen AQUÍ como tokens
-   semánticos. Para cambiar la paleta completa, edita solo este
-   archivo. No hardcodees colores en los componentes.
+   🎨 TODOS los colores de la app se definen AQUÍ como tokens.
+   Para cambiar la paleta completa, edita SOLO este archivo.
+   NO hardcodees colores en los componentes.
+
+   📘 CÓMO USAR LOS TOKENS EN LOS COMPONENTES:
+   ------------------------------------------------------------
+   • bg-surface-950  → Fondo principal (headers, sidebar, botones)
+   • bg-surface-100  → Fondo de página
+   • bg-white        → Fondo de tarjetas
+   • text-surface-950→ Títulos principales
+   • text-surface-700→ Texto de párrafos
+   • text-surface-500→ Texto secundario / descripciones
+   • text-surface-300→ Texto sobre fondos oscuros
+   • bg-surface-50   → Fondo de bloques internos de tarjetas
+   • bg-surface-100  → Fondo de badges / chips
+   • border-surface-300 → Bordes punteados / vacíos
+
+   Estados:
+   • success-* → Bienestar, constancias, pagos OK
+   • danger-*  → Errores, alertas, cancelar
+   • warning-* → Avisos, pendientes
+   • info-*    → Información, enlaces
+   • brand-*   → Acentos de marca (logos, highlights)
    ============================================================ */
 
 @theme {
-  /* ---------- Marca / Energía (naranja cálido) ---------- */
-  --color-brand-50: #fff7ed;
+  /* ==========================================================
+     1. MARCA / ENERGÍA (NARANJA CÁLIDO)
+     ----------------------------------------------------------
+     Color principal de la marca ORIGEN. Úsalo para acentos,
+     highlights y elementos que quieras destacar.
+     brand-500 es el color "oficial" de la marca.
+     ========================================================== */
+  --color-brand-50:  #fff7ed;
   --color-brand-100: #ffedd5;
   --color-brand-200: #fed7aa;
   --color-brand-300: #fdba74;
   --color-brand-400: #fb923c;
-  --color-brand-500: #f97316;
+  --color-brand-500: #f97316;  /* ← Naranja oficial */
   --color-brand-600: #ea580c;
   --color-brand-700: #c2410c;
   --color-brand-800: #9a3412;
   --color-brand-900: #7c2d12;
   --color-brand-950: #431407;
 
-  /* ---------- Superficies (gris cálido) ---------- */
-  --color-surface-50: #fafaf9;
+  /* ==========================================================
+     2. SUPERFICIES (NEUTROS CÁLIDOS)
+     ----------------------------------------------------------
+     Escala de grises para fondos, tarjetas y texto.
+     • 50–200  → Fondos claros
+     • 300–500 → Bordes y texto secundario
+     • 600–950 → Texto principal y fondos oscuros
+     ========================================================== */
+  --color-surface-50:  #fafaf9;
   --color-surface-100: #f5f5f4;
   --color-surface-200: #e7e5e4;
   --color-surface-300: #d6d3d1;
@@ -31,13 +64,16 @@
   --color-surface-500: #78716c;
   --color-surface-600: #57534e;
   --color-surface-700: #44403c;
-  --color-surface-800: #7c2d12;
-  --color-surface-900: #9a3412;
-  --color-surface-950: #c2410c;
+  --color-surface-800: #292524;
+  --color-surface-900: #1c1917;
+  --color-surface-950: #0c0a09;
 
-
-  /* ---------- Éxito / Bienestar (verde esmeralda) ---------- */
-  --color-success-50: #ecfdf5;
+  /* ==========================================================
+     3. ÉXITO / BIENESTAR (VERDE ESMERALDA)
+     ----------------------------------------------------------
+     Constancias marcadas, pagos exitosos, bienestar positivo.
+     ========================================================== */
+  --color-success-50:  #ecfdf5;
   --color-success-100: #d1fae5;
   --color-success-200: #a7f3d0;
   --color-success-300: #6ee7b7;
@@ -48,8 +84,12 @@
   --color-success-800: #065f46;
   --color-success-900: #064e3b;
 
-  /* ---------- Peligro / Alerta (rojo) ---------- */
-  --color-danger-50: #fff1f2;
+  /* ==========================================================
+     4. PELIGRO / ALERTA (ROJO)
+     ----------------------------------------------------------
+     Errores, acciones destructivas, cancelar, alertas críticas.
+     ========================================================== */
+  --color-danger-50:  #fff1f2;
   --color-danger-100: #ffe4e6;
   --color-danger-200: #fecdd3;
   --color-danger-300: #fda4af;
@@ -60,8 +100,12 @@
   --color-danger-800: #9f1239;
   --color-danger-900: #881337;
 
-  /* ---------- Aviso (ámbar) ---------- */
-  --color-warning-50: #fffbeb;
+  /* ==========================================================
+     5. AVISO (ÁMBAR)
+     ----------------------------------------------------------
+     Pendientes, advertencias, estados intermedios.
+     ========================================================== */
+  --color-warning-50:  #fffbeb;
   --color-warning-100: #fef3c7;
   --color-warning-200: #fde68a;
   --color-warning-300: #fcd34d;
@@ -72,8 +116,12 @@
   --color-warning-800: #92400e;
   --color-warning-900: #78350f;
 
-  /* ---------- Información (azul) ---------- */
-  --color-info-50: #eff6ff;
+  /* ==========================================================
+     6. INFORMACIÓN (AZUL)
+     ----------------------------------------------------------
+     Enlaces, información, notificaciones neutrales.
+     ========================================================== */
+  --color-info-50:  #eff6ff;
   --color-info-100: #dbeafe;
   --color-info-200: #bfdbfe;
   --color-info-300: #93c5fd;
@@ -85,7 +133,12 @@
   --color-info-900: #1e3a8a;
 }
 
-/* ---------- Base global ---------- */
+/* ============================================================
+   BASE GLOBAL
+   ------------------------------------------------------------
+   Estilos base de la aplicación. El fondo y el color de texto
+   por defecto se toman de los tokens de superficie.
+   ============================================================ */
 * {
   box-sizing: border-box;
 }
@@ -96,7 +149,6 @@ body {
   color: var(--color-surface-700);
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
-
 
 button,
 input,
