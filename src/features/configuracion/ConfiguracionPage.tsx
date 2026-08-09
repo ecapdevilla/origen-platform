@@ -34,7 +34,7 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] bg-slate-950 p-8 text-white">
+      <section className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
         <p className="text-sm text-slate-300">Configuración</p>
         <h1 className="mt-3 text-4xl font-black">Personaliza ORIGEN</h1>
         <p className="mt-4 max-w-3xl text-slate-300">
@@ -116,7 +116,7 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
         </section>
 
         <aside className="space-y-6">
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Vista previa</h2>
 
             <div className="mt-5 rounded-[2rem] bg-slate-950 p-6 text-white">
@@ -134,7 +134,7 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
             </div>
           </section>
 
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Lenguaje ORIGEN</h2>
 
             <div className="mt-5 space-y-3">
@@ -145,7 +145,7 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
             </div>
           </section>
 
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-xl font-black">Mensaje ejemplo</h2>
             <p className="mt-3 text-sm leading-6 text-slate-500">
               Bienvenido a {form.nombre || 'ORIGEN'}. Aquí cada{' '}

@@ -421,83 +421,168 @@ export function PersonasPage({
               </div>
             </div>
 
-            <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-slate-200">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-slate-50 text-slate-500">
-                  <tr>
-                    <th className="px-4 py-3">Persona</th>
-                    <th className="px-4 py-3">Documento</th>
-                    <th className="px-4 py-3">Objetivo</th>
-                    <th className="px-4 py-3">Estado</th>
-                    <th className="px-4 py-3 text-right">Acciones</th>
-                  </tr>
-                </thead>
+            <div className="mt-6">
+              {/* Tabla en desktop */}
+              <div className="hidden overflow-hidden rounded-[1.5rem] border border-slate-200 md:block">
+                <table className="w-full text-left text-sm">
+                  <thead className="bg-slate-50 text-slate-500">
+                    <tr>
+                      <th className="px-4 py-3">Persona</th>
+                      <th className="px-4 py-3">Documento</th>
+                      <th className="px-4 py-3">Objetivo</th>
+                      <th className="px-4 py-3">Estado</th>
+                      <th className="px-4 py-3 text-right">Acciones</th>
+                    </tr>
+                  </thead>
 
-                <tbody>
-                  {personasFiltradas.map((persona) => {
-                    const selected = selectedPersona?.id === persona.id
+                  <tbody>
+                    {personasFiltradas.map((persona) => {
+                      const selected = selectedPersona?.id === persona.id
 
-                    return (
-                      <tr
-                        key={persona.id}
-                        className={`border-t border-slate-100 ${
-                          selected ? 'bg-slate-50' : ''
-                        }`}
-                      >
-                        <td className="px-4 py-4">
-                          <p className="font-black">
-                            {persona.nombres} {persona.apellidos}
-                          </p>
-                          <p className="text-xs text-slate-500">{persona.correo}</p>
-                        </td>
+                      return (
+                        <tr
+                          key={persona.id}
+                          className={`border-t border-slate-100 ${
+                            selected ? 'bg-slate-50' : ''
+                          }`}
+                        >
+                          <td className="px-4 py-4">
+                            <p className="font-black">
+                              {persona.nombres} {persona.apellidos}
+                            </p>
+                            <p className="text-xs text-slate-500">{persona.correo}</p>
+                          </td>
 
-                        <td className="px-4 py-4">{persona.documento}</td>
+                          <td className="px-4 py-4">{persona.documento}</td>
 
-                        <td className="px-4 py-4">{persona.objetivo}</td>
+                          <td className="px-4 py-4">{persona.objetivo}</td>
 
-                        <td className="px-4 py-4">
-                          <span
-                            className={`rounded-full px-3 py-1 text-xs font-black ${estadoBadgeClass(
-                              persona.estado,
-                            )}`}
-                          >
-                            {estadoLabel(persona.estado)}
-                          </span>
-                        </td>
-
-                        <td className="px-4 py-4">
-                          <div className="flex justify-end gap-2">
-                            <button
-                              type="button"
-                              onClick={() => setSelectedId(persona.id)}
-                              className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-black hover:bg-slate-50"
+                          <td className="px-4 py-4">
+                            <span
+                              className={`rounded-full px-3 py-1 text-xs font-black ${estadoBadgeClass(
+                                persona.estado,
+                              )}`}
                             >
-                              Ver
-                            </button>
+                              {estadoLabel(persona.estado)}
+                            </span>
+                          </td>
 
-                            <button
-                              type="button"
-                              onClick={() => editarPersona(persona)}
-                              className="rounded-xl bg-slate-950 px-3 py-2 text-xs font-black text-white hover:bg-slate-800"
-                            >
-                              Editar
-                            </button>
-                          </div>
+                          <td className="px-4 py-4">
+                            <div className="flex justify-end gap-2">
+                              <button
+                                type="button"
+                                onClick={() => setSelectedId(persona.id)}
+                                className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-black hover:bg-slate-50"
+                              >
+                                Ver
+                              </button>
+
+                              <button
+                                type="button"
+                                onClick={() => editarPersona(persona)}
+                                className="rounded-xl bg-slate-950 px-3 py-2 text-xs font-black text-white hover:bg-slate-800"
+                              >
+                                Editar
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    })}
+
+                    {personasFiltradas.length === 0 && (
+                      <tr>
+                        <td colSpan={5} className="px-4 py-10 text-center text-slate-500">
+                          No se encontraron personas.
                         </td>
                       </tr>
-                    )
-                  })}
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
-                  {personasFiltradas.length === 0 && (
-                    <tr>
-                      <td colSpan={5} className="px-4 py-10 text-center text-slate-500">
-                        No se encontraron personas.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+              {/* Tarjetas en móvil */}
+              <div className="space-y-3 md:hidden">
+                {personasFiltradas.map((persona) => {
+                  const selected = selectedPersona?.id === persona.id
+
+                  return (
+                    <article
+                      key={persona.id}
+                      className={`rounded-[1.5rem] border p-4 ${
+                        selected
+                          ? 'border-slate-950 bg-slate-50'
+                          : 'border-slate-200 bg-white'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="font-black text-slate-900">
+                            {persona.nombres} {persona.apellidos}
+                          </p>
+                          <p className="mt-0.5 truncate text-xs text-slate-500">
+                            {persona.correo || 'Sin correo'}
+                          </p>
+                        </div>
+
+                        <span
+                          className={`shrink-0 rounded-full px-3 py-1 text-xs font-black ${estadoBadgeClass(
+                            persona.estado,
+                          )}`}
+                        >
+                          {estadoLabel(persona.estado)}
+                        </span>
+                      </div>
+
+                      <div className="mt-3 flex items-center justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="text-xs font-bold uppercase tracking-wide text-slate-400">
+                            Documento
+                          </p>
+                          <p className="truncate text-sm font-black text-slate-700">
+                            {persona.documento}
+                          </p>
+                        </div>
+
+                        <div className="min-w-0 text-right">
+                          <p className="text-xs font-bold uppercase tracking-wide text-slate-400">
+                            Objetivo
+                          </p>
+                          <p className="truncate text-sm font-black text-slate-700">
+                            {persona.objetivo || 'Sin objetivo'}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedId(persona.id)}
+                          className="flex-1 rounded-xl border border-slate-200 px-3 py-2.5 text-xs font-black text-slate-700 hover:bg-slate-50"
+                        >
+                          Ver perfil
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => editarPersona(persona)}
+                          className="flex-1 rounded-xl bg-slate-950 px-3 py-2.5 text-xs font-black text-white hover:bg-slate-800"
+                        >
+                          Editar
+                        </button>
+                      </div>
+                    </article>
+                  )
+                })}
+
+                {personasFiltradas.length === 0 && (
+                  <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
+                    No se encontraron personas.
+                  </div>
+                )}
+              </div>
             </div>
+
           </section>
 
           <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

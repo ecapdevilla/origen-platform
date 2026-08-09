@@ -83,7 +83,7 @@ export function ConstanciaPage({ personas, constancias, onMarcarConstancia }: Pr
 
   return (
     <div className="space-y-6">
-      <section className="overflow-hidden rounded-[2rem] bg-slate-950 p-8 text-white shadow-sm">
+      <section className="overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
         <p className="text-sm text-slate-300">Módulo Constancia</p>
         <h1 className="mt-3 text-4xl font-black tracking-tight">
           Acompaña la asistencia de hoy
@@ -135,7 +135,7 @@ export function ConstanciaPage({ personas, constancias, onMarcarConstancia }: Pr
       </section>
 
       {mejorRacha && mejorRacha.racha > 0 && (
-        <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
           <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
             <div>
               <p className="text-sm font-black text-slate-500">Reconocimiento ORIGEN</p>
@@ -157,7 +157,7 @@ export function ConstanciaPage({ personas, constancias, onMarcarConstancia }: Pr
         </section>
       )}
 
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div>
             <h2 className="text-2xl font-black">Registro de hoy</h2>
@@ -278,51 +278,91 @@ export function ConstanciaPage({ personas, constancias, onMarcarConstancia }: Pr
         </div>
       </section>
 
-      <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
         <h2 className="text-2xl font-black">Últimas constancias registradas</h2>
         <p className="mt-1 text-sm text-slate-500">
           Historial reciente de registros de asistencia.
         </p>
 
-        <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50 text-slate-500">
-              <tr>
-                <th className="px-4 py-3">Fecha</th>
-                <th className="px-4 py-3">Persona</th>
-                <th className="px-4 py-3">Registrado por</th>
-              </tr>
-            </thead>
+        <div className="mt-6">
+          {/* Tabla en desktop */}
+          <div className="hidden overflow-hidden rounded-2xl border border-slate-200 md:block">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-slate-50 text-slate-500">
+                <tr>
+                  <th className="px-4 py-3">Fecha</th>
+                  <th className="px-4 py-3">Persona</th>
+                  <th className="px-4 py-3">Registrado por</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {constancias.slice(0, 12).map((constancia) => {
-                const persona = personas.find((item) => item.id === constancia.personaId)
+              <tbody>
+                {constancias.slice(0, 12).map((constancia) => {
+                  const persona = personas.find((item) => item.id === constancia.personaId)
 
-                return (
-                  <tr key={constancia.id} className="border-t border-slate-100">
-                    <td className="px-4 py-4">
-                      {formatDate(normalizeDate(constancia.fecha))}
+                  return (
+                    <tr key={constancia.id} className="border-t border-slate-100">
+                      <td className="px-4 py-4">
+                        {formatDate(normalizeDate(constancia.fecha))}
+                      </td>
+                      <td className="px-4 py-4 font-black">
+                        {persona
+                          ? `${persona.nombres} ${persona.apellidos}`
+                          : 'Persona no encontrada'}
+                      </td>
+                      <td className="px-4 py-4 capitalize">{constancia.registradoPor}</td>
+                    </tr>
+                  )
+                })}
+
+                {constancias.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="px-4 py-10 text-center text-slate-500">
+                      Todavía no hay constancias registradas.
                     </td>
-                    <td className="px-4 py-4 font-black">
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Tarjetas en móvil */}
+          <div className="space-y-3 md:hidden">
+            {constancias.slice(0, 12).map((constancia) => {
+              const persona = personas.find((item) => item.id === constancia.personaId)
+
+              return (
+                <article
+                  key={constancia.id}
+                  className="rounded-[1.5rem] border border-slate-200 bg-white p-4"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="font-black text-slate-900">
                       {persona
                         ? `${persona.nombres} ${persona.apellidos}`
                         : 'Persona no encontrada'}
-                    </td>
-                    <td className="px-4 py-4 capitalize">{constancia.registradoPor}</td>
-                  </tr>
-                )
-              })}
+                    </p>
 
-              {constancias.length === 0 && (
-                <tr>
-                  <td colSpan={3} className="px-4 py-10 text-center text-slate-500">
-                    Todavía no hay constancias registradas.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                    <span className="shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs font-black capitalize text-slate-600">
+                      {constancia.registradoPor}
+                    </span>
+                  </div>
+
+                  <p className="mt-2 text-sm font-bold text-slate-500">
+                    {formatDate(normalizeDate(constancia.fecha))}
+                  </p>
+                </article>
+              )
+            })}
+
+            {constancias.length === 0 && (
+              <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
+                Todavía no hay constancias registradas.
+              </div>
+            )}
+          </div>
         </div>
+
       </section>
     </div>
   )

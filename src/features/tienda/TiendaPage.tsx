@@ -211,7 +211,7 @@ export function TiendaPage({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] bg-slate-950 p-8 text-white">
+      <section className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
         <p className="text-sm text-slate-300">Módulo Tienda</p>
         <h1 className="mt-3 text-4xl font-black">Inventario y ventas</h1>
         <p className="mt-4 max-w-3xl text-slate-300">
@@ -248,7 +248,7 @@ export function TiendaPage({
 
       <section className="grid gap-6 xl:grid-cols-[420px_1fr]">
         <div className="space-y-6">
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Crear producto</h2>
 
             <form onSubmit={crearProducto} className="mt-6 grid gap-4">
@@ -294,7 +294,7 @@ export function TiendaPage({
             </form>
           </section>
 
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Registrar venta</h2>
 
             <form onSubmit={registrarVenta} className="mt-6 grid gap-4">
@@ -425,63 +425,119 @@ export function TiendaPage({
           <section className="rounded-[2rem] bg-white p-6 shadow-sm">
             <h2 className="text-2xl font-black">Movimientos de inventario</h2>
 
-            <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-slate-50 text-slate-500">
-                  <tr>
-                    <th className="px-4 py-3">Fecha</th>
-                    <th className="px-4 py-3">Producto</th>
-                    <th className="px-4 py-3">Tipo</th>
-                    <th className="px-4 py-3 text-right">Cantidad</th>
-                  </tr>
-                </thead>
+            <div className="mt-6">
+              {/* Tabla en desktop */}
+              <div className="hidden overflow-hidden rounded-2xl border border-slate-200 md:block">
+                <table className="w-full text-left text-sm">
+                  <thead className="bg-slate-50 text-slate-500">
+                    <tr>
+                      <th className="px-4 py-3">Fecha</th>
+                      <th className="px-4 py-3">Producto</th>
+                      <th className="px-4 py-3">Tipo</th>
+                      <th className="px-4 py-3 text-right">Cantidad</th>
+                    </tr>
+                  </thead>
 
-                <tbody>
-                  {movimientosOrdenados.map((movimiento) => {
-                    const producto = productos.find((item) => item.id === movimiento.productoId)
+                  <tbody>
+                    {movimientosOrdenados.map((movimiento) => {
+                      const producto = productos.find((item) => item.id === movimiento.productoId)
 
-                    return (
-                      <tr key={movimiento.id} className="border-t border-slate-100">
-                        <td className="px-4 py-4">{formatDate(movimiento.fecha)}</td>
+                      return (
+                        <tr key={movimiento.id} className="border-t border-slate-100">
+                          <td className="px-4 py-4">{formatDate(movimiento.fecha)}</td>
 
-                        <td className="px-4 py-4">
-                          <p className="font-black">
-                            {producto ? producto.nombre : 'Producto no encontrado'}
-                          </p>
-                          <p className="text-xs text-slate-500">
-                            {movimiento.observacion || '-'}
-                          </p>
-                        </td>
+                          <td className="px-4 py-4">
+                            <p className="font-black">
+                              {producto ? producto.nombre : 'Producto no encontrado'}
+                            </p>
+                            <p className="text-xs text-slate-500">
+                              {movimiento.observacion || '-'}
+                            </p>
+                          </td>
 
-                        <td className="px-4 py-4">
-                          <span
-                            className={`rounded-full px-3 py-1 text-xs font-black ${
-                              movimiento.tipo === 'entrada'
-                                ? 'bg-emerald-50 text-emerald-700'
-                                : 'bg-blue-50 text-blue-700'
-                            }`}
-                          >
-                            {movimiento.tipo}
-                          </span>
-                        </td>
+                          <td className="px-4 py-4">
+                            <span
+                              className={`rounded-full px-3 py-1 text-xs font-black ${
+                                movimiento.tipo === 'entrada'
+                                  ? 'bg-emerald-50 text-emerald-700'
+                                  : 'bg-blue-50 text-blue-700'
+                              }`}
+                            >
+                              {movimiento.tipo}
+                            </span>
+                          </td>
 
-                        <td className="px-4 py-4 text-right font-black">
-                          {movimiento.cantidad}
+                          <td className="px-4 py-4 text-right font-black">
+                            {movimiento.cantidad}
+                          </td>
+                        </tr>
+                      )
+                    })}
+
+                    {movimientosOrdenados.length === 0 && (
+                      <tr>
+                        <td colSpan={4} className="px-4 py-10 text-center text-slate-500">
+                          No hay movimientos de inventario.
                         </td>
                       </tr>
-                    )
-                  })}
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
-                  {movimientosOrdenados.length === 0 && (
-                    <tr>
-                      <td colSpan={4} className="px-4 py-10 text-center text-slate-500">
-                        No hay movimientos de inventario.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+              {/* Tarjetas en móvil */}
+              <div className="space-y-3 md:hidden">
+                {movimientosOrdenados.map((movimiento) => {
+                  const producto = productos.find((item) => item.id === movimiento.productoId)
+
+                  return (
+                    <article
+                      key={movimiento.id}
+                      className="rounded-[1.5rem] border border-slate-200 bg-white p-4"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="font-black text-slate-900">
+                            {producto ? producto.nombre : 'Producto no encontrado'}
+                          </p>
+                          <p className="mt-0.5 text-xs text-slate-500">
+                            {formatDate(movimiento.fecha)}
+                          </p>
+                        </div>
+
+                        <span
+                          className={`shrink-0 rounded-full px-3 py-1 text-xs font-black ${
+                            movimiento.tipo === 'entrada'
+                              ? 'bg-emerald-50 text-emerald-700'
+                              : 'bg-blue-50 text-blue-700'
+                          }`}
+                        >
+                          {movimiento.tipo}
+                        </span>
+                      </div>
+
+                      <div className="mt-3 flex items-center justify-between gap-3">
+                        <p className="text-xs font-bold text-slate-400">
+                          {movimiento.observacion || '-'}
+                        </p>
+
+                        <p className="font-black text-slate-900">
+                          {movimiento.tipo === 'entrada' ? '+' : '-'}
+                          {movimiento.cantidad}
+                        </p>
+                      </div>
+                    </article>
+                  )
+                })}
+
+                {movimientosOrdenados.length === 0 && (
+                  <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
+                    No hay movimientos de inventario.
+                  </div>
+                )}
+              </div>
             </div>
+
           </section>
         </div>
       </section>

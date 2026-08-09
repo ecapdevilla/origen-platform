@@ -138,7 +138,7 @@ export function BienestarPage({ personas, registros, onCreateRegistro }: Props) 
 
   return (
     <div className="space-y-6">
-      <section className="overflow-hidden rounded-[2rem] bg-slate-950 p-8 text-white shadow-sm">
+      <section className="overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
         <p className="text-sm text-slate-300">Módulo Bienestar</p>
         <h1 className="mt-3 text-4xl font-black tracking-tight">
           Acompaña más que el entrenamiento
@@ -180,7 +180,7 @@ export function BienestarPage({ personas, registros, onCreateRegistro }: Props) 
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[420px_1fr]">
-        <div className="rounded-[2rem] bg-white p-6 shadow-sm">
+        <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
           <div>
             <h2 className="text-2xl font-black">Registrar bienestar</h2>
             <p className="mt-1 text-sm text-slate-500">
@@ -270,7 +270,7 @@ export function BienestarPage({ personas, registros, onCreateRegistro }: Props) 
         </div>
 
         <div className="space-y-6">
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
               <div>
                 <h2 className="text-2xl font-black">Historial de bienestar</h2>

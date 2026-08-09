@@ -126,7 +126,7 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
   ]
     return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] bg-slate-950 p-8 text-white">
+      <section className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
         <p className="text-sm text-slate-300">Reportes</p>
 
         <h1 className="mt-3 text-4xl font-black">Indicadores de ORIGEN</h1>
@@ -152,7 +152,7 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
 
       <section className="grid gap-6 xl:grid-cols-[1fr_420px]">
         <section className="space-y-6">
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Estado de personas</h2>
 
             <p className="mt-1 text-sm text-slate-500">
@@ -171,7 +171,7 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
             </div>
           </section>
 
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Ranking de constancia</h2>
 
             <p className="mt-1 text-sm text-slate-500">
@@ -209,69 +209,125 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
             </div>
           </section>
 
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Movimientos recientes</h2>
 
             <p className="mt-1 text-sm text-slate-500">
               Últimos ingresos y gastos registrados en caja.
             </p>
 
-            <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-slate-50 text-slate-500">
-                  <tr>
-                    <th className="px-4 py-3">Fecha</th>
-                    <th className="px-4 py-3">Concepto</th>
-                    <th className="px-4 py-3">Tipo</th>
-                    <th className="px-4 py-3 text-right">Valor</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {movimientosRecientes.map((movimiento) => (
-                    <tr key={movimiento.id} className="border-t border-slate-100">
-                      <td className="px-4 py-4">{formatDate(movimiento.fecha)}</td>
-
-                      <td className="px-4 py-4">
-                        <p className="font-black">{movimiento.concepto}</p>
-                        <p className="text-xs text-slate-500">
-                          {movimiento.metodoPago || 'Sin método'}
-                        </p>
-                      </td>
-
-                      <td className="px-4 py-4">
-                        <span
-                          className={`rounded-full px-3 py-1 text-xs font-black ${
-                            movimiento.tipo === 'ingreso'
-                              ? 'bg-emerald-50 text-emerald-700'
-                              : 'bg-rose-50 text-rose-700'
-                          }`}
-                        >
-                          {movimiento.tipo}
-                        </span>
-                      </td>
-
-                      <td className="px-4 py-4 text-right font-black">
-                        {formatMoney(movimiento.valor)}
-                      </td>
-                    </tr>
-                  ))}
-
-                  {movimientosRecientes.length === 0 && (
+            <div className="mt-6">
+              {/* Tabla en desktop */}
+              <div className="hidden overflow-hidden rounded-2xl border border-slate-200 md:block">
+                <table className="w-full text-left text-sm">
+                  <thead className="bg-slate-50 text-slate-500">
                     <tr>
-                      <td colSpan={4} className="px-4 py-10 text-center text-slate-500">
-                        Todavía no hay movimientos registrados.
-                      </td>
+                      <th className="px-4 py-3">Fecha</th>
+                      <th className="px-4 py-3">Concepto</th>
+                      <th className="px-4 py-3">Tipo</th>
+                      <th className="px-4 py-3 text-right">Valor</th>
                     </tr>
-                  )}
-                </tbody>
-              </table>
+                  </thead>
+
+                  <tbody>
+                    {movimientosRecientes.map((movimiento) => (
+                      <tr key={movimiento.id} className="border-t border-slate-100">
+                        <td className="px-4 py-4">{formatDate(movimiento.fecha)}</td>
+
+                        <td className="px-4 py-4">
+                          <p className="font-black">{movimiento.concepto}</p>
+                          <p className="text-xs text-slate-500">
+                            {movimiento.metodoPago || 'Sin método'}
+                          </p>
+                        </td>
+
+                        <td className="px-4 py-4">
+                          <span
+                            className={`rounded-full px-3 py-1 text-xs font-black ${
+                              movimiento.tipo === 'ingreso'
+                                ? 'bg-emerald-50 text-emerald-700'
+                                : 'bg-rose-50 text-rose-700'
+                            }`}
+                          >
+                            {movimiento.tipo}
+                          </span>
+                        </td>
+
+                        <td className="px-4 py-4 text-right font-black">
+                          {formatMoney(movimiento.valor)}
+                        </td>
+                      </tr>
+                    ))}
+
+                    {movimientosRecientes.length === 0 && (
+                      <tr>
+                        <td colSpan={4} className="px-4 py-10 text-center text-slate-500">
+                          Todavía no hay movimientos registrados.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Tarjetas en móvil */}
+              <div className="space-y-3 md:hidden">
+                {movimientosRecientes.map((movimiento) => (
+                  <article
+                    key={movimiento.id}
+                    className="rounded-[1.5rem] border border-slate-200 bg-white p-4"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="font-black text-slate-900">{movimiento.concepto}</p>
+                        <p className="mt-0.5 text-xs text-slate-500">
+                          {formatDate(movimiento.fecha)}
+                        </p>
+                      </div>
+
+                      <span
+                        className={`shrink-0 rounded-full px-3 py-1 text-xs font-black ${
+                          movimiento.tipo === 'ingreso'
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'bg-rose-50 text-rose-700'
+                        }`}
+                      >
+                        {movimiento.tipo}
+                      </span>
+                    </div>
+
+                    <div className="mt-3 flex items-center justify-between gap-3">
+                      <p className="text-xs font-bold text-slate-400">
+                        {movimiento.metodoPago || 'Sin método'}
+                      </p>
+
+                      <p
+                        className={`font-black ${
+                          movimiento.tipo === 'ingreso'
+                            ? 'text-emerald-700'
+                            : 'text-rose-700'
+                        }`}
+                      >
+                        {movimiento.tipo === 'ingreso' ? '+' : '-'}
+                        {formatMoney(movimiento.valor)}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+
+                {movimientosRecientes.length === 0 && (
+                  <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
+                    Todavía no hay movimientos registrados.
+                  </div>
+                )}
+              </div>
             </div>
+
           </section>
         </section>
 
         <aside className="space-y-6">
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Resumen financiero</h2>
 
             <div className="mt-5 space-y-3">
@@ -281,7 +337,7 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
             </div>
           </section>
 
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Inventario</h2>
 
             <div className="mt-5 space-y-3">
@@ -298,7 +354,7 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
             </div>
           </section>
 
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Constancia</h2>
 
             <div className="mt-5 space-y-3">
@@ -309,7 +365,7 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
             </div>
           </section>
 
-          <section className="rounded-[2rem] bg-white p-6 shadow-sm">
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Lectura rápida</h2>
 
             <div className="mt-5 rounded-2xl bg-slate-50 p-5 text-sm leading-6 text-slate-600">

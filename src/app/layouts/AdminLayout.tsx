@@ -1,4 +1,21 @@
 import { useEffect, useState } from 'react'
+import {
+  BarChart3,
+  CalendarCheck,
+  Dumbbell,
+  Heart,
+  Home,
+  LayoutGrid,
+  LogOut,
+  Menu,
+  MoreHorizontal,
+  Settings,
+  Store,
+  Users,
+  Wallet,
+  X,
+} from 'lucide-react'
+
 import { AdminDashboard } from '@/features/admin/AdminDashboard'
 import {
   crearRegistroBienestarSupabase,
@@ -148,8 +165,26 @@ const navigation: { id: AdminPage; label: string; description: string }[] = [
   },
 ]
 
+// Secciones principales que van en la barra inferior de móvil
+const primaryNav: AdminPage[] = ['dashboard', 'personas', 'constancia', 'comercial', 'tienda']
+
+const navIcons: Record<AdminPage, React.ElementType> = {
+
+  dashboard: Home,
+  personas: Users,
+  constancia: CalendarCheck,
+  comercial: Wallet,
+  tienda: Store,
+  entrenamiento: Dumbbell,
+  bienestar: Heart,
+  usuarios: LayoutGrid,
+  reportes: BarChart3,
+  configuracion: Settings,
+}
+
 export function AdminLayout({ usuario, onLogout }: Props) {
   const [activePage, setActivePage] = useState<AdminPage>('dashboard')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [loading, setLoading] = useState(true)
 
   const [personas, setPersonas] = useState<Persona[]>([])
@@ -475,6 +510,11 @@ export function AdminLayout({ usuario, onLogout }: Props) {
     }
   }
 
+  function navigate(page: AdminPage) {
+    setActivePage(page)
+    setMobileMenuOpen(false)
+  }
+
   function renderPage() {
     if (activePage === 'dashboard') {
       return (
@@ -563,12 +603,12 @@ export function AdminLayout({ usuario, onLogout }: Props) {
     if (activePage === 'usuarios') {
       return (
         <UsuariosPage
-  usuarios={usuarios}
-  personas={personas}
-  onCreateUsuario={createUsuario}
-  onUpdateUsuario={updateUsuario}
-  onChangeEstado={changeEstadoUsuario}
-/>
+          usuarios={usuarios}
+          personas={personas}
+          onCreateUsuario={createUsuario}
+          onUpdateUsuario={updateUsuario}
+          onChangeEstado={changeEstadoUsuario}
+        />
       )
     }
 
@@ -613,6 +653,7 @@ export function AdminLayout({ usuario, onLogout }: Props) {
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900">
+      {/* Sidebar desktop */}
       <aside className="fixed inset-y-0 left-0 hidden w-80 border-r border-slate-200 bg-slate-950 p-6 lg:flex lg:flex-col">
         <div className="rounded-[1.75rem] border border-white/10 bg-white/10 p-6 text-white">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-300">ORIGEN</p>
@@ -627,27 +668,32 @@ export function AdminLayout({ usuario, onLogout }: Props) {
         <nav className="mt-6 flex-1 space-y-2">
           {navigation.map((item) => {
             const isActive = activePage === item.id
+            const Icon = navIcons[item.id]
 
             return (
               <button
                 key={item.id}
                 type="button"
-                onClick={() => setActivePage(item.id)}
-                className={`w-full rounded-2xl px-4 py-3 text-left transition ${
+                onClick={() => navigate(item.id)}
+                className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left transition ${
                   isActive
                     ? 'bg-white text-slate-950 shadow-sm'
                     : 'text-slate-300 hover:bg-white/10 hover:text-white'
                 }`}
               >
-                <p className="font-black">{item.label}</p>
+                <Icon size={20} className={isActive ? 'text-slate-950' : 'text-slate-400'} />
 
-                <p
-                  className={`mt-1 text-xs ${
-                    isActive ? 'text-slate-500' : 'text-slate-400'
-                  }`}
-                >
-                  {item.description}
-                </p>
+                <span>
+                  <p className="font-black">{item.label}</p>
+
+                  <p
+                    className={`mt-0.5 text-xs ${
+                      isActive ? 'text-slate-500' : 'text-slate-400'
+                    }`}
+                  >
+                    {item.description}
+                  </p>
+                </span>
               </button>
             )
           })}
@@ -668,30 +714,21 @@ export function AdminLayout({ usuario, onLogout }: Props) {
       </aside>
 
       <div className="lg:pl-80">
-        <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 px-4 py-4 backdrop-blur md:px-8">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.3em] text-slate-500">Panel administrativo</p>
+        {/* Header móvil + desktop */}
+        <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur md:px-8">
+          <div className="flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">
+                Panel administrativo
+              </p>
 
-              <h2 className="text-2xl font-black text-slate-950">
+              <h2 className="truncate text-xl font-black text-slate-950 sm:text-2xl">
                 {activeNavigation ? activeNavigation.label : 'ORIGEN'}
               </h2>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <select
-                value={activePage}
-                onChange={(event) => setActivePage(event.target.value as AdminPage)}
-                className="rounded-2xl border border-slate-200 bg-white px-4 py-3 font-bold outline-none lg:hidden"
-              >
-                {navigation.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+            <div className="flex items-center gap-2">
+              <div className="hidden rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2 sm:block">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Sesión</p>
                 <p className="text-sm font-black text-slate-900">{usuario.nombre}</p>
               </div>
@@ -699,16 +736,109 @@ export function AdminLayout({ usuario, onLogout }: Props) {
               <button
                 type="button"
                 onClick={onLogout}
-                className="rounded-2xl bg-slate-950 px-5 py-3 text-sm font-black text-white transition hover:bg-slate-800 lg:hidden"
+                className="hidden rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-black text-white transition hover:bg-slate-800 sm:block"
               >
                 Salir
+              </button>
+
+              {/* Botón menú móvil */}
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+                className="rounded-2xl border border-slate-200 bg-white p-2.5 text-slate-700 lg:hidden"
+                aria-label="Abrir menú"
+              >
+                {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
             </div>
           </div>
         </header>
 
-        <main className="p-4 md:p-8">{renderPage()}</main>
+        {/* Menú móvil desplegable */}
+        {mobileMenuOpen && (
+          <div className="border-b border-slate-200 bg-white px-4 py-4 shadow-sm lg:hidden">
+            <div className="mb-3 flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Sesión</p>
+                <p className="text-sm font-black text-slate-900">{usuario.nombre}</p>
+              </div>
+
+              <button
+                type="button"
+                onClick={onLogout}
+                className="inline-flex items-center gap-2 rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-black text-white"
+              >
+                <LogOut size={16} />
+                Salir
+              </button>
+            </div>
+
+            <nav className="grid grid-cols-2 gap-2">
+              {navigation.map((item) => {
+                const isActive = activePage === item.id
+                const Icon = navIcons[item.id]
+
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => navigate(item.id)}
+                    className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-left transition ${
+                      isActive
+                        ? 'bg-slate-950 text-white'
+                        : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Icon size={18} className={isActive ? 'text-white' : 'text-slate-400'} />
+                    <span className="text-sm font-black">{item.label}</span>
+                  </button>
+                )
+              })}
+            </nav>
+          </div>
+        )}
+
+        <main className="p-4 pb-24 md:p-8 lg:pb-8">{renderPage()}</main>
       </div>
+
+      {/* Barra de navegación inferior móvil */}
+      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur lg:hidden">
+        <div className="mx-auto flex max-w-md items-stretch justify-around px-2 py-1.5">
+          {primaryNav.map((id) => {
+            const item = navigation.find((nav) => nav.id === id)!
+            const isActive = activePage === id
+            const Icon = navIcons[id]
+
+            return (
+              <button
+                key={id}
+                type="button"
+                onClick={() => navigate(id)}
+                className={`flex flex-1 flex-col items-center gap-1 rounded-2xl px-2 py-2 transition ${
+                  isActive ? 'text-slate-950' : 'text-slate-400 hover:text-slate-600'
+                }`}
+              >
+                <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+                <span className={`text-[10px] font-black ${isActive ? '' : 'font-bold'}`}>
+                  {item.label}
+                </span>
+              </button>
+            )
+          })}
+
+          {/* Botón "Más" */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            className={`flex flex-1 flex-col items-center gap-1 rounded-2xl px-2 py-2 transition ${
+              mobileMenuOpen ? 'text-slate-950' : 'text-slate-400 hover:text-slate-600'
+            }`}
+          >
+            <MoreHorizontal size={22} />
+            <span className="text-[10px] font-black">Más</span>
+          </button>
+        </div>
+      </nav>
     </div>
   )
 }
