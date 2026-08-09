@@ -619,6 +619,11 @@ export function AdminLayout({ usuario, onLogout }: Props) {
           constancias={constancias}
           movimientos={movimientos}
           productos={productos}
+          servicios={servicios}
+          movimientosInventario={movimientosInventario}
+          planes={planes}
+          registrosBienestar={registrosBienestar}
+          medidas={medidas}
         />
       )
     }

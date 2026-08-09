@@ -1,130 +1,296 @@
-import { useMemo } from 'react'
-import type { MovimientoCaja } from '@/shared/types/comercial'
+import { useMemo, useState } from 'react'
+import { CalendarRange, Download, TrendingUp, TrendingDown, Wallet } from 'lucide-react'
+import type { RegistroBienestar } from '@/shared/types/bienestar'
+import type { MovimientoCaja, Servicio } from '@/shared/types/comercial'
 import type { Constancia } from '@/shared/types/constancia'
+import type { PlanEntrenamiento } from '@/shared/types/entrenamiento'
 import type { Persona } from '@/shared/types/persona'
-import type { Producto } from '@/shared/types/tienda'
+import type { MedidaCorporal } from '@/shared/types/progreso'
+import type { MovimientoInventario, Producto } from '@/shared/types/tienda'
 
 interface Props {
   personas: Persona[]
   constancias: Constancia[]
   movimientos: MovimientoCaja[]
   productos: Producto[]
+  servicios: Servicio[]
+  movimientosInventario: MovimientoInventario[]
+  planes: PlanEntrenamiento[]
+  registrosBienestar: RegistroBienestar[]
+  medidas: MedidaCorporal[]
 }
 
-export function ReportesPage({ personas, constancias, movimientos, productos }: Props) {
+type RangoPreset = 'hoy' | 'semana' | 'mes' | 'todo'
+
+const presets: { id: RangoPreset; label: string }[] = [
+  { id: 'hoy', label: 'Hoy' },
+  { id: 'semana', label: 'Últimos 7 días' },
+  { id: 'mes', label: 'Últimos 30 días' },
+  { id: 'todo', label: 'Todo' },
+]
+
+export function ReportesPage({
+  personas,
+  constancias,
+  movimientos,
+  productos,
+  servicios,
+  movimientosInventario,
+  planes,
+  registrosBienestar,
+  medidas,
+}: Props) {
   const hoy = new Date().toISOString().slice(0, 10)
 
-  const personasActivas = personas.filter((persona) => persona.estado === 'activa').length
-  const personasRegistro = personas.filter((persona) => persona.estado === 'registro').length
-  const personasPausa = personas.filter((persona) => persona.estado === 'en_pausa').length
-  const personasHistoricas = personas.filter((persona) => persona.estado === 'historica').length
+  const [preset, setPreset] = useState<RangoPreset>('mes')
+  const [fechaDesde, setFechaDesde] = useState('')
+  const [fechaHasta, setFechaHasta] = useState('')
 
-  const constanciasHoy = constancias.filter(
-    (constancia) => constancia.fecha.slice(0, 10) === hoy,
-  ).length
+  // Fechas del rango efectivo
+  const rango = useMemo(() => {
+    if (fechaDesde && fechaHasta) {
+      return { desde: fechaDesde, hasta: fechaHasta }
+    }
 
-  const porcentajeAsistencia =
-    personasActivas > 0 ? Math.round((constanciasHoy / personasActivas) * 100) : 0
+    const hasta = hoy
+    let desde = hoy
 
-  const ingresos = movimientos
-    .filter((movimiento) => movimiento.tipo === 'ingreso')
-    .reduce((total, movimiento) => total + movimiento.valor, 0)
+    if (preset === 'semana') {
+      const d = new Date()
+      d.setDate(d.getDate() - 7)
+      desde = d.toISOString().slice(0, 10)
+    } else if (preset === 'mes') {
+      const d = new Date()
+      d.setDate(d.getDate() - 30)
+      desde = d.toISOString().slice(0, 10)
+    } else if (preset === 'todo') {
+      desde = '0000-01-01'
+    }
 
-  const gastos = movimientos
-    .filter((movimiento) => movimiento.tipo === 'gasto')
-    .reduce((total, movimiento) => total + movimiento.valor, 0)
+    return { desde, hasta }
+  }, [preset, fechaDesde, fechaHasta, hoy])
 
-  const cajaNeta = ingresos - gastos
+  const enRango = (fecha: string) => {
+    const f = fecha.slice(0, 10)
+    return f >= rango.desde && f <= rango.hasta
+  }
 
-  const stockTotal = productos.reduce((total, producto) => total + producto.stock, 0)
-
-  const valorInventarioVenta = productos.reduce(
-    (total, producto) => total + producto.stock * producto.precioVenta,
-    0,
+  // Movimientos filtrados por rango
+  const movimientosRango = useMemo(
+    () => movimientos.filter((m) => enRango(m.fecha)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [movimientos, rango],
   )
 
-  const valorInventarioCosto = productos.reduce(
-    (total, producto) => total + producto.stock * producto.costo,
-    0,
-  )
+  const ingresosRango = movimientosRango
+    .filter((m) => m.tipo === 'ingreso')
+    .reduce((suma, m) => suma + m.valor, 0)
 
-  const productosBajoStock = productos.filter((producto) => producto.stock <= 3).length
+  const gastosRango = movimientosRango
+    .filter((m) => m.tipo === 'gasto')
+    .reduce((suma, m) => suma + m.valor, 0)
 
-  const movimientosRecientes = useMemo(() => {
-    return [...movimientos]
-      .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
+  const cajaNetaRango = ingresosRango - gastosRango
+
+  // Ingresos por método de pago
+  const ingresosPorMetodo = useMemo(() => {
+    const mapa = new Map<string, number>()
+
+    movimientosRango
+      .filter((m) => m.tipo === 'ingreso')
+      .forEach((m) => {
+        const metodo = m.metodoPago || 'Sin método'
+        mapa.set(metodo, (mapa.get(metodo) ?? 0) + m.valor)
+      })
+
+    return [...mapa.entries()]
+      .map(([metodo, total]) => ({ metodo, total }))
+      .sort((a, b) => b.total - a.total)
+  }, [movimientosRango])
+
+  // Ingresos por concepto
+  const ingresosPorConcepto = useMemo(() => {
+    const mapa = new Map<string, number>()
+
+    movimientosRango
+      .filter((m) => m.tipo === 'ingreso')
+      .forEach((m) => {
+        mapa.set(m.concepto, (mapa.get(m.concepto) ?? 0) + m.valor)
+      })
+
+    return [...mapa.entries()]
+      .map(([concepto, total]) => ({ concepto, total }))
+      .sort((a, b) => b.total - a.total)
       .slice(0, 8)
-  }, [movimientos])
+  }, [movimientosRango])
 
-  const rankingConstancia = useMemo(() => {
-    return personas
-      .map((persona) => {
-        const total = constancias.filter(
-          (constancia) => constancia.personaId === persona.id,
-        ).length
+  // Personas nuevas en el rango
+  const personasNuevas = useMemo(
+    () =>
+      personas
+        .filter((p) => enRango(p.fechaRegistro))
+        .sort((a, b) => b.fechaRegistro.localeCompare(a.fechaRegistro)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [personas, rango],
+  )
 
+  // Constancias en el rango
+  const constanciasRango = useMemo(
+    () => constancias.filter((c) => enRango(c.fecha)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [constancias, rango],
+  )
+
+  // Ventas de tienda en el rango (movimientos inventario tipo venta)
+  const ventasTienda = useMemo(
+    () => movimientosInventario.filter((m) => m.tipo === 'venta' && enRango(m.fecha)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [movimientosInventario, rango],
+  )
+
+  const unidadesVendidas = ventasTienda.reduce((suma, v) => suma + v.cantidad, 0)
+
+  // Ingresos por persona (quién aporta más)
+  const ingresosPorPersona = useMemo(() => {
+    const mapa = new Map<string, number>()
+
+    movimientosRango
+      .filter((m) => m.tipo === 'ingreso' && m.personaId)
+      .forEach((m) => {
+        mapa.set(m.personaId!, (mapa.get(m.personaId!) ?? 0) + m.valor)
+      })
+
+    return [...mapa.entries()]
+      .map(([personaId, total]) => {
+        const persona = personas.find((p) => p.id === personaId)
         return {
           persona,
           total,
         }
       })
+      .filter((item) => item.persona)
+      .sort((a, b) => b.total - a.total)
+      .slice(0, 5)
+  }, [movimientosRango, personas])
+
+  // Totales generales (sin filtro)
+  const ingresosTotales = movimientos
+    .filter((m) => m.tipo === 'ingreso')
+    .reduce((suma, m) => suma + m.valor, 0)
+
+  const gastosTotales = movimientos
+    .filter((m) => m.tipo === 'gasto')
+    .reduce((suma, m) => suma + m.valor, 0)
+
+  const cajaNetaTotal = ingresosTotales - gastosTotales
+
+  const personasActivas = personas.filter((p) => p.estado === 'activa').length
+  const personasRegistro = personas.filter((p) => p.estado === 'registro').length
+  const personasPausa = personas.filter((p) => p.estado === 'en_pausa').length
+  const personasHistoricas = personas.filter((p) => p.estado === 'historica').length
+
+  const constanciasHoy = constancias.filter((c) => c.fecha.slice(0, 10) === hoy).length
+  const porcentajeAsistencia =
+    personasActivas > 0 ? Math.round((constanciasHoy / personasActivas) * 100) : 0
+
+  const stockTotal = productos.reduce((suma, p) => suma + p.stock, 0)
+  const productosBajoStock = productos.filter((p) => p.stock <= 3).length
+
+  const valorInventarioVenta = productos.reduce(
+    (suma, p) => suma + p.stock * p.precioVenta,
+    0,
+  )
+
+  const valorInventarioCosto = productos.reduce((suma, p) => suma + p.stock * p.costo, 0)
+
+  // Ranking de constancia
+  const rankingConstancia = useMemo(() => {
+    return personas
+      .map((persona) => {
+        const total = constancias.filter((c) => c.personaId === persona.id).length
+        return { persona, total }
+      })
       .sort((a, b) => b.total - a.total)
       .slice(0, 5)
   }, [personas, constancias])
 
+  // Planes de entrenamiento activos
+  const planesActivos = planes.filter((p) => p.estado === 'activo').length
+  const planesAprobados = planes.filter((p) => p.estado === 'aprobado').length
+  const planesSugeridos = planes.filter((p) => p.estado === 'sugerido').length
+  const planesFinalizados = planes.filter((p) => p.estado === 'finalizado').length
+
+  // Registros de bienestar en el rango
+  const bienestarRango = useMemo(
+    () => registrosBienestar.filter((r) => enRango(r.fecha)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [registrosBienestar, rango],
+  )
+
+  const energiaPromedio =
+    bienestarRango.length > 0
+      ? Math.round(
+          (bienestarRango.reduce((suma, r) => suma + r.energia, 0) / bienestarRango.length) *
+            10,
+        ) / 10
+      : 0
+
+  const suenoPromedio =
+    bienestarRango.length > 0
+      ? Math.round(
+          (bienestarRango.reduce((suma, r) => suma + r.horasSueno, 0) /
+            bienestarRango.length) *
+            10,
+        ) / 10
+      : 0
+
+  // Medidas registradas en el rango
+  const medidasRango = useMemo(
+    () => medidas.filter((m) => enRango(m.fecha)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [medidas, rango],
+  )
+
+  // Servicios activos
+  const serviciosActivos = servicios.filter((s) => s.activo).length
+  const serviciosInactivos = servicios.filter((s) => !s.activo).length
+  const serviciosMembresia = servicios.filter((s) => s.tipo === 'membresia').length
+  const serviciosPersonalizado = servicios.filter((s) => s.tipo === 'personalizado').length
+
+
+  // Exportar CSV de movimientos del rango
+  function exportarCSV() {
+    const encabezados = ['Fecha', 'Tipo', 'Concepto', 'Valor', 'Método de pago', 'Observación']
+    const filas = movimientosRango.map((m) => [
+      m.fecha.slice(0, 10),
+      m.tipo,
+      m.concepto,
+      String(m.valor),
+      m.metodoPago || '',
+      m.observacion || '',
+    ])
+
+    const csv = [encabezados, ...filas]
+      .map((fila) => fila.map((celda) => `"${celda.replace(/"/g, '""')}"`).join(','))
+      .join('\n')
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `reporte-caja-${rango.desde}-a-${rango.hasta}.csv`
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
   const resumenEstados = [
-    {
-      label: 'Activas',
-      value: personasActivas,
-      total: personas.length,
-    },
-    {
-      label: 'En registro',
-      value: personasRegistro,
-      total: personas.length,
-    },
-    {
-      label: 'En pausa',
-      value: personasPausa,
-      total: personas.length,
-    },
-    {
-      label: 'Históricas',
-      value: personasHistoricas,
-      total: personas.length,
-    },
+    { label: 'Activas', value: personasActivas, total: personas.length },
+    { label: 'En registro', value: personasRegistro, total: personas.length },
+    { label: 'En pausa', value: personasPausa, total: personas.length },
+    { label: 'Históricas', value: personasHistoricas, total: personas.length },
   ]
 
-  const resumenFinanciero = [
-    {
-      label: 'Ingresos',
-      value: ingresos,
-    },
-    {
-      label: 'Gastos',
-      value: gastos,
-    },
-    {
-      label: 'Caja neta',
-      value: cajaNeta,
-    },
-  ]
-
-  const resumenInventario = [
-    {
-      label: 'Productos',
-      value: productos.length,
-    },
-    {
-      label: 'Stock total',
-      value: stockTotal,
-    },
-    {
-      label: 'Bajo stock',
-      value: productosBajoStock,
-    },
-  ]
-    return (
+  return (
     <div className="space-y-6">
       <section className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
         <p className="text-sm text-slate-300">Reportes</p>
@@ -132,24 +298,438 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
         <h1 className="mt-3 text-4xl font-black">Indicadores de ORIGEN</h1>
 
         <p className="mt-4 max-w-3xl text-slate-300">
-          Visualiza el estado general del gimnasio: personas, constancia, caja, tienda e inventario.
+          Consulta ingresos, gastos, ganancias y actividad del gimnasio filtrando por rango de
+          fechas.
         </p>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-4">
-        <Metric title="Personas" value={String(personas.length)} />
-        <Metric title="Activas" value={String(personasActivas)} />
-        <Metric title="Constancia hoy" value={String(constanciasHoy)} />
-        <Metric title="Asistencia hoy" value={`${porcentajeAsistencia}%`} />
+      {/* Filtro por rango de fechas */}
+      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-white">
+              <CalendarRange size={20} />
+            </div>
+
+            <div>
+              <h2 className="text-xl font-black">Filtrar por fechas</h2>
+              <p className="text-sm text-slate-500">
+                Consulta ingresos y ganancias de un período específico.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={exportarCSV}
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 text-sm font-black text-white transition hover:bg-slate-800"
+          >
+            <Download size={16} />
+            Exportar CSV
+          </button>
+        </div>
+
+        <div className="mt-5 flex flex-wrap gap-2">
+          {presets.map((p) => (
+            <button
+              key={p.id}
+              type="button"
+              onClick={() => {
+                setPreset(p.id)
+                setFechaDesde('')
+                setFechaHasta('')
+              }}
+              className={`rounded-2xl px-4 py-2.5 text-sm font-black transition ${
+                preset === p.id && !fechaDesde && !fechaHasta
+                  ? 'bg-slate-950 text-white'
+                  : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
+              }`}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:max-w-xl">
+          <label className="block">
+            <span className="text-sm font-bold text-slate-700">Desde</span>
+            <input
+              type="date"
+              value={fechaDesde}
+              onChange={(e) => {
+                setFechaDesde(e.target.value)
+                setPreset('todo')
+              }}
+              className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+            />
+          </label>
+
+          <label className="block">
+            <span className="text-sm font-bold text-slate-700">Hasta</span>
+            <input
+              type="date"
+              value={fechaHasta}
+              onChange={(e) => {
+                setFechaHasta(e.target.value)
+                setPreset('todo')
+              }}
+              className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+            />
+          </label>
+        </div>
+
+        <p className="mt-4 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-600">
+          Período consultado:{' '}
+          <span className="text-slate-950">
+            {formatDate(rango.desde)} — {formatDate(rango.hasta)}
+          </span>
+        </p>
       </section>
 
+      {/* Métricas del período */}
       <section className="grid gap-4 md:grid-cols-4">
-        <Metric title="Ingresos" value={formatMoney(ingresos)} />
-        <Metric title="Gastos" value={formatMoney(gastos)} />
-        <Metric title="Caja neta" value={formatMoney(cajaNeta)} />
-        <Metric title="Productos bajo stock" value={String(productosBajoStock)} />
+        <Metric
+          title="Ingresos del período"
+          value={formatMoney(ingresosRango)}
+          icon={<TrendingUp size={18} />}
+          tone="emerald"
+        />
+        <Metric
+          title="Gastos del período"
+          value={formatMoney(gastosRango)}
+          icon={<TrendingDown size={18} />}
+          tone="rose"
+        />
+        <Metric
+          title="Ganancia neta"
+          value={formatMoney(cajaNetaRango)}
+          icon={<Wallet size={18} />}
+          tone={cajaNetaRango >= 0 ? 'emerald' : 'rose'}
+        />
+        <Metric
+          title="Movimientos"
+          value={String(movimientosRango.length)}
+          icon={<CalendarRange size={18} />}
+          tone="slate"
+        />
       </section>
 
+      {/* Ingresos por método de pago y concepto */}
+      <section className="grid gap-6 xl:grid-cols-2">
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-2xl font-black">Ingresos por método de pago</h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Cómo se recibieron los pagos en el período.
+          </p>
+
+          <div className="mt-5 space-y-3">
+            {ingresosPorMetodo.length === 0 ? (
+              <Empty message="No hay ingresos en este período." />
+            ) : (
+              ingresosPorMetodo.map((item) => {
+                const percent =
+                  ingresosRango > 0 ? Math.round((item.total / ingresosRango) * 100) : 0
+
+                return (
+                  <div key={item.metodo}>
+                    <div className="mb-1 flex items-center justify-between gap-4">
+                      <span className="text-sm font-black text-slate-700">{item.metodo}</span>
+                      <span className="text-sm font-black text-slate-500">
+                        {formatMoney(item.total)} · {percent}%
+                      </span>
+                    </div>
+
+                    <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
+                      <div
+                        className="h-full rounded-full bg-emerald-500"
+                        style={{ width: `${percent}%` }}
+                      />
+                    </div>
+                  </div>
+                )
+              })
+            )}
+          </div>
+        </section>
+
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-2xl font-black">Ingresos por concepto</h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Los conceptos que más generaron ingresos en el período.
+          </p>
+
+          <div className="mt-5 space-y-3">
+            {ingresosPorConcepto.length === 0 ? (
+              <Empty message="No hay ingresos en este período." />
+            ) : (
+              ingresosPorConcepto.map((item) => (
+                <div
+                  key={item.concepto}
+                  className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3"
+                >
+                  <span className="text-sm font-black text-slate-700">{item.concepto}</span>
+                  <span className="text-sm font-black text-emerald-700">
+                    {formatMoney(item.total)}
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
+        </section>
+      </section>
+
+      {/* Personas nuevas y ranking de aportes */}
+      <section className="grid gap-6 xl:grid-cols-2">
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-2xl font-black">Personas nuevas en el período</h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Registros de personas creados entre {formatDate(rango.desde)} y{' '}
+            {formatDate(rango.hasta)}.
+          </p>
+
+          <div className="mt-5 space-y-3">
+            {personasNuevas.length === 0 ? (
+              <Empty message="No se registraron personas nuevas en este período." />
+            ) : (
+              personasNuevas.map((persona) => (
+                <div
+                  key={persona.id}
+                  className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3"
+                >
+                  <div className="min-w-0">
+                    <p className="truncate font-black">
+                      {persona.nombres} {persona.apellidos}
+                    </p>
+                    <p className="text-xs text-slate-500">{persona.documento}</p>
+                  </div>
+
+                  <span className="shrink-0 rounded-full bg-white px-3 py-1 text-xs font-black text-slate-700">
+                    {formatDate(persona.fechaRegistro)}
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
+        </section>
+
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-2xl font-black">Personas que más aportan</h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Quiénes generaron más ingresos en el período.
+          </p>
+
+          <div className="mt-5 space-y-3">
+            {ingresosPorPersona.length === 0 ? (
+              <Empty message="No hay ingresos asociados a personas en este período." />
+            ) : (
+              ingresosPorPersona.map((item, index) => (
+                <div
+                  key={item.persona!.id}
+                  className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-950 text-sm font-black text-white">
+                      {index + 1}
+                    </div>
+
+                    <div className="min-w-0">
+                      <p className="truncate font-black">
+                        {item.persona!.nombres} {item.persona!.apellidos}
+                      </p>
+                      <p className="text-xs text-slate-500">{item.persona!.objetivo}</p>
+                    </div>
+                  </div>
+
+                  <span className="shrink-0 text-sm font-black text-emerald-700">
+                    {formatMoney(item.total)}
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
+        </section>
+      </section>
+
+      {/* Actividad del período */}
+      <section className="grid gap-4 md:grid-cols-4">
+        <Metric title="Constancias en período" value={String(constanciasRango.length)} />
+        <Metric title="Personas nuevas" value={String(personasNuevas.length)} />
+        <Metric title="Ventas tienda" value={String(ventasTienda.length)} />
+        <Metric title="Unidades vendidas" value={String(unidadesVendidas)} />
+      </section>
+
+      {/* Entrenamiento, bienestar y servicios */}
+      <section className="grid gap-6 xl:grid-cols-3">
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-2xl font-black">Planes de entrenamiento</h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Estado actual de los planes asignados.
+          </p>
+
+          <div className="mt-5 space-y-3">
+            <Line label="Activos" value={String(planesActivos)} />
+            <Line label="Aprobados" value={String(planesAprobados)} />
+            <Line label="Sugeridos" value={String(planesSugeridos)} />
+            <Line label="Finalizados" value={String(planesFinalizados)} />
+            <Line label="Total planes" value={String(planes.length)} />
+          </div>
+        </section>
+
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-2xl font-black">Bienestar en el período</h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Registros de bienestar entre {formatDate(rango.desde)} y {formatDate(rango.hasta)}.
+          </p>
+
+          <div className="mt-5 space-y-3">
+            <Line label="Registros" value={String(bienestarRango.length)} />
+            <Line label="Energía promedio" value={`${energiaPromedio}/10`} />
+            <Line label="Sueño promedio" value={`${suenoPromedio} h`} />
+            <Line label="Medidas registradas" value={String(medidasRango.length)} />
+          </div>
+        </section>
+
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-2xl font-black">Servicios</h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Catálogo de servicios del gimnasio.
+          </p>
+
+          <div className="mt-5 space-y-3">
+            <Line label="Activos" value={String(serviciosActivos)} />
+            <Line label="Inactivos" value={String(serviciosInactivos)} />
+            <Line label="Membresías" value={String(serviciosMembresia)} />
+            <Line label="Personalizados" value={String(serviciosPersonalizado)} />
+            <Line label="Total servicios" value={String(servicios.length)} />
+          </div>
+        </section>
+      </section>
+
+      {/* Movimientos del período */}
+      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <h2 className="text-2xl font-black">Movimientos del período</h2>
+
+        <p className="mt-1 text-sm text-slate-500">
+          Todos los ingresos y gastos registrados entre {formatDate(rango.desde)} y{' '}
+          {formatDate(rango.hasta)}.
+        </p>
+
+        <div className="mt-6">
+          {/* Tabla en desktop */}
+          <div className="hidden overflow-hidden rounded-2xl border border-slate-200 md:block">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-slate-50 text-slate-500">
+                <tr>
+                  <th className="px-4 py-3">Fecha</th>
+                  <th className="px-4 py-3">Concepto</th>
+                  <th className="px-4 py-3">Tipo</th>
+                  <th className="px-4 py-3">Método</th>
+                  <th className="px-4 py-3 text-right">Valor</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {movimientosRango.map((movimiento) => (
+                  <tr key={movimiento.id} className="border-t border-slate-100">
+                    <td className="px-4 py-4">{formatDate(movimiento.fecha)}</td>
+
+                    <td className="px-4 py-4">
+                      <p className="font-black">{movimiento.concepto}</p>
+                      {movimiento.observacion && (
+                        <p className="text-xs text-slate-500">{movimiento.observacion}</p>
+                      )}
+                    </td>
+
+                    <td className="px-4 py-4">
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs font-black ${
+                          movimiento.tipo === 'ingreso'
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : 'bg-rose-50 text-rose-700'
+                        }`}
+                      >
+                        {movimiento.tipo}
+                      </span>
+                    </td>
+
+                    <td className="px-4 py-4">{movimiento.metodoPago || 'Sin método'}</td>
+
+                    <td
+                      className={`px-4 py-4 text-right font-black ${
+                        movimiento.tipo === 'ingreso' ? 'text-emerald-700' : 'text-rose-700'
+                      }`}
+                    >
+                      {movimiento.tipo === 'ingreso' ? '+' : '-'}
+                      {formatMoney(movimiento.valor)}
+                    </td>
+                  </tr>
+                ))}
+
+                {movimientosRango.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="px-4 py-10 text-center text-slate-500">
+                      No hay movimientos en este período.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Tarjetas en móvil */}
+          <div className="space-y-3 md:hidden">
+            {movimientosRango.map((movimiento) => (
+              <article
+                key={movimiento.id}
+                className="rounded-[1.5rem] border border-slate-200 bg-white p-4"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-black text-slate-900">{movimiento.concepto}</p>
+                    <p className="mt-0.5 text-xs text-slate-500">
+                      {formatDate(movimiento.fecha)} · {movimiento.metodoPago || 'Sin método'}
+                    </p>
+                  </div>
+
+                  <span
+                    className={`shrink-0 rounded-full px-3 py-1 text-xs font-black ${
+                      movimiento.tipo === 'ingreso'
+                        ? 'bg-emerald-50 text-emerald-700'
+                        : 'bg-rose-50 text-rose-700'
+                    }`}
+                  >
+                    {movimiento.tipo}
+                  </span>
+                </div>
+
+                <p
+                  className={`mt-3 text-right font-black ${
+                    movimiento.tipo === 'ingreso' ? 'text-emerald-700' : 'text-rose-700'
+                  }`}
+                >
+                  {movimiento.tipo === 'ingreso' ? '+' : '-'}
+                  {formatMoney(movimiento.valor)}
+                </p>
+              </article>
+            ))}
+
+            {movimientosRango.length === 0 && (
+              <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
+                No hay movimientos en este período.
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Resumen general del sistema */}
       <section className="grid gap-6 xl:grid-cols-[1fr_420px]">
         <section className="space-y-6">
           <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
@@ -208,132 +788,16 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
               )}
             </div>
           </section>
-
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <h2 className="text-2xl font-black">Movimientos recientes</h2>
-
-            <p className="mt-1 text-sm text-slate-500">
-              Últimos ingresos y gastos registrados en caja.
-            </p>
-
-            <div className="mt-6">
-              {/* Tabla en desktop */}
-              <div className="hidden overflow-hidden rounded-2xl border border-slate-200 md:block">
-                <table className="w-full text-left text-sm">
-                  <thead className="bg-slate-50 text-slate-500">
-                    <tr>
-                      <th className="px-4 py-3">Fecha</th>
-                      <th className="px-4 py-3">Concepto</th>
-                      <th className="px-4 py-3">Tipo</th>
-                      <th className="px-4 py-3 text-right">Valor</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {movimientosRecientes.map((movimiento) => (
-                      <tr key={movimiento.id} className="border-t border-slate-100">
-                        <td className="px-4 py-4">{formatDate(movimiento.fecha)}</td>
-
-                        <td className="px-4 py-4">
-                          <p className="font-black">{movimiento.concepto}</p>
-                          <p className="text-xs text-slate-500">
-                            {movimiento.metodoPago || 'Sin método'}
-                          </p>
-                        </td>
-
-                        <td className="px-4 py-4">
-                          <span
-                            className={`rounded-full px-3 py-1 text-xs font-black ${
-                              movimiento.tipo === 'ingreso'
-                                ? 'bg-emerald-50 text-emerald-700'
-                                : 'bg-rose-50 text-rose-700'
-                            }`}
-                          >
-                            {movimiento.tipo}
-                          </span>
-                        </td>
-
-                        <td className="px-4 py-4 text-right font-black">
-                          {formatMoney(movimiento.valor)}
-                        </td>
-                      </tr>
-                    ))}
-
-                    {movimientosRecientes.length === 0 && (
-                      <tr>
-                        <td colSpan={4} className="px-4 py-10 text-center text-slate-500">
-                          Todavía no hay movimientos registrados.
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Tarjetas en móvil */}
-              <div className="space-y-3 md:hidden">
-                {movimientosRecientes.map((movimiento) => (
-                  <article
-                    key={movimiento.id}
-                    className="rounded-[1.5rem] border border-slate-200 bg-white p-4"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <p className="font-black text-slate-900">{movimiento.concepto}</p>
-                        <p className="mt-0.5 text-xs text-slate-500">
-                          {formatDate(movimiento.fecha)}
-                        </p>
-                      </div>
-
-                      <span
-                        className={`shrink-0 rounded-full px-3 py-1 text-xs font-black ${
-                          movimiento.tipo === 'ingreso'
-                            ? 'bg-emerald-50 text-emerald-700'
-                            : 'bg-rose-50 text-rose-700'
-                        }`}
-                      >
-                        {movimiento.tipo}
-                      </span>
-                    </div>
-
-                    <div className="mt-3 flex items-center justify-between gap-3">
-                      <p className="text-xs font-bold text-slate-400">
-                        {movimiento.metodoPago || 'Sin método'}
-                      </p>
-
-                      <p
-                        className={`font-black ${
-                          movimiento.tipo === 'ingreso'
-                            ? 'text-emerald-700'
-                            : 'text-rose-700'
-                        }`}
-                      >
-                        {movimiento.tipo === 'ingreso' ? '+' : '-'}
-                        {formatMoney(movimiento.valor)}
-                      </p>
-                    </div>
-                  </article>
-                ))}
-
-                {movimientosRecientes.length === 0 && (
-                  <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
-                    Todavía no hay movimientos registrados.
-                  </div>
-                )}
-              </div>
-            </div>
-
-          </section>
         </section>
 
         <aside className="space-y-6">
           <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <h2 className="text-2xl font-black">Resumen financiero</h2>
+            <h2 className="text-2xl font-black">Resumen financiero total</h2>
 
             <div className="mt-5 space-y-3">
-              {resumenFinanciero.map((item) => (
-                <Line key={item.label} label={item.label} value={formatMoney(item.value)} />
-              ))}
+              <Line label="Ingresos totales" value={formatMoney(ingresosTotales)} />
+              <Line label="Gastos totales" value={formatMoney(gastosTotales)} />
+              <Line label="Caja neta total" value={formatMoney(cajaNetaTotal)} />
             </div>
           </section>
 
@@ -341,10 +805,9 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
             <h2 className="text-2xl font-black">Inventario</h2>
 
             <div className="mt-5 space-y-3">
-              {resumenInventario.map((item) => (
-                <Line key={item.label} label={item.label} value={String(item.value)} />
-              ))}
-
+              <Line label="Productos" value={String(productos.length)} />
+              <Line label="Stock total" value={String(stockTotal)} />
+              <Line label="Bajo stock" value={String(productosBajoStock)} />
               <Line label="Valor venta" value={formatMoney(valorInventarioVenta)} />
               <Line label="Valor costo" value={formatMoney(valorInventarioCosto)} />
               <Line
@@ -370,14 +833,15 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
 
             <div className="mt-5 rounded-2xl bg-slate-50 p-5 text-sm leading-6 text-slate-600">
               <p>
-                Hoy hay <strong>{constanciasHoy}</strong> constancias registradas sobre{' '}
-                <strong>{personasActivas}</strong> personas activas.
+                En el período consultado se registraron{' '}
+                <strong>{formatMoney(ingresosRango)}</strong> en ingresos y{' '}
+                <strong>{formatMoney(gastosRango)}</strong> en gastos, para una ganancia neta de{' '}
+                <strong>{formatMoney(cajaNetaRango)}</strong>.
               </p>
 
               <p className="mt-3">
-                La caja neta actual es <strong>{formatMoney(cajaNeta)}</strong> y el inventario
-                tiene un valor estimado de venta de{' '}
-                <strong>{formatMoney(valorInventarioVenta)}</strong>.
+                Se registraron <strong>{personasNuevas.length}</strong> personas nuevas y{' '}
+                <strong>{constanciasRango.length}</strong> constancias en el período.
               </p>
             </div>
           </section>
@@ -387,10 +851,34 @@ export function ReportesPage({ personas, constancias, movimientos, productos }: 
   )
 }
 
-function Metric({ title, value }: { title: string; value: string }) {
+function Metric({
+  title,
+  value,
+  icon,
+  tone = 'slate',
+}: {
+  title: string
+  value: string
+  icon?: React.ReactNode
+  tone?: 'slate' | 'emerald' | 'rose'
+}) {
+  const toneClasses: Record<string, string> = {
+    slate: 'bg-slate-950 text-white',
+    emerald: 'bg-emerald-600 text-white',
+    rose: 'bg-rose-600 text-white',
+  }
+
   return (
     <div className="rounded-[2rem] bg-white p-6 shadow-sm">
-      <p className="text-sm font-bold text-slate-500">{title}</p>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-sm font-bold text-slate-500">{title}</p>
+        {icon && (
+          <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${toneClasses[tone]}`}>
+            {icon}
+          </span>
+        )}
+      </div>
+
       <p className="mt-2 text-2xl font-black">{value}</p>
     </div>
   )
@@ -455,3 +943,4 @@ function formatMoney(value: number) {
     maximumFractionDigits: 0,
   }).format(value)
 }
+ 
