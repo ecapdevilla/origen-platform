@@ -6,12 +6,17 @@ import {
 } from '@/features/auth/authApi'
 import { LoginPage } from '@/features/auth/LoginPage'
 import { EntrenadorPortalPage } from '@/features/entrenador/EntrenadorPortalPage'
+import { useTheme } from '@/hooks/useTheme'
 import { PersonaPortalPage } from '@/features/portal-persona/PersonaPortalPage'
 import type { SesionUsuario } from '@/shared/types/auth'
 
 export default function App() {
   const [usuario, setUsuario] = useState<SesionUsuario | null>(null)
   const [loading, setLoading] = useState(true)
+
+  // Aplica el color principal del tema (persistido en localStorage)
+  useTheme()
+
 
   useEffect(() => {
     let mounted = true

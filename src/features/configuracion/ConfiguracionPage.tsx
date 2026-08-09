@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { useTheme } from '@/hooks/useTheme'
 import type { ConfiguracionGimnasio } from '@/shared/types/configuracion'
 
 interface Props {
@@ -11,6 +12,8 @@ const terminosPersonas = ['Personas', 'Miembros', 'Afiliados', 'Clientes', 'Usua
 
 export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Props) {
   const [form, setForm] = useState<ConfiguracionGimnasio>(configuracion)
+  const { paleta, cambiarPaleta, paletas } = useTheme()
+
 
   function guardarConfiguracion(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -140,7 +143,44 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
           </section>
 
           <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
+            <h2 className="text-2xl font-black">Color del tema</h2>
+            <p className="mt-1 text-sm text-surface-500">
+              Elige el color principal de la app. Se aplica al instante en headers, menús y
+              botones.
+            </p>
+
+            <div className="mt-5 grid grid-cols-3 gap-3">
+              {paletas.map((item) => {
+                const activa = item.id === paleta.id
+
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => cambiarPaleta(item.id)}
+                    className={`rounded-2xl border-2 p-3 text-left transition ${
+                      activa
+                        ? 'border-surface-950'
+                        : 'border-surface-200 hover:border-surface-400'
+                    }`}
+                  >
+                    <span
+                      className="block h-10 w-full rounded-xl"
+                      style={{ backgroundColor: item.primary }}
+                    />
+
+                    <span className="mt-2 block text-xs font-black text-surface-700">
+                      {item.nombre}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </section>
+
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Lenguaje ORIGEN</h2>
+
 
 
             <div className="mt-5 space-y-3">

@@ -26,14 +26,28 @@
    • warning-* → Avisos, pendientes
    • info-*    → Información, enlaces
    • brand-*   → Acentos de marca (logos, highlights)
+
+   🎛️ COLOR PRINCIPAL DINÁMICO:
+   ------------------------------------------------------------
+   El color principal de la app (headers, sidebar, botones) se
+   controla con las variables CSS de abajo. Puedes cambiarlo en
+   tiempo real desde la página de Configuración (selector de color)
+   o editando los valores de --brand-primary aquí.
    ============================================================ */
+
+/* Variables dinámicas del color principal.
+   Se sobreescriben en tiempo real desde la app (Configuración). */
+:root {
+  --brand-primary: #0c0a09;        /* surface-950 — color principal */
+  --brand-primary-dark: #1c1917;   /* surface-900 — hover / variante */
+  --brand-primary-darker: #292524; /* surface-800 — variante más clara */
+}
 
 @theme {
   /* ==========================================================
      1. MARCA / ENERGÍA (NARANJA CÁLIDO)
      ----------------------------------------------------------
-     Color principal de la marca ORIGEN. Úsalo para acentos,
-     highlights y elementos que quieras destacar.
+     Color de acento de la marca ORIGEN. Úsalo para highlights.
      brand-500 es el color "oficial" de la marca.
      ========================================================== */
   --color-brand-50:  #fff7ed;
@@ -55,6 +69,9 @@
      • 50–200  → Fondos claros
      • 300–500 → Bordes y texto secundario
      • 600–950 → Texto principal y fondos oscuros
+     ----------------------------------------------------------
+     Los tonos 800/900/950 son DINÁMICOS: apuntan a las variables
+     --brand-primary* y se pueden cambiar en vivo desde la app.
      ========================================================== */
   --color-surface-50:  #fafaf9;
   --color-surface-100: #f5f5f4;
@@ -64,9 +81,10 @@
   --color-surface-500: #78716c;
   --color-surface-600: #57534e;
   --color-surface-700: #44403c;
-  --color-surface-800: #292524;
-  --color-surface-900: #1c1917;
-  --color-surface-950: #0c0a09;
+  --color-surface-800: var(--brand-primary-darker);
+  --color-surface-900: var(--brand-primary-dark);
+  --color-surface-950: var(--brand-primary);
+
 
   /* ==========================================================
      3. ÉXITO / BIENESTAR (VERDE ESMERALDA)
