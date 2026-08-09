@@ -377,6 +377,24 @@ export function AdminLayout({ usuario, onLogout }: Props) {
     }
   }
 
+  async function marcarPago(persona: Persona) {
+    const hoy = new Date().toISOString()
+
+    const movimiento: MovimientoCaja = {
+      id: crypto.randomUUID(),
+      tipo: 'ingreso',
+      concepto: `Pago de ${persona.nombres} ${persona.apellidos}`,
+      valor: 0,
+      fecha: hoy,
+      personaId: persona.id,
+      metodoPago: 'Efectivo',
+      observacion: 'Pago marcado desde el módulo de personas',
+    }
+
+    await createMovimiento(movimiento)
+  }
+
+
   async function createProducto(producto: Producto) {
     try {
       const nuevoProducto = await crearProductoSupabase(producto)
@@ -541,7 +559,9 @@ export function AdminLayout({ usuario, onLogout }: Props) {
           onUpdatePersona={updatePersona}
           onChangeEstado={changeEstado}
           onCreateMedida={createMedida}
+          onMarcarPago={marcarPago}
         />
+
       )
     }
 

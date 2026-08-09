@@ -20,7 +20,9 @@ interface Props {
   onUpdatePersona: (persona: Persona) => void
   onChangeEstado: (id: string, estado: EstadoPersona) => void
   onCreateMedida: (medida: MedidaCorporal) => void
+  onMarcarPago: (persona: Persona) => void
 }
+
 
 type Vista = 'lista' | 'nueva' | 'detalle'
 
@@ -35,7 +37,9 @@ export function PersonasPage({
   onUpdatePersona,
   onChangeEstado,
   onCreateMedida,
+  onMarcarPago,
 }: Props) {
+
   const [vista, setVista] = useState<Vista>('lista')
   const [personaId, setPersonaId] = useState<string | null>(null)
   const [editandoId, setEditandoId] = useState<string | null>(null)
@@ -99,9 +103,12 @@ export function PersonasPage({
   return (
     <PersonaList
       personas={personas}
+      movimientos={movimientos}
       onNueva={abrirNueva}
       onVerDetalle={abrirDetalle}
       onEditar={abrirEdicion}
+      onMarcarPago={onMarcarPago}
     />
   )
+
 }
