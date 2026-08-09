@@ -9,8 +9,9 @@ interface Props {
   onNueva: () => void
   onVerDetalle: (persona: Persona) => void
   onEditar: (persona: Persona) => void
-  onMarcarPago: (persona: Persona) => void
+  onMarcarPago: (persona: Persona, valor: number) => void
 }
+
 
 const estadoOptions: EstadoPersona[] = ['activa', 'en_pausa', 'registro', 'historica']
 
@@ -28,6 +29,8 @@ export function PersonaList({
   const [estadoFiltro, setEstadoFiltro] = useState<'todos' | EstadoPersona>('todos')
   const [filtroPago, setFiltroPago] = useState<FiltroPago>('todos')
   const [confirmarPago, setConfirmarPago] = useState<Persona | null>(null)
+  const [valorPago, setValorPago] = useState('')
+
 
   // Mapa de personas que han pagado (tienen un ingreso asociado)
   const personasPagadas = useMemo(() => {
@@ -76,12 +79,26 @@ export function PersonaList({
 
   const sinPagar = personas.filter((persona) => !personasPagadas.has(persona.id)).length
 
-  function confirmarPagoPersona() {
-    if (confirmarPago) {
-      onMarcarPago(confirmarPago)
-      setConfirmarPago(null)
-    }
+  function abrirConfirmacion(persona: Persona) {
+    setValorPago('')
+    setConfirmarPago(persona)
   }
+
+  function confirmarPagoPersona() {
+    if (!confirmarPago) return
+
+    const valor = Number(valorPago)
+
+    if (!Number.isFinite(valor) || valor <= 0) {
+      alert('Ingresa un valor de pago mayor a cero.')
+      return
+    }
+
+    onMarcarPago(confirmarPago, valor)
+    setConfirmarPago(null)
+    setValorPago('')
+  }
+
 
   return (
     <div className="space-y-6">
@@ -232,12 +249,13 @@ export function PersonaList({
                           {!haPagado && (
                             <button
                               type="button"
-                              onClick={() => setConfirmarPago(persona)}
+                              onClick={() => abrirConfirmacion(persona)}
                               className="rounded-xl bg-emerald-600 px-3 py-2 text-xs font-black text-white hover:bg-emerald-700"
                             >
                               Marcar pago
                             </button>
                           )}
+
                         </div>
                       </td>
                     </tr>
@@ -317,12 +335,13 @@ export function PersonaList({
                     {!haPagado && (
                       <button
                         type="button"
-                        onClick={() => setConfirmarPago(persona)}
+                        onClick={() => abrirConfirmacion(persona)}
                         className="flex-1 rounded-xl bg-emerald-600 px-3 py-2.5 text-xs font-black text-white hover:bg-emerald-700"
                       >
                         Marcar pago
                       </button>
                     )}
+
                   </div>
                 </article>
               )
@@ -362,7 +381,21 @@ export function PersonaList({
               ya realizó su pago? Se registrará un ingreso en caja asociado a esta persona.
             </p>
 
+            <label className="mt-5 block">
+              <span className="text-sm font-black text-slate-700">Valor del pago</span>
+              <input
+                type="number"
+                min="1"
+                step="0.01"
+                value={valorPago}
+                onChange={(event) => setValorPago(event.target.value)}
+                placeholder="Ej: 120000"
+                className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+              />
+            </label>
+
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+
               <button
                 type="button"
                 onClick={() => setConfirmarPago(null)}

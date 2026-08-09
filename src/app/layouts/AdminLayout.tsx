@@ -377,14 +377,14 @@ export function AdminLayout({ usuario, onLogout }: Props) {
     }
   }
 
-  async function marcarPago(persona: Persona) {
+  async function marcarPago(persona: Persona, valor: number) {
     const hoy = new Date().toISOString()
 
     const movimiento: MovimientoCaja = {
       id: crypto.randomUUID(),
       tipo: 'ingreso',
       concepto: `Pago de ${persona.nombres} ${persona.apellidos}`,
-      valor: 0,
+      valor,
       fecha: hoy,
       personaId: persona.id,
       metodoPago: 'Efectivo',
@@ -393,6 +393,7 @@ export function AdminLayout({ usuario, onLogout }: Props) {
 
     await createMovimiento(movimiento)
   }
+
 
 
   async function createProducto(producto: Producto) {

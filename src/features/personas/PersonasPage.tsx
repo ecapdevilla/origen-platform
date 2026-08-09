@@ -20,8 +20,9 @@ interface Props {
   onUpdatePersona: (persona: Persona) => void
   onChangeEstado: (id: string, estado: EstadoPersona) => void
   onCreateMedida: (medida: MedidaCorporal) => void
-  onMarcarPago: (persona: Persona) => void
+  onMarcarPago: (persona: Persona, valor: number) => void
 }
+
 
 
 type Vista = 'lista' | 'nueva' | 'detalle'
