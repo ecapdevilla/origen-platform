@@ -102,16 +102,16 @@ export function PersonaList({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
+      <section className="rounded-[2rem] border border-surface-800 bg-surface-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(28,25,23,0.35)] sm:p-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-300">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-surface-300">
               Personas
             </p>
 
             <h1 className="mt-3 text-3xl font-black sm:text-4xl">Gestión de personas</h1>
 
-            <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300 sm:text-base">
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-surface-300 sm:text-base">
               Administra los registros, objetivos, estados y pagos de cada persona del gimnasio.
             </p>
           </div>
@@ -119,13 +119,14 @@ export function PersonaList({
           <button
             type="button"
             onClick={onNueva}
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-sm font-black text-slate-950 transition hover:bg-slate-100"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 px-6 py-3.5 text-sm font-black text-white transition hover:bg-brand-700"
           >
             <Plus size={18} />
             Nueva persona
           </button>
         </div>
       </section>
+
 
       <section className="grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-4">
         <Metric title="Total" value={String(personas.length)} />
@@ -135,30 +136,30 @@ export function PersonaList({
         <Metric title="Sin pagar" value={String(sinPagar)} tone="rose" />
       </section>
 
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 className="text-2xl font-black">Listado de personas</h2>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-surface-500">
               Busca, selecciona o edita una persona. Marca los pagos recibidos.
             </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <div className="relative">
-              <Search className="absolute left-4 top-3.5 text-slate-400" size={18} />
+              <Search className="absolute left-4 top-3.5 text-surface-400" size={18} />
               <input
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 placeholder="Buscar persona"
-                className="w-full rounded-2xl border border-slate-200 py-3 pl-11 pr-4 outline-none transition focus:border-slate-950 sm:w-72"
+                className="w-full rounded-2xl border border-surface-200 py-3 pl-11 pr-4 outline-none transition focus:border-brand-600 sm:w-72"
               />
             </div>
 
             <select
               value={filtroPago}
               onChange={(event) => setFiltroPago(event.target.value as FiltroPago)}
-              className="rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+              className="rounded-2xl border border-surface-200 px-4 py-3 outline-none"
             >
               <option value="todos">Todos los pagos</option>
               <option value="pagado">Pagados</option>
@@ -170,7 +171,7 @@ export function PersonaList({
               onChange={(event) =>
                 setEstadoFiltro(event.target.value as 'todos' | EstadoPersona)
               }
-              className="rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+              className="rounded-2xl border border-surface-200 px-4 py-3 outline-none"
             >
               <option value="todos">Todos los estados</option>
               {estadoOptions.map((estado) => (
@@ -184,9 +185,9 @@ export function PersonaList({
 
         <div className="mt-6">
           {/* Tabla en desktop */}
-          <div className="hidden overflow-hidden rounded-[1.5rem] border border-slate-200 md:block">
+          <div className="hidden overflow-hidden rounded-[1.5rem] border border-surface-200 md:block">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50 text-slate-500">
+              <thead className="bg-surface-50 text-surface-500">
                 <tr>
                   <th className="px-4 py-3">Persona</th>
                   <th className="px-4 py-3">Documento</th>
@@ -202,12 +203,12 @@ export function PersonaList({
                   const haPagado = personasPagadas.has(persona.id)
 
                   return (
-                    <tr key={persona.id} className="border-t border-slate-100">
+                    <tr key={persona.id} className="border-t border-surface-100">
                       <td className="px-4 py-4">
                         <p className="font-black">
                           {persona.nombres} {persona.apellidos}
                         </p>
-                        <p className="text-xs text-slate-500">{persona.correo}</p>
+                        <p className="text-xs text-surface-500">{persona.correo}</p>
                       </td>
 
                       <td className="px-4 py-4">{persona.documento}</td>
@@ -233,7 +234,7 @@ export function PersonaList({
                           <button
                             type="button"
                             onClick={() => onVerDetalle(persona)}
-                            className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-black hover:bg-slate-50"
+                            className="rounded-xl border border-surface-200 px-3 py-2 text-xs font-black hover:bg-surface-50"
                           >
                             Ver
                           </button>
@@ -241,7 +242,7 @@ export function PersonaList({
                           <button
                             type="button"
                             onClick={() => onEditar(persona)}
-                            className="rounded-xl bg-slate-950 px-3 py-2 text-xs font-black text-white hover:bg-slate-800"
+                            className="rounded-xl bg-brand-600 px-3 py-2 text-xs font-black text-white hover:bg-brand-700"
                           >
                             Editar
                           </button>
@@ -250,7 +251,7 @@ export function PersonaList({
                             <button
                               type="button"
                               onClick={() => abrirConfirmacion(persona)}
-                              className="rounded-xl bg-emerald-600 px-3 py-2 text-xs font-black text-white hover:bg-emerald-700"
+                              className="rounded-xl bg-success-600 px-3 py-2 text-xs font-black text-white hover:bg-success-700"
                             >
                               Marcar pago
                             </button>
@@ -264,7 +265,7 @@ export function PersonaList({
 
                 {personasFiltradas.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="px-4 py-10 text-center text-slate-500">
+                    <td colSpan={6} className="px-4 py-10 text-center text-surface-500">
                       No se encontraron personas.
                     </td>
                   </tr>
@@ -281,14 +282,14 @@ export function PersonaList({
               return (
                 <article
                   key={persona.id}
-                  className="rounded-[1.5rem] border border-slate-200 bg-white p-4"
+                  className="rounded-[1.5rem] border border-surface-200 bg-white p-4"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="font-black text-slate-900">
+                      <p className="font-black text-surface-900">
                         {persona.nombres} {persona.apellidos}
                       </p>
-                      <p className="mt-0.5 truncate text-xs text-slate-500">
+                      <p className="mt-0.5 truncate text-xs text-surface-500">
                         {persona.correo || 'Sin correo'}
                       </p>
                     </div>
@@ -304,10 +305,10 @@ export function PersonaList({
 
                   <div className="mt-3 flex items-center justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="text-xs font-bold uppercase tracking-wide text-slate-400">
+                      <p className="text-xs font-bold uppercase tracking-wide text-surface-400">
                         Documento
                       </p>
-                      <p className="truncate text-sm font-black text-slate-700">
+                      <p className="truncate text-sm font-black text-surface-700">
                         {persona.documento}
                       </p>
                     </div>
@@ -319,7 +320,7 @@ export function PersonaList({
                     <button
                       type="button"
                       onClick={() => onVerDetalle(persona)}
-                      className="flex-1 rounded-xl border border-slate-200 px-3 py-2.5 text-xs font-black text-slate-700 hover:bg-slate-50"
+                      className="flex-1 rounded-xl border border-surface-200 px-3 py-2.5 text-xs font-black text-surface-700 hover:bg-surface-50"
                     >
                       Ver perfil
                     </button>
@@ -327,7 +328,7 @@ export function PersonaList({
                     <button
                       type="button"
                       onClick={() => onEditar(persona)}
-                      className="flex-1 rounded-xl bg-slate-950 px-3 py-2.5 text-xs font-black text-white hover:bg-slate-800"
+                      className="flex-1 rounded-xl bg-brand-600 px-3 py-2.5 text-xs font-black text-white hover:bg-brand-700"
                     >
                       Editar
                     </button>
@@ -336,7 +337,7 @@ export function PersonaList({
                       <button
                         type="button"
                         onClick={() => abrirConfirmacion(persona)}
-                        className="flex-1 rounded-xl bg-emerald-600 px-3 py-2.5 text-xs font-black text-white hover:bg-emerald-700"
+                        className="flex-1 rounded-xl bg-success-600 px-3 py-2.5 text-xs font-black text-white hover:bg-success-700"
                       >
                         Marcar pago
                       </button>
@@ -348,13 +349,14 @@ export function PersonaList({
             })}
 
             {personasFiltradas.length === 0 && (
-              <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
+              <div className="rounded-2xl border border-dashed border-surface-300 p-8 text-center text-surface-500">
                 No se encontraron personas.
               </div>
             )}
           </div>
         </div>
       </section>
+
 
       <section className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
         <Metric title="Históricas" value={String(personasHistoricas)} />
@@ -365,15 +367,15 @@ export function PersonaList({
 
       {/* Diálogo de confirmación de pago */}
       {confirmarPago && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-[2rem] border border-slate-200 bg-white p-6 shadow-2xl sm:p-8">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-950/60 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-[2rem] border border-surface-200 bg-white p-6 shadow-2xl sm:p-8">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-success-50 text-success-600">
               <CheckCircle2 size={28} />
             </div>
 
             <h2 className="mt-5 text-2xl font-black">Confirmar pago</h2>
 
-            <p className="mt-3 text-sm leading-6 text-slate-600">
+            <p className="mt-3 text-sm leading-6 text-surface-600">
               ¿Estás seguro de que{' '}
               <strong>
                 {confirmarPago.nombres} {confirmarPago.apellidos}
@@ -382,7 +384,7 @@ export function PersonaList({
             </p>
 
             <label className="mt-5 block">
-              <span className="text-sm font-black text-slate-700">Valor del pago</span>
+              <span className="text-sm font-black text-surface-700">Valor del pago</span>
               <input
                 type="number"
                 min="1"
@@ -390,7 +392,7 @@ export function PersonaList({
                 value={valorPago}
                 onChange={(event) => setValorPago(event.target.value)}
                 placeholder="Ej: 120000"
-                className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+                className="mt-2 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none transition focus:border-brand-600"
               />
             </label>
 
@@ -399,7 +401,7 @@ export function PersonaList({
               <button
                 type="button"
                 onClick={() => setConfirmarPago(null)}
-                className="flex-1 rounded-2xl border border-slate-200 px-5 py-3 text-sm font-black text-slate-700 transition hover:bg-slate-50"
+                className="flex-1 rounded-2xl border border-surface-200 px-5 py-3 text-sm font-black text-surface-700 transition hover:bg-surface-50"
               >
                 Cancelar
               </button>
@@ -407,7 +409,7 @@ export function PersonaList({
               <button
                 type="button"
                 onClick={confirmarPagoPersona}
-                className="flex-1 rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-black text-white transition hover:bg-emerald-700"
+                className="flex-1 rounded-2xl bg-success-600 px-5 py-3 text-sm font-black text-white transition hover:bg-success-700"
               >
                 Sí, confirmar pago
               </button>
@@ -415,6 +417,7 @@ export function PersonaList({
           </div>
         </div>
       )}
+
     </div>
   )
 }
@@ -422,7 +425,7 @@ export function PersonaList({
 function PagoBadge({ haPagado }: { haPagado: boolean }) {
   if (haPagado) {
     return (
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700">
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-success-50 px-3 py-1 text-xs font-black text-success-700">
         <CheckCircle2 size={14} />
         Pagado
       </span>
@@ -430,7 +433,7 @@ function PagoBadge({ haPagado }: { haPagado: boolean }) {
   }
 
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-3 py-1 text-xs font-black text-rose-700">
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-danger-50 px-3 py-1 text-xs font-black text-danger-700">
       <XCircle size={14} />
       Sin pagar
     </span>
@@ -447,11 +450,11 @@ function Metric({
   tone?: 'slate' | 'rose'
 }) {
   return (
-    <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
-      <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">{title}</p>
+    <div className="rounded-[1.5rem] border border-surface-200 bg-white p-5 shadow-sm">
+      <p className="text-sm font-bold uppercase tracking-[0.2em] text-surface-500">{title}</p>
       <p
         className={`mt-2 text-2xl font-black ${
-          tone === 'rose' ? 'text-rose-600' : 'text-slate-950'
+          tone === 'rose' ? 'text-danger-600' : 'text-surface-900'
         }`}
       >
         {value}
@@ -459,6 +462,7 @@ function Metric({
     </div>
   )
 }
+
 
 function estadoLabel(estado: EstadoPersona) {
   const labels: Record<EstadoPersona, string> = {
@@ -473,11 +477,13 @@ function estadoLabel(estado: EstadoPersona) {
 
 function estadoBadgeClass(estado: EstadoPersona) {
   const classes: Record<EstadoPersona, string> = {
-    activa: 'bg-emerald-50 text-emerald-700',
-    en_pausa: 'bg-amber-50 text-amber-700',
-    registro: 'bg-blue-50 text-blue-700',
-    historica: 'bg-slate-100 text-slate-700',
+    activa: 'bg-success-50 text-success-700',
+    en_pausa: 'bg-warning-50 text-warning-700',
+    registro: 'bg-info-50 text-info-700',
+    historica: 'bg-surface-100 text-surface-700',
   }
 
   return classes[estado]
 }
+
+

@@ -96,7 +96,7 @@ export function PersonaDetail({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
+      <section className="rounded-[2rem] border border-surface-800 bg-surface-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(28,25,23,0.35)] sm:p-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0">
             <button
@@ -112,7 +112,7 @@ export function PersonaDetail({
               {persona.nombres} {persona.apellidos}
             </h1>
 
-            <p className="mt-2 text-sm text-slate-300">
+            <p className="mt-2 text-sm text-surface-300">
               {persona.documento} · {persona.correo || 'Sin correo'}
             </p>
 
@@ -125,7 +125,7 @@ export function PersonaDetail({
                 {estadoLabel(persona.estado)}
               </span>
 
-              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-slate-200">
+              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-surface-200">
                 Registro: {persona.fechaRegistro}
               </span>
             </div>
@@ -135,7 +135,7 @@ export function PersonaDetail({
             <button
               type="button"
               onClick={() => onEditar(persona)}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-black text-slate-950 transition hover:bg-slate-100"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-3 text-sm font-black text-white transition hover:bg-brand-700"
             >
               <Pencil size={16} />
               Editar
@@ -149,7 +149,7 @@ export function PersonaDetail({
               className="rounded-2xl bg-white/10 px-4 py-3 text-sm font-black text-white outline-none"
             >
               {estadoOptions.map((estado) => (
-                <option key={estado} value={estado} className="text-slate-900">
+                <option key={estado} value={estado} className="text-surface-900">
                   {estadoLabel(estado)}
                 </option>
               ))}
@@ -170,8 +170,8 @@ export function PersonaDetail({
               onClick={() => setSeccion(id)}
               className={`inline-flex shrink-0 items-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-black transition ${
                 isActive
-                  ? 'bg-slate-950 text-white'
-                  : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
+                  ? 'bg-brand-600 text-white'
+                  : 'border border-surface-200 bg-white text-surface-600 hover:bg-surface-50'
               }`}
             >
               <Icon size={16} />
@@ -180,6 +180,7 @@ export function PersonaDetail({
           )
         })}
       </nav>
+
 
       {seccion === 'resumen' && (
         <ResumenSeccion
@@ -238,7 +239,7 @@ function ResumenSeccion({
         <Metric title="Registros bienestar" value={String(bienestar.length)} />
       </section>
 
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
         <h2 className="text-2xl font-black">Información</h2>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -249,7 +250,7 @@ function ResumenSeccion({
         </div>
       </section>
 
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
         <h2 className="text-2xl font-black">Última medida</h2>
 
         {ultimaMedida ? (
@@ -259,11 +260,11 @@ function ResumenSeccion({
             <InfoItem label="Fecha" value={ultimaMedida.fecha} />
           </div>
         ) : (
-          <p className="mt-3 text-sm text-slate-500">Aún no hay medidas registradas.</p>
+          <p className="mt-3 text-sm text-surface-500">Aún no hay medidas registradas.</p>
         )}
       </section>
 
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
         <h2 className="text-2xl font-black">Último bienestar</h2>
 
         {ultimoBienestar ? (
@@ -275,9 +276,10 @@ function ResumenSeccion({
             <InfoItem label="Fecha" value={ultimoBienestar.fecha} />
           </div>
         ) : (
-          <p className="mt-3 text-sm text-slate-500">Aún no hay registros de bienestar.</p>
+          <p className="mt-3 text-sm text-surface-500">Aún no hay registros de bienestar.</p>
         )}
       </section>
+
     </div>
   )
 }
@@ -328,7 +330,7 @@ function MedidasSeccion({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
         <h2 className="text-2xl font-black">Registrar medida</h2>
 
         <form onSubmit={guardarMedida} className="mt-4 grid gap-4 sm:grid-cols-3">
@@ -341,28 +343,28 @@ function MedidasSeccion({
 
           <button
             type="submit"
-            className="rounded-2xl bg-slate-950 px-5 py-3 font-black text-white transition hover:bg-slate-800 sm:col-span-3"
+            className="rounded-2xl bg-brand-600 px-5 py-3 font-black text-white transition hover:bg-brand-700 sm:col-span-3"
           >
             Guardar medida
           </button>
         </form>
       </section>
 
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
         <h2 className="text-2xl font-black">Historial de medidas</h2>
 
         {medidas.length === 0 ? (
-          <p className="mt-3 text-sm text-slate-500">Aún no hay medidas registradas.</p>
+          <p className="mt-3 text-sm text-surface-500">Aún no hay medidas registradas.</p>
         ) : (
           <div className="mt-4 space-y-3">
             {medidas.map((medida) => (
               <div
                 key={medida.id}
-                className="flex items-center justify-between rounded-2xl border border-slate-100 p-4"
+                className="flex items-center justify-between rounded-2xl border border-surface-100 p-4"
               >
                 <div>
                   <p className="font-black">{medida.fecha}</p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-surface-500">
                     Peso {medida.pesoKg} kg · Estatura {medida.estaturaCm} cm
                     {medida.cinturaCm ? ` · Cintura ${medida.cinturaCm} cm` : ''}
                   </p>
@@ -372,6 +374,7 @@ function MedidasSeccion({
           </div>
         )}
       </section>
+
     </div>
   )
 }
@@ -393,26 +396,26 @@ function PagosSeccion({ movimientos }: { movimientos: MovimientoCaja[] }) {
         <Metric title="Saldo" value={`$${(totalIngresos - totalEgresos).toLocaleString()}`} />
       </section>
 
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
         <h2 className="text-2xl font-black">Movimientos</h2>
 
         {movimientos.length === 0 ? (
-          <p className="mt-3 text-sm text-slate-500">Aún no hay movimientos registrados.</p>
+          <p className="mt-3 text-sm text-surface-500">Aún no hay movimientos registrados.</p>
         ) : (
           <div className="mt-4 space-y-3">
             {movimientos.map((movimiento) => (
               <div
                 key={movimiento.id}
-                className="flex items-center justify-between rounded-2xl border border-slate-100 p-4"
+                className="flex items-center justify-between rounded-2xl border border-surface-100 p-4"
               >
                 <div>
                   <p className="font-black">{movimiento.concepto}</p>
-                  <p className="text-xs text-slate-500">{movimiento.fecha}</p>
+                  <p className="text-xs text-surface-500">{movimiento.fecha}</p>
                 </div>
 
                 <span
                   className={`font-black ${
-                    movimiento.tipo === 'ingreso' ? 'text-emerald-600' : 'text-rose-600'
+                    movimiento.tipo === 'ingreso' ? 'text-success-600' : 'text-danger-600'
                   }`}
                 >
                   {movimiento.tipo === 'ingreso' ? '+' : '-'}$
@@ -423,27 +426,28 @@ function PagosSeccion({ movimientos }: { movimientos: MovimientoCaja[] }) {
           </div>
         )}
       </section>
+
     </div>
   )
 }
 
 function BienestarSeccion({ registros }: { registros: RegistroBienestar[] }) {
   return (
-    <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+    <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
       <h2 className="text-2xl font-black">Registros de bienestar</h2>
 
       {registros.length === 0 ? (
-        <p className="mt-3 text-sm text-slate-500">Aún no hay registros de bienestar.</p>
+        <p className="mt-3 text-sm text-surface-500">Aún no hay registros de bienestar.</p>
       ) : (
         <div className="mt-4 space-y-3">
           {registros.map((registro) => (
             <div
               key={registro.id}
-              className="flex items-center justify-between rounded-2xl border border-slate-100 p-4"
+              className="flex items-center justify-between rounded-2xl border border-surface-100 p-4"
             >
               <div>
                 <p className="font-black">{registro.fecha}</p>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-surface-500">
                   Energía {registro.energia}/10 · Sueño {registro.horasSueno}h · Agua{' '}
                   {registro.vasosAgua}
                 </p>
@@ -459,9 +463,9 @@ function BienestarSeccion({ registros }: { registros: RegistroBienestar[] }) {
 function PlanSeccion({ plan }: { plan: PlanEntrenamiento | null }) {
   if (!plan) {
     return (
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
         <h2 className="text-2xl font-black">Plan de entrenamiento</h2>
-        <p className="mt-3 text-sm text-slate-500">
+        <p className="mt-3 text-sm text-surface-500">
           Esta persona aún no tiene un plan de entrenamiento asignado.
         </p>
       </section>
@@ -469,7 +473,7 @@ function PlanSeccion({ plan }: { plan: PlanEntrenamiento | null }) {
   }
 
   return (
-    <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+    <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
       <h2 className="text-2xl font-black">Plan de entrenamiento</h2>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -479,28 +483,28 @@ function PlanSeccion({ plan }: { plan: PlanEntrenamiento | null }) {
         <InfoItem label="Objetivo" value={plan.objetivo} />
       </div>
 
-      <p className="mt-4 text-sm leading-6 text-slate-600">{plan.descripcion}</p>
+      <p className="mt-4 text-sm leading-6 text-surface-600">{plan.descripcion}</p>
     </section>
   )
 }
 
 function ConstanciasSeccion({ constancias }: { constancias: Constancia[] }) {
   return (
-    <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+    <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
       <h2 className="text-2xl font-black">Constancias</h2>
 
       {constancias.length === 0 ? (
-        <p className="mt-3 text-sm text-slate-500">Aún no hay constancias registradas.</p>
+        <p className="mt-3 text-sm text-surface-500">Aún no hay constancias registradas.</p>
       ) : (
         <div className="mt-4 space-y-3">
           {constancias.map((constancia) => (
             <div
               key={constancia.id}
-              className="flex items-center justify-between rounded-2xl border border-slate-100 p-4"
+              className="flex items-center justify-between rounded-2xl border border-surface-100 p-4"
             >
               <div>
                 <p className="font-black">{constancia.fecha}</p>
-                <p className="text-xs text-slate-500">Marcada por {constancia.registradoPor}</p>
+                <p className="text-xs text-surface-500">Marcada por {constancia.registradoPor}</p>
               </div>
             </div>
           ))}
@@ -512,9 +516,9 @@ function ConstanciasSeccion({ constancias }: { constancias: Constancia[] }) {
 
 function Metric({ title, value }: { title: string; value: string }) {
   return (
-    <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
-      <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">{title}</p>
-      <p className="mt-2 text-2xl font-black text-slate-950">{value}</p>
+    <div className="rounded-[1.5rem] border border-surface-200 bg-white p-5 shadow-sm">
+      <p className="text-sm font-bold uppercase tracking-[0.2em] text-surface-500">{title}</p>
+      <p className="mt-2 text-2xl font-black text-surface-900">{value}</p>
     </div>
   )
 }
@@ -522,8 +526,8 @@ function Metric({ title, value }: { title: string; value: string }) {
 function InfoItem({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-xs font-bold uppercase tracking-wide text-slate-400">{label}</p>
-      <p className="mt-1 font-black text-slate-900">{value}</p>
+      <p className="text-xs font-bold uppercase tracking-wide text-surface-400">{label}</p>
+      <p className="mt-1 font-black text-surface-900">{value}</p>
     </div>
   )
 }
@@ -541,17 +545,18 @@ function Input({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-bold text-slate-700">{label}</span>
+      <span className="text-sm font-bold text-surface-700">{label}</span>
 
       <input
         type={type}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+        className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none transition focus:border-brand-600"
       />
     </label>
   )
 }
+
 
 function estadoLabel(estado: EstadoPersona) {
   const labels: Record<EstadoPersona, string> = {
@@ -566,11 +571,13 @@ function estadoLabel(estado: EstadoPersona) {
 
 function estadoBadgeClass(estado: EstadoPersona) {
   const classes: Record<EstadoPersona, string> = {
-    activa: 'bg-emerald-50 text-emerald-700',
-    en_pausa: 'bg-amber-50 text-amber-700',
-    registro: 'bg-blue-50 text-blue-700',
-    historica: 'bg-slate-100 text-slate-700',
+    activa: 'bg-success-50 text-success-700',
+    en_pausa: 'bg-warning-50 text-warning-700',
+    registro: 'bg-info-50 text-info-700',
+    historica: 'bg-surface-100 text-surface-700',
   }
 
   return classes[estado]
 }
+
+

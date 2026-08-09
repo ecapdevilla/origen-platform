@@ -167,15 +167,15 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
   }
     if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-100 p-6">
+      <div className="flex min-h-screen items-center justify-center bg-surface-100 p-6">
         <div className="rounded-[2rem] bg-white p-8 text-center shadow-sm">
-          <p className="text-sm font-bold text-slate-500">ORIGEN</p>
+          <p className="text-sm font-bold text-surface-500">ORIGEN</p>
 
-          <h1 className="mt-2 text-2xl font-black text-slate-950">
+          <h1 className="mt-2 text-2xl font-black text-surface-950">
             Cargando portal persona
           </h1>
 
-          <p className="mt-3 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-surface-500">
             Consultando tu constancia, plan, bienestar, medidas y pagos desde Supabase.
           </p>
         </div>
@@ -185,32 +185,32 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
 
   if (!usuario.personaId || !persona) {
     return (
-      <div className="min-h-screen bg-slate-100 p-6">
+      <div className="min-h-screen bg-surface-100 p-6">
         <div className="mx-auto max-w-5xl">
-          <header className="flex flex-col gap-4 rounded-[2rem] bg-slate-950 p-8 text-white md:flex-row md:items-center md:justify-between">
+          <header className="flex flex-col gap-4 rounded-[2rem] bg-surface-950 p-8 text-white md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-sm text-slate-300">ORIGEN</p>
+              <p className="text-sm text-surface-300">ORIGEN</p>
 
               <h1 className="mt-2 text-3xl font-black">Portal Persona</h1>
 
-              <p className="mt-2 text-sm text-slate-300">{usuario.nombre}</p>
+              <p className="mt-2 text-sm text-surface-300">{usuario.nombre}</p>
             </div>
 
             <button
               type="button"
               onClick={onLogout}
-              className="rounded-2xl bg-white px-5 py-3 text-sm font-black text-slate-950 hover:bg-slate-100"
+              className="rounded-2xl bg-white px-5 py-3 text-sm font-black text-surface-950 hover:bg-surface-100"
             >
               Cerrar sesión
             </button>
           </header>
 
           <section className="mt-6 rounded-[2rem] bg-white p-8 text-center shadow-sm">
-            <h2 className="text-2xl font-black text-slate-950">
+            <h2 className="text-2xl font-black text-surface-950">
               Tu usuario no está enlazado a una persona
             </h2>
 
-            <p className="mt-3 text-slate-500">
+            <p className="mt-3 text-surface-500">
               Un administrador debe ir a Usuarios y Roles, editar tu usuario y
               seleccionar la persona enlazada.
             </p>
@@ -221,29 +221,29 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100">
-      <header className="bg-slate-950 p-6 text-white">
+    <div className="min-h-screen bg-surface-100">
+      <header className="bg-surface-950 p-6 text-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-sm text-slate-300">ORIGEN</p>
+            <p className="text-sm text-surface-300">ORIGEN</p>
 
             <h1 className="mt-2 text-3xl font-black">Portal Persona</h1>
 
-            <p className="mt-2 text-sm text-slate-300">
+            <p className="mt-2 text-sm text-surface-300">
               Revisa tu constancia, plan, bienestar, progreso y pagos.
             </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <div className="rounded-2xl bg-white/10 px-4 py-3">
-              <p className="text-xs text-slate-300">Sesión</p>
+              <p className="text-xs text-surface-300">Sesión</p>
               <p className="text-sm font-black">{usuario.nombre}</p>
             </div>
 
             <button
               type="button"
               onClick={onLogout}
-              className="rounded-2xl bg-white px-5 py-3 text-sm font-black text-slate-950 hover:bg-slate-100"
+              className="rounded-2xl bg-white px-5 py-3 text-sm font-black text-surface-950 hover:bg-surface-100"
             >
               Salir
             </button>
@@ -251,17 +251,19 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
         </div>
       </header>
 
+
       <main className="mx-auto max-w-7xl space-y-6 p-6">
         <section className="rounded-[2rem] bg-white p-8 shadow-sm">
           <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-start">
             <div>
-              <p className="text-sm font-bold text-slate-500">Mi perfil</p>
+              <p className="text-sm font-bold text-surface-500">Mi perfil</p>
 
-              <h2 className="mt-2 text-4xl font-black text-slate-950">
+              <h2 className="mt-2 text-4xl font-black text-surface-950">
                 {persona.nombres} {persona.apellidos}
               </h2>
 
-              <p className="mt-3 max-w-2xl text-slate-500">{persona.objetivo}</p>
+              <p className="mt-3 max-w-2xl text-surface-500">{persona.objetivo}</p>
+
 
               <div className="mt-5 flex flex-wrap gap-2">
                 <Badge label={`Documento ${persona.documento}`} />
@@ -277,9 +279,10 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
               disabled={Boolean(constanciaHoy)}
               className={`rounded-2xl px-6 py-4 text-sm font-black ${
                 constanciaHoy
-                  ? 'cursor-not-allowed bg-slate-100 text-slate-400'
-                  : 'bg-slate-950 text-white hover:bg-slate-800'
+                  ? 'cursor-not-allowed bg-surface-100 text-surface-400'
+                  : 'bg-surface-950 text-white hover:bg-surface-800'
               }`}
+
             >
               {constanciaHoy ? 'Constancia marcada hoy' : 'Marcar mi constancia'}
             </button>
@@ -295,21 +298,22 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
 
         <section className="grid gap-6 lg:grid-cols-2">
           <article className="rounded-[2rem] bg-white p-6 shadow-sm">
-            <h3 className="text-2xl font-black text-slate-950">
+            <h3 className="text-2xl font-black text-surface-950">
               Mi plan de entrenamiento
             </h3>
 
             {planActivo ? (
-              <div className="mt-5 rounded-2xl bg-slate-50 p-5">
+              <div className="mt-5 rounded-2xl bg-surface-50 p-5">
                 <p className="text-xl font-black">{planActivo.nombre}</p>
 
-                <p className="mt-2 text-sm font-bold text-slate-700">
+                <p className="mt-2 text-sm font-bold text-surface-700">
                   {planActivo.objetivo}
                 </p>
 
-                <p className="mt-3 text-sm leading-6 text-slate-500">
+                <p className="mt-3 text-sm leading-6 text-surface-500">
                   {planActivo.descripcion}
                 </p>
+
 
                 <div className="mt-4 grid gap-3 md:grid-cols-2">
                   <Mini label="Días semana" value={String(planActivo.diasSemana)} />
@@ -322,15 +326,15 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
           </article>
 
           <article className="rounded-[2rem] bg-white p-6 shadow-sm">
-            <h3 className="text-2xl font-black text-slate-950">
+            <h3 className="text-2xl font-black text-surface-950">
               Mi último bienestar
             </h3>
 
             {ultimoBienestar ? (
-              <div className="mt-5 rounded-2xl bg-slate-50 p-5">
+              <div className="mt-5 rounded-2xl bg-surface-50 p-5">
                 <p className="text-xl font-black">{ultimoBienestar.estadoAnimo}</p>
 
-                <p className="mt-2 text-sm text-slate-500">
+                <p className="mt-2 text-sm text-surface-500">
                   {formatDate(ultimoBienestar.fecha)}
                 </p>
 
@@ -341,7 +345,7 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
                 </div>
 
                 {ultimoBienestar.nota && (
-                  <p className="mt-4 rounded-2xl bg-white p-4 text-sm text-slate-500">
+                  <p className="mt-4 rounded-2xl bg-white p-4 text-sm text-surface-500">
                     {ultimoBienestar.nota}
                   </p>
                 )}
@@ -354,9 +358,10 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
 
         <section className="grid gap-6 lg:grid-cols-2">
           <article className="rounded-[2rem] bg-white p-6 shadow-sm">
-            <h3 className="text-2xl font-black text-slate-950">
+            <h3 className="text-2xl font-black text-surface-950">
               Mi progreso corporal
             </h3>
+
 
             {ultimaMedida ? (
               <div className="mt-5 grid gap-3 md:grid-cols-2">
@@ -377,34 +382,34 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
             )}
 
             {medidasPersona.length > 0 && (
-              <p className="mt-4 text-sm text-slate-500">
+              <p className="mt-4 text-sm text-surface-500">
                 Total de medidas registradas: {medidasPersona.length}
               </p>
             )}
           </article>
 
           <article className="rounded-[2rem] bg-white p-6 shadow-sm">
-            <h3 className="text-2xl font-black text-slate-950">Mis pagos</h3>
+            <h3 className="text-2xl font-black text-surface-950">Mis pagos</h3>
 
             {pagosPersona.length > 0 ? (
               <div className="mt-5 space-y-3">
                 {pagosPersona.slice(0, 5).map((movimiento) => (
                   <div
                     key={movimiento.id}
-                    className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 p-4"
+                    className="flex items-center justify-between gap-4 rounded-2xl bg-surface-50 p-4"
                   >
                     <div>
-                      <p className="font-black text-slate-900">
+                      <p className="font-black text-surface-900">
                         {movimiento.concepto}
                       </p>
 
-                      <p className="mt-1 text-sm text-slate-500">
+                      <p className="mt-1 text-sm text-surface-500">
                         {formatDate(movimiento.fecha)} ·{' '}
                         {movimiento.metodoPago || 'Sin método'}
                       </p>
                     </div>
 
-                    <p className="font-black text-slate-950">
+                    <p className="font-black text-surface-950">
                       {formatMoney(movimiento.valor)}
                     </p>
                   </div>
@@ -417,19 +422,19 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
         </section>
 
         <section className="rounded-[2rem] bg-white p-6 shadow-sm">
-          <h3 className="text-2xl font-black text-slate-950">
+          <h3 className="text-2xl font-black text-surface-950">
             Mi historial de constancia
           </h3>
 
           {constanciasPersona.length > 0 ? (
             <div className="mt-5 grid gap-3 md:grid-cols-3">
               {constanciasPersona.slice(0, 9).map((constancia) => (
-                <div key={constancia.id} className="rounded-2xl bg-slate-50 p-4">
-                  <p className="font-black text-slate-900">
+                <div key={constancia.id} className="rounded-2xl bg-surface-50 p-4">
+                  <p className="font-black text-surface-900">
                     {formatDate(constancia.fecha)}
                   </p>
 
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 text-sm text-surface-500">
                     Registrado por {constancia.registradoPor}
                   </p>
                 </div>
@@ -447,8 +452,8 @@ export function PersonaPortalPage({ usuario, onLogout }: Props) {
 function Metric({ title, value }: { title: string; value: string }) {
   return (
     <div className="rounded-[2rem] bg-white p-6 shadow-sm">
-      <p className="text-sm font-bold text-slate-500">{title}</p>
-      <p className="mt-2 text-2xl font-black text-slate-950">{value}</p>
+      <p className="text-sm font-bold text-surface-500">{title}</p>
+      <p className="mt-2 text-2xl font-black text-surface-950">{value}</p>
     </div>
   )
 }
@@ -456,17 +461,17 @@ function Metric({ title, value }: { title: string; value: string }) {
 function Mini({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl bg-white p-4">
-      <p className="text-xs font-black uppercase tracking-wide text-slate-400">
+      <p className="text-xs font-black uppercase tracking-wide text-surface-400">
         {label}
       </p>
-      <p className="mt-1 font-black text-slate-900">{value}</p>
+      <p className="mt-1 font-black text-surface-900">{value}</p>
     </div>
   )
 }
 
 function Badge({ label }: { label: string }) {
   return (
-    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-700">
+    <span className="rounded-full bg-surface-100 px-3 py-1 text-xs font-black text-surface-700">
       {label}
     </span>
   )
@@ -474,11 +479,12 @@ function Badge({ label }: { label: string }) {
 
 function Empty({ message }: { message: string }) {
   return (
-    <div className="mt-5 rounded-2xl border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500">
+    <div className="mt-5 rounded-2xl border border-dashed border-surface-300 p-6 text-center text-sm text-surface-500">
       {message}
     </div>
   )
 }
+
 
 function formatDate(date: string) {
   return new Date(`${date.slice(0, 10)}T00:00:00`).toLocaleDateString('es-CO', {

@@ -64,14 +64,14 @@ export function AdminDashboard({
 
   return (
     <div className="space-y-6">
-      <section className="overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-950 p-5 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
+      <section className="overflow-hidden rounded-[2rem] border border-surface-800 bg-surface-950 p-5 text-white shadow-[0_20px_70px_-25px_rgba(28,25,23,0.35)] sm:p-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300 sm:text-sm">Panel principal</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-surface-300 sm:text-sm">Panel principal</p>
 
             <h1 className="mt-2 text-2xl font-black sm:text-4xl">Bienvenido a ORIGEN</h1>
 
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300 sm:mt-4 sm:text-base sm:leading-7">
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-surface-300 sm:mt-4 sm:text-base sm:leading-7">
               Cada persona importa. Cada hábito cuenta. Cada logro merece ser celebrado.
             </p>
           </div>
@@ -79,12 +79,13 @@ export function AdminDashboard({
           <button
             type="button"
             onClick={onGoPersonas}
-            className="w-full rounded-2xl bg-white px-6 py-3.5 text-sm font-black text-slate-950 transition hover:bg-slate-100 sm:w-auto lg:px-6 lg:py-4"
+            className="w-full rounded-2xl bg-brand-600 px-6 py-3.5 text-sm font-black text-white transition hover:bg-brand-700 sm:w-auto lg:px-6 lg:py-4"
           >
             Registrar persona
           </button>
         </div>
       </section>
+
 
       <section className="grid grid-cols-2 gap-3 md:grid-cols-2 xl:grid-cols-4 md:gap-4">
         <Metric title="Personas" value={String(personas.length)} />
@@ -106,11 +107,11 @@ export function AdminDashboard({
           <section className="rounded-[2rem] bg-white p-6 shadow-sm">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
-                <h2 className="text-2xl font-black text-slate-950">
+                <h2 className="text-2xl font-black text-surface-900">
                   Estado de personas
                 </h2>
 
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-surface-500">
                   Resumen de personas por estado dentro del gimnasio.
                 </p>
               </div>
@@ -118,10 +119,11 @@ export function AdminDashboard({
               <button
                 type="button"
                 onClick={onGoPersonas}
-                className="rounded-2xl bg-slate-950 px-5 py-3 text-sm font-black text-white hover:bg-slate-800"
+                className="rounded-2xl bg-brand-600 px-5 py-3 text-sm font-black text-white hover:bg-brand-700"
               >
                 Ir a personas
               </button>
+
             </div>
 
             <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -145,12 +147,12 @@ export function AdminDashboard({
             </div>
           </section>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <h2 className="text-2xl font-black text-slate-950">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
+            <h2 className="text-2xl font-black text-surface-900">
               Movimientos recientes
             </h2>
 
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-surface-500">
               Últimos ingresos y gastos registrados en caja.
             </p>
 
@@ -158,14 +160,14 @@ export function AdminDashboard({
               {movimientosRecientes.map((movimiento) => (
                 <div
                   key={movimiento.id}
-                  className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 p-4"
+                  className="flex items-center justify-between gap-4 rounded-2xl bg-surface-50 p-4"
                 >
                   <div>
-                    <p className="font-black text-slate-900">
+                    <p className="font-black text-surface-900">
                       {movimiento.concepto}
                     </p>
 
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="mt-1 text-sm text-surface-500">
                       {formatDate(movimiento.fecha)} ·{' '}
                       {movimiento.metodoPago || 'Sin método'}
                     </p>
@@ -175,15 +177,15 @@ export function AdminDashboard({
                     <p
                       className={`font-black ${
                         movimiento.tipo === 'ingreso'
-                          ? 'text-emerald-700'
-                          : 'text-rose-700'
+                          ? 'text-success-700'
+                          : 'text-danger-700'
                       }`}
                     >
                       {movimiento.tipo === 'ingreso' ? '+' : '-'}
                       {formatMoney(movimiento.valor)}
                     </p>
 
-                    <p className="mt-1 text-xs font-bold text-slate-400">
+                    <p className="mt-1 text-xs font-bold text-surface-400">
                       {movimiento.tipo}
                     </p>
                   </div>
@@ -195,33 +197,34 @@ export function AdminDashboard({
               )}
             </div>
           </section>
+
         </section>
 
         <aside className="space-y-6">
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <h2 className="text-2xl font-black text-slate-950">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
+            <h2 className="text-2xl font-black text-surface-900">
               Personas recientes
             </h2>
 
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-surface-500">
               Últimos registros creados en ORIGEN.
             </p>
 
             <div className="mt-5 space-y-3">
               {personasRecientes.map((persona) => (
-                <div key={persona.id} className="rounded-2xl bg-slate-50 p-4">
-                  <p className="font-black text-slate-900">
+                <div key={persona.id} className="rounded-2xl bg-surface-50 p-4">
+                  <p className="font-black text-surface-900">
                     {persona.nombres} {persona.apellidos}
                   </p>
 
-                  <p className="mt-1 text-sm text-slate-500">{persona.objetivo}</p>
+                  <p className="mt-1 text-sm text-surface-500">{persona.objetivo}</p>
 
                   <div className="mt-3 flex items-center justify-between gap-3">
-                    <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-slate-700">
+                    <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-surface-700">
                       {persona.estado}
                     </span>
 
-                    <span className="text-xs font-bold text-slate-400">
+                    <span className="text-xs font-bold text-surface-400">
                       {formatDate(persona.fechaRegistro)}
                     </span>
                   </div>
@@ -234,27 +237,27 @@ export function AdminDashboard({
             </div>
           </section>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-            <h2 className="text-2xl font-black text-slate-950">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
+            <h2 className="text-2xl font-black text-surface-900">
               Alertas de inventario
             </h2>
 
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-surface-500">
               Productos bajos o agotados en tienda.
             </p>
 
             <div className="mt-5 space-y-3">
               {productosAgotados.map((producto) => (
-                <div key={producto.id} className="rounded-2xl bg-rose-50 p-4">
-                  <p className="font-black text-rose-700">{producto.nombre}</p>
-                  <p className="mt-1 text-sm text-rose-600">Producto agotado</p>
+                <div key={producto.id} className="rounded-2xl bg-danger-50 p-4">
+                  <p className="font-black text-danger-700">{producto.nombre}</p>
+                  <p className="mt-1 text-sm text-danger-600">Producto agotado</p>
                 </div>
               ))}
 
               {productosBajoStock.map((producto) => (
-                <div key={producto.id} className="rounded-2xl bg-amber-50 p-4">
-                  <p className="font-black text-amber-700">{producto.nombre}</p>
-                  <p className="mt-1 text-sm text-amber-600">
+                <div key={producto.id} className="rounded-2xl bg-warning-50 p-4">
+                  <p className="font-black text-warning-700">{producto.nombre}</p>
+                  <p className="mt-1 text-sm text-warning-600">
                     Stock bajo: {producto.stock}
                   </p>
                 </div>
@@ -265,6 +268,7 @@ export function AdminDashboard({
               )}
             </div>
           </section>
+
         </aside>
       </section>
     </div>
@@ -273,9 +277,9 @@ export function AdminDashboard({
 
 function Metric({ title, value }: { title: string; value: string }) {
   return (
-    <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
-      <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">{title}</p>
-      <p className="mt-3 text-2xl font-black text-slate-950">{value}</p>
+    <div className="rounded-[1.5rem] border border-surface-200 bg-white p-5 shadow-sm">
+      <p className="text-sm font-bold uppercase tracking-[0.2em] text-surface-500">{title}</p>
+      <p className="mt-3 text-2xl font-black text-surface-900">{value}</p>
     </div>
   )
 }
@@ -290,21 +294,22 @@ function StatusCard({
   description: string
 }) {
   return (
-    <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
-      <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">{title}</p>
-      <p className="mt-2 text-3xl font-black text-slate-950">{value}</p>
-      <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
+    <div className="rounded-[1.5rem] border border-surface-200 bg-surface-50 p-5">
+      <p className="text-sm font-bold uppercase tracking-[0.2em] text-surface-500">{title}</p>
+      <p className="mt-2 text-3xl font-black text-surface-900">{value}</p>
+      <p className="mt-2 text-sm leading-6 text-surface-500">{description}</p>
     </div>
   )
 }
 
 function Empty({ message }: { message: string }) {
   return (
-    <div className="rounded-2xl border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500">
+    <div className="rounded-2xl border border-dashed border-surface-300 p-6 text-center text-sm text-surface-500">
       {message}
     </div>
   )
 }
+
 
 function formatDate(date: string) {
   return new Date(`${date.slice(0, 10)}T00:00:00`).toLocaleDateString('es-CO', {

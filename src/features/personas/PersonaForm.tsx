@@ -115,7 +115,8 @@ export function PersonaForm({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
+      <section className="rounded-[2rem] border border-surface-800 bg-surface-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(28,25,23,0.35)] sm:p-8">
+
         <button
           type="button"
           onClick={onVolver}
@@ -129,14 +130,15 @@ export function PersonaForm({
           {personaEditando ? 'Editar persona' : 'Registrar persona'}
         </h1>
 
-        <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300 sm:text-base">
+        <p className="mt-3 max-w-3xl text-sm leading-7 text-surface-300 sm:text-base">
           {personaEditando
             ? 'Actualiza la información principal de la persona.'
             : 'Ingresa la información principal de la nueva persona.'}
         </p>
       </section>
 
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
+
         <form onSubmit={guardarPersona} className="grid gap-4 md:grid-cols-2">
           <Input
             label="Nombres"
@@ -189,14 +191,14 @@ export function PersonaForm({
           />
 
           <label className="block">
-            <span className="text-sm font-bold text-slate-700">Estado</span>
+            <span className="text-sm font-bold text-surface-700">Estado</span>
 
             <select
               value={form.estado}
               onChange={(event) =>
                 setForm({ ...form, estado: event.target.value as EstadoPersona })
               }
-              className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+              className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none transition focus:border-brand-600"
             >
               {estadoOptions.map((estado) => (
                 <option key={estado} value={estado}>
@@ -209,7 +211,7 @@ export function PersonaForm({
           <div className="flex flex-col gap-3 sm:flex-row md:col-span-2">
             <button
               type="submit"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 font-black text-white transition hover:bg-slate-800"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-3 font-black text-white transition hover:bg-brand-700"
             >
               <Save size={18} />
               {personaEditando ? 'Guardar cambios' : 'Crear persona'}
@@ -218,11 +220,12 @@ export function PersonaForm({
             <button
               type="button"
               onClick={onVolver}
-              className="rounded-2xl border border-slate-200 px-5 py-3 font-black text-slate-700 transition hover:bg-slate-50"
+              className="rounded-2xl border border-surface-200 px-5 py-3 font-black text-surface-700 transition hover:bg-surface-50"
             >
               Cancelar
             </button>
           </div>
+
         </form>
       </section>
     </div>
@@ -244,18 +247,19 @@ function Input({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-bold text-slate-700">{label}</span>
+      <span className="text-sm font-bold text-surface-700">{label}</span>
 
       <input
         type={type}
         value={value}
         placeholder={placeholder}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+        className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none transition focus:border-brand-600"
       />
     </label>
   )
 }
+
 
 function estadoLabel(estado: EstadoPersona) {
   const labels: Record<EstadoPersona, string> = {

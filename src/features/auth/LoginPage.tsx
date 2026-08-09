@@ -50,16 +50,17 @@ export function LoginPage({ onLogin }: Props) {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_#f8fafc_0%,_#e2e8f0_100%)] p-3 sm:p-6">
-      <section className="grid w-full max-w-6xl overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_20px_60px_-20px_rgba(15,23,42,0.35)] lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="bg-slate-950 p-6 text-white sm:p-8 lg:p-10">
-          <p className="text-sm font-bold uppercase tracking-[0.3em] text-slate-300">ORIGEN</p>
+    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_var(--color-surface-50)_0%,_var(--color-surface-200)_100%)] p-3 sm:p-6">
+      <section className="grid w-full max-w-6xl overflow-hidden rounded-[1.5rem] border border-surface-200 bg-white shadow-[0_20px_60px_-20px_rgba(28,25,23,0.35)] lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="bg-surface-950 p-6 text-white sm:p-8 lg:p-10">
+          <p className="text-sm font-bold uppercase tracking-[0.3em] text-surface-300">ORIGEN</p>
 
           <h1 className="mt-6 max-w-xl text-3xl font-black leading-tight sm:text-4xl lg:text-5xl">
             Cada persona importa. Cada hábito cuenta.
           </h1>
 
-          <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300 sm:text-base">
+          <p className="mt-4 max-w-xl text-sm leading-7 text-surface-300 sm:text-base">
+
             Ingresa a tu plataforma de bienestar, constancia, entrenamiento,
             caja, tienda y seguimiento de personas.
           </p>
@@ -73,13 +74,13 @@ export function LoginPage({ onLogin }: Props) {
 
         <div className="p-6 sm:p-8 lg:p-10">
           <div>
-            <p className="text-sm font-bold text-slate-500">Acceso seguro</p>
+            <p className="text-sm font-bold text-surface-500">Acceso seguro</p>
 
-            <h2 className="mt-2 text-2xl font-black text-slate-950 sm:text-3xl">
+            <h2 className="mt-2 text-2xl font-black text-surface-950 sm:text-3xl">
               Iniciar sesión
             </h2>
 
-            <p className="mt-3 text-sm leading-6 text-slate-500">
+            <p className="mt-3 text-sm leading-6 text-surface-500">
               Usa tu correo y contraseña de Supabase Auth. Si el usuario no existe o la contraseña es incorrecta, verás el error correspondiente.
             </p>
           </div>
@@ -88,7 +89,7 @@ export function LoginPage({ onLogin }: Props) {
             <div>
               <label
                 htmlFor="correo"
-                className="text-sm font-black text-slate-700"
+                className="text-sm font-black text-surface-700"
               >
                 Correo
               </label>
@@ -98,7 +99,7 @@ export function LoginPage({ onLogin }: Props) {
                 type="email"
                 value={correo}
                 onChange={(event) => setCorreo(event.target.value)}
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
+                className="mt-2 w-full rounded-2xl border border-surface-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-surface-950 focus:ring-2 focus:ring-surface-200"
                 placeholder="correo@ejemplo.com"
                 autoComplete="email"
               />
@@ -107,7 +108,7 @@ export function LoginPage({ onLogin }: Props) {
             <div>
               <label
                 htmlFor="password"
-                className="text-sm font-black text-slate-700"
+                className="text-sm font-black text-surface-700"
               >
                 Contraseña
               </label>
@@ -117,14 +118,14 @@ export function LoginPage({ onLogin }: Props) {
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
+                className="mt-2 w-full rounded-2xl border border-surface-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-surface-950 focus:ring-2 focus:ring-surface-200"
                 placeholder="Tu contraseña"
                 autoComplete="current-password"
               />
             </div>
 
             {errorMessage && (
-              <div className="rounded-2xl bg-rose-50 p-4 text-sm font-bold text-rose-700">
+              <div className="rounded-2xl bg-danger-50 p-4 text-sm font-bold text-danger-700">
                 {errorMessage}
               </div>
             )}
@@ -134,13 +135,14 @@ export function LoginPage({ onLogin }: Props) {
               disabled={loading}
               className={`w-full rounded-2xl px-5 py-3.5 text-sm font-black text-white transition ${
                 loading
-                  ? 'cursor-not-allowed bg-slate-400'
-                  : 'bg-slate-950 hover:bg-slate-800'
+                  ? 'cursor-not-allowed bg-surface-400'
+                  : 'bg-surface-950 hover:bg-surface-800'
               }`}
             >
               {loading ? 'Ingresando...' : 'Entrar a ORIGEN'}
             </button>
           </form>
+
         </div>
       </section>
     </div>
@@ -151,7 +153,8 @@ function Card({ title, text }: { title: string; text: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/10 p-3">
       <p className="font-black text-white">{title}</p>
-      <p className="mt-1 text-xs leading-5 text-slate-300 sm:text-sm">{text}</p>
+      <p className="mt-1 text-xs leading-5 text-surface-300 sm:text-sm">{text}</p>
+
     </div>
   )
 }

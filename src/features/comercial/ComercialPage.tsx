@@ -183,13 +183,14 @@ export function ComercialPage({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
-        <p className="text-sm text-slate-300">Módulo Comercial</p>
+      <section className="rounded-[2rem] border border-surface-800 bg-surface-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(28,25,23,0.35)] sm:p-8">
+        <p className="text-sm text-surface-300">Módulo Comercial</p>
         <h1 className="mt-3 text-4xl font-black">Caja y servicios</h1>
-        <p className="mt-4 max-w-3xl text-slate-300">
+        <p className="mt-4 max-w-3xl text-surface-300">
           Registra servicios, ingresos, pagos y gastos del gimnasio.
         </p>
       </section>
+
 
       <section className="grid gap-4 md:grid-cols-4">
         <Metric title="Ingresos" value={formatMoney(ingresos)} />
@@ -200,7 +201,7 @@ export function ComercialPage({
 
       <section className="grid gap-6 xl:grid-cols-[420px_1fr]">
         <div className="space-y-6">
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Crear servicio</h2>
 
             <form onSubmit={crearServicio} className="mt-6 grid gap-4">
@@ -211,7 +212,7 @@ export function ComercialPage({
               />
 
               <label className="block">
-                <span className="text-sm font-bold text-slate-700">Tipo</span>
+                <span className="text-sm font-bold text-surface-700">Tipo</span>
                 <select
                   value={servicioForm.tipo}
                   onChange={(event) =>
@@ -220,7 +221,7 @@ export function ComercialPage({
                       tipo: event.target.value as TipoServicio,
                     })
                   }
-                  className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                  className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
                 >
                   {tiposServicio.map((tipo) => (
                     <option key={tipo.value} value={tipo.value}>
@@ -246,19 +247,19 @@ export function ComercialPage({
                 }
               />
 
-              <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 font-black text-white hover:bg-slate-800">
+              <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-3 font-black text-white hover:bg-brand-700">
                 <Plus size={18} />
                 Crear servicio
               </button>
             </form>
           </section>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Registrar movimiento</h2>
 
             <form onSubmit={crearMovimiento} className="mt-6 grid gap-4">
               <label className="block">
-                <span className="text-sm font-bold text-slate-700">Tipo</span>
+                <span className="text-sm font-bold text-surface-700">Tipo</span>
                 <select
                   value={movimientoForm.tipo}
                   onChange={(event) =>
@@ -269,7 +270,7 @@ export function ComercialPage({
                       servicioId: '',
                     })
                   }
-                  className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                  className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
                 >
                   <option value="ingreso">Ingreso</option>
                   <option value="gasto">Gasto</option>
@@ -279,7 +280,7 @@ export function ComercialPage({
               {movimientoForm.tipo === 'ingreso' && (
                 <>
                   <label className="block">
-                    <span className="text-sm font-bold text-slate-700">Persona</span>
+                    <span className="text-sm font-bold text-surface-700">Persona</span>
                     <select
                       value={movimientoForm.personaId}
                       onChange={(event) =>
@@ -288,7 +289,7 @@ export function ComercialPage({
                           personaId: event.target.value,
                         })
                       }
-                      className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                      className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
                     >
                       <option value="">Sin persona asociada</option>
                       {personasActivas.map((persona) => (
@@ -300,11 +301,11 @@ export function ComercialPage({
                   </label>
 
                   <label className="block">
-                    <span className="text-sm font-bold text-slate-700">Servicio</span>
+                    <span className="text-sm font-bold text-surface-700">Servicio</span>
                     <select
                       value={movimientoForm.servicioId}
                       onChange={(event) => seleccionarServicio(event.target.value)}
-                      className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                      className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
                     >
                       <option value="">Sin servicio asociado</option>
                       {servicios
@@ -335,7 +336,7 @@ export function ComercialPage({
               />
 
               <label className="block">
-                <span className="text-sm font-bold text-slate-700">Método de pago</span>
+                <span className="text-sm font-bold text-surface-700">Método de pago</span>
                 <select
                   value={movimientoForm.metodoPago}
                   onChange={(event) =>
@@ -344,7 +345,7 @@ export function ComercialPage({
                       metodoPago: event.target.value,
                     })
                   }
-                  className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                  className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
                 >
                   {metodosPago.map((metodo) => (
                     <option key={metodo}>{metodo}</option>
@@ -353,7 +354,7 @@ export function ComercialPage({
               </label>
 
               <label className="block">
-                <span className="text-sm font-bold text-slate-700">Observación</span>
+                <span className="text-sm font-bold text-surface-700">Observación</span>
                 <textarea
                   value={movimientoForm.observacion}
                   onChange={(event) =>
@@ -362,16 +363,17 @@ export function ComercialPage({
                       observacion: event.target.value,
                     })
                   }
-                  className="mt-1 min-h-24 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                  className="mt-1 min-h-24 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
                 />
               </label>
 
-              <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 font-black text-white hover:bg-slate-800">
+              <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-3 font-black text-white hover:bg-brand-700">
                 <Plus size={18} />
                 Guardar movimiento
               </button>
             </form>
           </section>
+
         </div>
 
         <div className="space-y-6">
@@ -380,9 +382,9 @@ export function ComercialPage({
 
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               {servicios.map((servicio) => (
-                <article key={servicio.id} className="rounded-2xl border border-slate-200 p-4">
+                <article key={servicio.id} className="rounded-2xl border border-surface-200 p-4">
                   <p className="font-black">{servicio.nombre}</p>
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 text-sm text-surface-500">
                     {getTipoServicioLabel(servicio.tipo)} · {servicio.duracionDias} días
                   </p>
                   <p className="mt-3 text-xl font-black">{formatMoney(servicio.precio)}</p>
@@ -390,7 +392,7 @@ export function ComercialPage({
               ))}
 
               {servicios.length === 0 && (
-                <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500 md:col-span-2">
+                <div className="rounded-2xl border border-dashed border-surface-300 p-8 text-center text-surface-500 md:col-span-2">
                   No hay servicios creados.
                 </div>
               )}
@@ -401,26 +403,26 @@ export function ComercialPage({
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <h2 className="text-2xl font-black">Historial</h2>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-surface-500">
                   Movimientos de caja registrados.
                 </p>
               </div>
 
               <div className="flex flex-col gap-3 md:flex-row">
                 <div className="relative">
-                  <Search className="absolute left-4 top-3.5 text-slate-400" size={18} />
+                  <Search className="absolute left-4 top-3.5 text-surface-400" size={18} />
                   <input
                     value={search}
                     onChange={(event) => setSearch(event.target.value)}
                     placeholder="Buscar"
-                    className="w-full rounded-2xl border border-slate-200 py-3 pl-11 pr-4 outline-none"
+                    className="w-full rounded-2xl border border-surface-200 py-3 pl-11 pr-4 outline-none"
                   />
                 </div>
 
                 <select
                   value={filtro}
                   onChange={(event) => setFiltro(event.target.value as FiltroMovimiento)}
-                  className="rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                  className="rounded-2xl border border-surface-200 px-4 py-3 outline-none"
                 >
                   <option value="todos">Todos</option>
                   <option value="ingreso">Ingresos</option>
@@ -431,9 +433,9 @@ export function ComercialPage({
 
             <div className="mt-6">
               {/* Tabla en desktop */}
-              <div className="hidden overflow-hidden rounded-2xl border border-slate-200 md:block">
+              <div className="hidden overflow-hidden rounded-2xl border border-surface-200 md:block">
                 <table className="w-full text-left text-sm">
-                  <thead className="bg-slate-50 text-slate-500">
+                  <thead className="bg-surface-50 text-surface-500">
                     <tr>
                       <th className="px-4 py-3">Fecha</th>
                       <th className="px-4 py-3">Concepto</th>
@@ -444,11 +446,11 @@ export function ComercialPage({
 
                   <tbody>
                     {movimientosFiltrados.map((movimiento) => (
-                      <tr key={movimiento.id} className="border-t border-slate-100">
+                      <tr key={movimiento.id} className="border-t border-surface-100">
                         <td className="px-4 py-4">{formatDate(movimiento.fecha)}</td>
                         <td className="px-4 py-4">
                           <p className="font-black">{movimiento.concepto}</p>
-                          <p className="text-xs text-slate-500">
+                          <p className="text-xs text-surface-500">
                             {movimiento.metodoPago || 'Sin método'}
                           </p>
                         </td>
@@ -456,8 +458,8 @@ export function ComercialPage({
                           <span
                             className={`rounded-full px-3 py-1 text-xs font-black ${
                               movimiento.tipo === 'ingreso'
-                                ? 'bg-emerald-50 text-emerald-700'
-                                : 'bg-rose-50 text-rose-700'
+                                ? 'bg-success-50 text-success-700'
+                                : 'bg-danger-50 text-danger-700'
                             }`}
                           >
                             {movimiento.tipo}
@@ -471,7 +473,7 @@ export function ComercialPage({
 
                     {movimientosFiltrados.length === 0 && (
                       <tr>
-                        <td colSpan={4} className="px-4 py-10 text-center text-slate-500">
+                        <td colSpan={4} className="px-4 py-10 text-center text-surface-500">
                           No hay movimientos para mostrar.
                         </td>
                       </tr>
@@ -485,12 +487,12 @@ export function ComercialPage({
                 {movimientosFiltrados.map((movimiento) => (
                   <article
                     key={movimiento.id}
-                    className="rounded-[1.5rem] border border-slate-200 bg-white p-4"
+                    className="rounded-[1.5rem] border border-surface-200 bg-white p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
-                        <p className="font-black text-slate-900">{movimiento.concepto}</p>
-                        <p className="mt-0.5 text-xs text-slate-500">
+                        <p className="font-black text-surface-900">{movimiento.concepto}</p>
+                        <p className="mt-0.5 text-xs text-surface-500">
                           {formatDate(movimiento.fecha)}
                         </p>
                       </div>
@@ -498,8 +500,8 @@ export function ComercialPage({
                       <span
                         className={`shrink-0 rounded-full px-3 py-1 text-xs font-black ${
                           movimiento.tipo === 'ingreso'
-                            ? 'bg-emerald-50 text-emerald-700'
-                            : 'bg-rose-50 text-rose-700'
+                            ? 'bg-success-50 text-success-700'
+                            : 'bg-danger-50 text-danger-700'
                         }`}
                       >
                         {movimiento.tipo}
@@ -507,15 +509,15 @@ export function ComercialPage({
                     </div>
 
                     <div className="mt-3 flex items-center justify-between gap-3">
-                      <p className="text-xs font-bold text-slate-400">
+                      <p className="text-xs font-bold text-surface-400">
                         {movimiento.metodoPago || 'Sin método'}
                       </p>
 
                       <p
                         className={`font-black ${
                           movimiento.tipo === 'ingreso'
-                            ? 'text-emerald-700'
-                            : 'text-rose-700'
+                            ? 'text-success-700'
+                            : 'text-danger-700'
                         }`}
                       >
                         {movimiento.tipo === 'ingreso' ? '+' : '-'}
@@ -526,7 +528,7 @@ export function ComercialPage({
                 ))}
 
                 {movimientosFiltrados.length === 0 && (
-                  <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
+                  <div className="rounded-2xl border border-dashed border-surface-300 p-8 text-center text-surface-500">
                     No hay movimientos para mostrar.
                   </div>
                 )}
@@ -534,6 +536,7 @@ export function ComercialPage({
             </div>
 
           </section>
+
         </div>
       </section>
     </div>
@@ -553,12 +556,12 @@ function Input({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-bold text-slate-700">{label}</span>
+      <span className="text-sm font-bold text-surface-700">{label}</span>
       <input
         type={type}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+        className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
       />
     </label>
   )
@@ -567,11 +570,12 @@ function Input({
 function Metric({ title, value }: { title: string; value: string }) {
   return (
     <div className="rounded-[2rem] bg-white p-6 shadow-sm">
-      <p className="text-sm font-bold text-slate-500">{title}</p>
+      <p className="text-sm font-bold text-surface-500">{title}</p>
       <p className="mt-2 text-2xl font-black">{value}</p>
     </div>
   )
 }
+
 
 function getTipoServicioLabel(tipo: TipoServicio) {
   const found = tiposServicio.find((item) => item.value === tipo)

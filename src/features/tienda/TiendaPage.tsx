@@ -211,13 +211,14 @@ export function TiendaPage({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
-        <p className="text-sm text-slate-300">Módulo Tienda</p>
+      <section className="rounded-[2rem] border border-surface-800 bg-surface-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(28,25,23,0.35)] sm:p-8">
+        <p className="text-sm text-surface-300">Módulo Tienda</p>
         <h1 className="mt-3 text-4xl font-black">Inventario y ventas</h1>
-        <p className="mt-4 max-w-3xl text-slate-300">
+        <p className="mt-4 max-w-3xl text-surface-300">
           Registra productos, controla stock, entradas de inventario y ventas de tienda.
         </p>
       </section>
+
 
       <section className="grid gap-4 md:grid-cols-4">
         <Metric title="Productos" value={String(productos.length)} />
@@ -248,7 +249,7 @@ export function TiendaPage({
 
       <section className="grid gap-6 xl:grid-cols-[420px_1fr]">
         <div className="space-y-6">
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Crear producto</h2>
 
             <form onSubmit={crearProducto} className="mt-6 grid gap-4">
@@ -287,14 +288,14 @@ export function TiendaPage({
                 onChange={(value) => setProductoForm({ ...productoForm, stock: value })}
               />
 
-              <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 font-black text-white hover:bg-slate-800">
+              <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-3 font-black text-white hover:bg-brand-700">
                 <Plus size={18} />
                 Crear producto
               </button>
             </form>
           </section>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Registrar venta</h2>
 
             <form onSubmit={registrarVenta} className="mt-6 grid gap-4">
@@ -313,13 +314,13 @@ export function TiendaPage({
               />
 
               <label className="block">
-                <span className="text-sm font-bold text-slate-700">Método de pago</span>
+                <span className="text-sm font-bold text-surface-700">Método de pago</span>
                 <select
                   value={ventaForm.metodoPago}
                   onChange={(event) =>
                     setVentaForm({ ...ventaForm, metodoPago: event.target.value })
                   }
-                  className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                  className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
                 >
                   {metodosPago.map((metodo) => (
                     <option key={metodo}>{metodo}</option>
@@ -327,7 +328,7 @@ export function TiendaPage({
                 </select>
               </label>
 
-              <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 font-black text-white hover:bg-slate-800">
+              <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-3 font-black text-white hover:bg-brand-700">
                 <Plus size={18} />
                 Registrar venta
               </button>
@@ -355,22 +356,23 @@ export function TiendaPage({
               />
 
               <label className="block">
-                <span className="text-sm font-bold text-slate-700">Observación</span>
+                <span className="text-sm font-bold text-surface-700">Observación</span>
                 <textarea
                   value={entradaForm.observacion}
                   onChange={(event) =>
                     setEntradaForm({ ...entradaForm, observacion: event.target.value })
                   }
-                  className="mt-1 min-h-24 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                  className="mt-1 min-h-24 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
                 />
               </label>
 
-              <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 font-black text-white hover:bg-slate-800">
+              <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-3 font-black text-white hover:bg-brand-700">
                 <Plus size={18} />
                 Registrar entrada
               </button>
             </form>
           </section>
+
         </div>
 
         <div className="space-y-6">
@@ -378,29 +380,29 @@ export function TiendaPage({
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <h2 className="text-2xl font-black">Productos</h2>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-surface-500">
                   Inventario disponible.
                 </p>
               </div>
 
               <div className="relative">
-                <Search className="absolute left-4 top-3.5 text-slate-400" size={18} />
+                <Search className="absolute left-4 top-3.5 text-surface-400" size={18} />
                 <input
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                   placeholder="Buscar producto"
-                  className="w-full rounded-2xl border border-slate-200 py-3 pl-11 pr-4 outline-none"
+                  className="w-full rounded-2xl border border-surface-200 py-3 pl-11 pr-4 outline-none"
                 />
               </div>
             </div>
 
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               {productosFiltrados.map((producto) => (
-                <article key={producto.id} className="rounded-2xl border border-slate-200 p-4">
+                <article key={producto.id} className="rounded-2xl border border-surface-200 p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="font-black">{producto.nombre}</p>
-                      <p className="mt-1 text-sm text-slate-500">{producto.categoria}</p>
+                      <p className="mt-1 text-sm text-surface-500">{producto.categoria}</p>
                     </div>
 
                     <StockBadge stock={producto.stock} />
@@ -415,21 +417,22 @@ export function TiendaPage({
               ))}
 
               {productosFiltrados.length === 0 && (
-                <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500 md:col-span-2">
+                <div className="rounded-2xl border border-dashed border-surface-300 p-8 text-center text-surface-500 md:col-span-2">
                   No hay productos para mostrar.
                 </div>
               )}
             </div>
           </section>
 
+
           <section className="rounded-[2rem] bg-white p-6 shadow-sm">
             <h2 className="text-2xl font-black">Movimientos de inventario</h2>
 
             <div className="mt-6">
               {/* Tabla en desktop */}
-              <div className="hidden overflow-hidden rounded-2xl border border-slate-200 md:block">
+              <div className="hidden overflow-hidden rounded-2xl border border-surface-200 md:block">
                 <table className="w-full text-left text-sm">
-                  <thead className="bg-slate-50 text-slate-500">
+                  <thead className="bg-surface-50 text-surface-500">
                     <tr>
                       <th className="px-4 py-3">Fecha</th>
                       <th className="px-4 py-3">Producto</th>
@@ -443,14 +446,14 @@ export function TiendaPage({
                       const producto = productos.find((item) => item.id === movimiento.productoId)
 
                       return (
-                        <tr key={movimiento.id} className="border-t border-slate-100">
+                        <tr key={movimiento.id} className="border-t border-surface-100">
                           <td className="px-4 py-4">{formatDate(movimiento.fecha)}</td>
 
                           <td className="px-4 py-4">
                             <p className="font-black">
                               {producto ? producto.nombre : 'Producto no encontrado'}
                             </p>
-                            <p className="text-xs text-slate-500">
+                            <p className="text-xs text-surface-500">
                               {movimiento.observacion || '-'}
                             </p>
                           </td>
@@ -459,8 +462,8 @@ export function TiendaPage({
                             <span
                               className={`rounded-full px-3 py-1 text-xs font-black ${
                                 movimiento.tipo === 'entrada'
-                                  ? 'bg-emerald-50 text-emerald-700'
-                                  : 'bg-blue-50 text-blue-700'
+                                  ? 'bg-success-50 text-success-700'
+                                  : 'bg-info-50 text-info-700'
                               }`}
                             >
                               {movimiento.tipo}
@@ -476,7 +479,7 @@ export function TiendaPage({
 
                     {movimientosOrdenados.length === 0 && (
                       <tr>
-                        <td colSpan={4} className="px-4 py-10 text-center text-slate-500">
+                        <td colSpan={4} className="px-4 py-10 text-center text-surface-500">
                           No hay movimientos de inventario.
                         </td>
                       </tr>
@@ -493,14 +496,14 @@ export function TiendaPage({
                   return (
                     <article
                       key={movimiento.id}
-                      className="rounded-[1.5rem] border border-slate-200 bg-white p-4"
+                      className="rounded-[1.5rem] border border-surface-200 bg-white p-4"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                          <p className="font-black text-slate-900">
+                          <p className="font-black text-surface-900">
                             {producto ? producto.nombre : 'Producto no encontrado'}
                           </p>
-                          <p className="mt-0.5 text-xs text-slate-500">
+                          <p className="mt-0.5 text-xs text-surface-500">
                             {formatDate(movimiento.fecha)}
                           </p>
                         </div>
@@ -508,8 +511,8 @@ export function TiendaPage({
                         <span
                           className={`shrink-0 rounded-full px-3 py-1 text-xs font-black ${
                             movimiento.tipo === 'entrada'
-                              ? 'bg-emerald-50 text-emerald-700'
-                              : 'bg-blue-50 text-blue-700'
+                              ? 'bg-success-50 text-success-700'
+                              : 'bg-info-50 text-info-700'
                           }`}
                         >
                           {movimiento.tipo}
@@ -517,11 +520,11 @@ export function TiendaPage({
                       </div>
 
                       <div className="mt-3 flex items-center justify-between gap-3">
-                        <p className="text-xs font-bold text-slate-400">
+                        <p className="text-xs font-bold text-surface-400">
                           {movimiento.observacion || '-'}
                         </p>
 
-                        <p className="font-black text-slate-900">
+                        <p className="font-black text-surface-900">
                           {movimiento.tipo === 'entrada' ? '+' : '-'}
                           {movimiento.cantidad}
                         </p>
@@ -531,7 +534,7 @@ export function TiendaPage({
                 })}
 
                 {movimientosOrdenados.length === 0 && (
-                  <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
+                  <div className="rounded-2xl border border-dashed border-surface-300 p-8 text-center text-surface-500">
                     No hay movimientos de inventario.
                   </div>
                 )}
@@ -539,6 +542,7 @@ export function TiendaPage({
             </div>
 
           </section>
+
         </div>
       </section>
     </div>
@@ -558,12 +562,12 @@ function Input({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-bold text-slate-700">{label}</span>
+      <span className="text-sm font-bold text-surface-700">{label}</span>
       <input
         type={type}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+        className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
       />
     </label>
   )
@@ -582,11 +586,11 @@ function SelectProducto({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-bold text-slate-700">{label}</span>
+      <span className="text-sm font-bold text-surface-700">{label}</span>
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+        className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
       >
         <option value="">Seleccionar producto</option>
         {productos.map((producto) => (
@@ -602,7 +606,7 @@ function SelectProducto({
 function Metric({ title, value }: { title: string; value: string }) {
   return (
     <div className="rounded-[2rem] bg-white p-6 shadow-sm">
-      <p className="text-sm font-bold text-slate-500">{title}</p>
+      <p className="text-sm font-bold text-surface-500">{title}</p>
       <p className="mt-2 text-2xl font-black">{value}</p>
     </div>
   )
@@ -610,8 +614,8 @@ function Metric({ title, value }: { title: string; value: string }) {
 
 function Mini({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl bg-slate-50 p-3">
-      <p className="text-xs font-black uppercase tracking-wide text-slate-400">{label}</p>
+    <div className="rounded-2xl bg-surface-50 p-3">
+      <p className="text-xs font-black uppercase tracking-wide text-surface-400">{label}</p>
       <p className="mt-1 font-black">{value}</p>
     </div>
   )
@@ -620,7 +624,7 @@ function Mini({ label, value }: { label: string; value: string }) {
 function StockBadge({ stock }: { stock: number }) {
   if (stock <= 0) {
     return (
-      <span className="rounded-full bg-rose-50 px-3 py-1 text-xs font-black text-rose-700">
+      <span className="rounded-full bg-danger-50 px-3 py-1 text-xs font-black text-danger-700">
         Sin stock
       </span>
     )
@@ -628,18 +632,19 @@ function StockBadge({ stock }: { stock: number }) {
 
   if (stock <= 3) {
     return (
-      <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-black text-amber-700">
+      <span className="rounded-full bg-warning-50 px-3 py-1 text-xs font-black text-warning-700">
         Bajo stock
       </span>
     )
   }
 
   return (
-    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700">
+    <span className="rounded-full bg-success-50 px-3 py-1 text-xs font-black text-success-700">
       Disponible
     </span>
   )
 }
+
 
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString('es-CO', {

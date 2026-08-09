@@ -661,15 +661,16 @@ export function AdminLayout({ usuario, onLogout }: Props) {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_#f8fafc_0%,_#e2e8f0_100%)] p-4 sm:p-6">
-        <div className="w-full max-w-md rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)]">
-          <p className="text-sm font-bold uppercase tracking-[0.3em] text-slate-500">ORIGEN</p>
+      <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_var(--color-surface-50)_0%,_var(--color-surface-200)_100%)] p-4 sm:p-6">
 
-          <h1 className="mt-3 text-2xl font-black text-slate-950">
+        <div className="w-full max-w-md rounded-[2rem] border border-surface-200 bg-white p-8 text-center shadow-[0_20px_70px_-25px_rgba(28,25,23,0.35)]">
+          <p className="text-sm font-bold uppercase tracking-[0.3em] text-surface-500">ORIGEN</p>
+
+          <h1 className="mt-3 text-2xl font-black text-surface-900">
             Cargando datos desde Supabase
           </h1>
 
-          <p className="mt-3 text-sm leading-6 text-slate-500">
+          <p className="mt-3 text-sm leading-6 text-surface-500">
             Estamos preparando personas, constancias, caja, tienda, usuarios y reportes.
           </p>
         </div>
@@ -678,15 +679,16 @@ export function AdminLayout({ usuario, onLogout }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-900">
+    <div className="min-h-screen bg-surface-100 text-surface-900">
+
       {/* Sidebar desktop */}
-      <aside className="fixed inset-y-0 left-0 hidden w-80 border-r border-slate-200 bg-slate-950 p-6 lg:flex lg:flex-col">
+      <aside className="fixed inset-y-0 left-0 hidden w-80 border-r border-surface-200 bg-surface-950 p-6 lg:flex lg:flex-col">
         <div className="rounded-[1.75rem] border border-white/10 bg-white/10 p-6 text-white">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-300">ORIGEN</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-surface-300">ORIGEN</p>
 
           <h1 className="mt-3 text-2xl font-black">Panel admin</h1>
 
-          <p className="mt-3 text-sm leading-6 text-slate-300">
+          <p className="mt-3 text-sm leading-6 text-surface-300">
             Cada persona importa. Cada hábito cuenta.
           </p>
         </div>
@@ -703,18 +705,18 @@ export function AdminLayout({ usuario, onLogout }: Props) {
                 onClick={() => navigate(item.id)}
                 className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left transition ${
                   isActive
-                    ? 'bg-white text-slate-950 shadow-sm'
-                    : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                    ? 'bg-white text-surface-950 shadow-sm'
+                    : 'text-surface-300 hover:bg-white/10 hover:text-white'
                 }`}
               >
-                <Icon size={20} className={isActive ? 'text-slate-950' : 'text-slate-400'} />
+                <Icon size={20} className={isActive ? 'text-surface-950' : 'text-surface-400'} />
 
                 <span>
                   <p className="font-black">{item.label}</p>
 
                   <p
                     className={`mt-0.5 text-xs ${
-                      isActive ? 'text-slate-500' : 'text-slate-400'
+                      isActive ? 'text-surface-500' : 'text-surface-400'
                     }`}
                   >
                     {item.description}
@@ -727,42 +729,43 @@ export function AdminLayout({ usuario, onLogout }: Props) {
 
         <div className="rounded-[1.5rem] border border-white/10 bg-white/10 p-4 text-white">
           <p className="text-sm font-black">{usuario.nombre}</p>
-          <p className="mt-1 text-xs text-slate-300">{usuario.correo}</p>
+          <p className="mt-1 text-xs text-surface-300">{usuario.correo}</p>
 
           <button
             type="button"
             onClick={onLogout}
-            className="mt-4 w-full rounded-2xl bg-white px-4 py-3 text-sm font-black text-slate-900 transition hover:bg-slate-100"
+            className="mt-4 w-full rounded-2xl bg-white px-4 py-3 text-sm font-black text-surface-900 transition hover:bg-surface-100"
           >
             Cerrar sesión
           </button>
         </div>
       </aside>
 
+
       <div className="lg:pl-80">
         {/* Header móvil + desktop */}
-        <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur md:px-8">
+        <header className="sticky top-0 z-30 border-b border-surface-200 bg-white/90 px-4 py-3 backdrop-blur md:px-8">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0">
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-surface-500">
                 Panel administrativo
               </p>
 
-              <h2 className="truncate text-xl font-black text-slate-950 sm:text-2xl">
+              <h2 className="truncate text-xl font-black text-surface-900 sm:text-2xl">
                 {activeNavigation ? activeNavigation.label : 'ORIGEN'}
               </h2>
             </div>
 
             <div className="flex items-center gap-2">
-              <div className="hidden rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2 sm:block">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Sesión</p>
-                <p className="text-sm font-black text-slate-900">{usuario.nombre}</p>
+              <div className="hidden rounded-2xl border border-surface-200 bg-surface-50 px-4 py-2 sm:block">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-surface-500">Sesión</p>
+                <p className="text-sm font-black text-surface-900">{usuario.nombre}</p>
               </div>
 
               <button
                 type="button"
                 onClick={onLogout}
-                className="hidden rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-black text-white transition hover:bg-slate-800 sm:block"
+                className="hidden rounded-2xl bg-brand-600 px-4 py-2.5 text-sm font-black text-white transition hover:bg-brand-700 sm:block"
               >
                 Salir
               </button>
@@ -771,7 +774,7 @@ export function AdminLayout({ usuario, onLogout }: Props) {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen((open) => !open)}
-                className="rounded-2xl border border-slate-200 bg-white p-2.5 text-slate-700 lg:hidden"
+                className="rounded-2xl border border-surface-200 bg-white p-2.5 text-surface-700 lg:hidden"
                 aria-label="Abrir menú"
               >
                 {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -782,17 +785,17 @@ export function AdminLayout({ usuario, onLogout }: Props) {
 
         {/* Menú móvil desplegable */}
         {mobileMenuOpen && (
-          <div className="border-b border-slate-200 bg-white px-4 py-4 shadow-sm lg:hidden">
-            <div className="mb-3 flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
+          <div className="border-b border-surface-200 bg-white px-4 py-4 shadow-sm lg:hidden">
+            <div className="mb-3 flex items-center justify-between rounded-2xl bg-surface-50 px-4 py-3">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Sesión</p>
-                <p className="text-sm font-black text-slate-900">{usuario.nombre}</p>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-surface-500">Sesión</p>
+                <p className="text-sm font-black text-surface-900">{usuario.nombre}</p>
               </div>
 
               <button
                 type="button"
                 onClick={onLogout}
-                className="inline-flex items-center gap-2 rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-black text-white"
+                className="inline-flex items-center gap-2 rounded-2xl bg-brand-600 px-4 py-2.5 text-sm font-black text-white"
               >
                 <LogOut size={16} />
                 Salir
@@ -811,11 +814,11 @@ export function AdminLayout({ usuario, onLogout }: Props) {
                     onClick={() => navigate(item.id)}
                     className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-left transition ${
                       isActive
-                        ? 'bg-slate-950 text-white'
-                        : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
+                        ? 'bg-brand-600 text-white'
+                        : 'bg-surface-50 text-surface-700 hover:bg-surface-100'
                     }`}
                   >
-                    <Icon size={18} className={isActive ? 'text-white' : 'text-slate-400'} />
+                    <Icon size={18} className={isActive ? 'text-white' : 'text-surface-400'} />
                     <span className="text-sm font-black">{item.label}</span>
                   </button>
                 )
@@ -824,11 +827,12 @@ export function AdminLayout({ usuario, onLogout }: Props) {
           </div>
         )}
 
+
         <main className="p-4 pb-24 md:p-8 lg:pb-8">{renderPage()}</main>
       </div>
 
       {/* Barra de navegación inferior móvil */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-surface-200 bg-white/95 backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-md items-stretch justify-around px-2 py-1.5">
           {primaryNav.map((id) => {
             const item = navigation.find((nav) => nav.id === id)!
@@ -841,7 +845,7 @@ export function AdminLayout({ usuario, onLogout }: Props) {
                 type="button"
                 onClick={() => navigate(id)}
                 className={`flex flex-1 flex-col items-center gap-1 rounded-2xl px-2 py-2 transition ${
-                  isActive ? 'text-slate-950' : 'text-slate-400 hover:text-slate-600'
+                  isActive ? 'text-brand-600' : 'text-surface-400 hover:text-surface-600'
                 }`}
               >
                 <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
@@ -857,7 +861,7 @@ export function AdminLayout({ usuario, onLogout }: Props) {
             type="button"
             onClick={() => setMobileMenuOpen((open) => !open)}
             className={`flex flex-1 flex-col items-center gap-1 rounded-2xl px-2 py-2 transition ${
-              mobileMenuOpen ? 'text-slate-950' : 'text-slate-400 hover:text-slate-600'
+              mobileMenuOpen ? 'text-brand-600' : 'text-surface-400 hover:text-surface-600'
             }`}
           >
             <MoreHorizontal size={22} />
@@ -865,6 +869,7 @@ export function AdminLayout({ usuario, onLogout }: Props) {
           </button>
         </div>
       </nav>
+
     </div>
   )
 }

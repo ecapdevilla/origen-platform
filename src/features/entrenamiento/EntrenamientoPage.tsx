@@ -112,17 +112,18 @@ export function EntrenamientoPage({ personas, planes, onCreatePlan }: Props) {
 
   return (
     <div className="space-y-6">
-      <section className="overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
-        <p className="text-sm text-slate-300">Módulo Entrenamiento</p>
+      <section className="overflow-hidden rounded-[2rem] border border-surface-800 bg-surface-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(28,25,23,0.35)] sm:p-8">
+        <p className="text-sm text-surface-300">Módulo Entrenamiento</p>
         <h1 className="mt-3 text-4xl font-black tracking-tight">
           Planes que acompañan objetivos reales
         </h1>
-        <p className="mt-4 max-w-3xl text-slate-300">
+        <p className="mt-4 max-w-3xl text-surface-300">
           Aquí se crean planes orientativos para acompañar el proceso de cada persona. Más adelante
           conectaremos rutinas por día, ejercicios, series, cargas, observaciones y seguimiento del
           entrenador.
         </p>
       </section>
+
 
       <section className="grid gap-4 md:grid-cols-4">
         <Metric icon={Dumbbell} title="Planes totales" value={planes.length} />
@@ -132,21 +133,21 @@ export function EntrenamientoPage({ personas, planes, onCreatePlan }: Props) {
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[420px_1fr]">
-        <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
           <div>
             <h2 className="text-2xl font-black">Crear plan</h2>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-surface-500">
               Registra un plan inicial para una persona activa.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
             <label className="block">
-              <span className="text-sm font-bold text-slate-700">Persona</span>
+              <span className="text-sm font-bold text-surface-700">Persona</span>
               <select
                 value={form.personaId}
                 onChange={(event) => setForm({ ...form, personaId: event.target.value })}
-                className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+                className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none transition focus:border-brand-600"
               >
                 <option value="">Seleccionar persona</option>
                 {personasActivas.map((persona) => (
@@ -165,11 +166,11 @@ export function EntrenamientoPage({ personas, planes, onCreatePlan }: Props) {
             />
 
             <label className="block">
-              <span className="text-sm font-bold text-slate-700">Objetivo</span>
+              <span className="text-sm font-bold text-surface-700">Objetivo</span>
               <select
                 value={form.objetivo}
                 onChange={(event) => setForm({ ...form, objetivo: event.target.value })}
-                className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+                className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none transition focus:border-brand-600"
               >
                 {objetivos.map((objetivo) => (
                   <option key={objetivo}>{objetivo}</option>
@@ -185,53 +186,54 @@ export function EntrenamientoPage({ personas, planes, onCreatePlan }: Props) {
             />
 
             <label className="block">
-              <span className="text-sm font-bold text-slate-700">Descripción del plan</span>
+              <span className="text-sm font-bold text-surface-700">Descripción del plan</span>
               <textarea
                 value={form.descripcion}
                 onChange={(event) => setForm({ ...form, descripcion: event.target.value })}
                 placeholder="Describe el enfoque del plan, recomendaciones, días de trabajo y observaciones."
-                className="mt-1 min-h-36 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+                className="mt-1 min-h-36 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none transition focus:border-brand-600"
               />
             </label>
 
-            <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 font-black text-white hover:bg-slate-800">
+            <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-3 font-black text-white hover:bg-brand-700">
               <Plus size={18} />
               Crear plan sugerido
             </button>
           </form>
 
           {personasActivas.length === 0 && (
-            <div className="mt-5 rounded-2xl bg-amber-50 p-4 text-sm font-bold text-amber-700">
+            <div className="mt-5 rounded-2xl bg-warning-50 p-4 text-sm font-bold text-warning-700">
               Primero registra una persona activa para poder crear planes.
             </div>
           )}
         </div>
 
+
         <div className="space-y-6">
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
               <div>
                 <h2 className="text-2xl font-black">Planes de entrenamiento</h2>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-surface-500">
                   Consulta los planes creados y su estado actual.
                 </p>
               </div>
 
               <div className="flex flex-col gap-3 md:flex-row">
                 <div className="relative min-w-[280px]">
-                  <Search className="absolute left-4 top-3.5 text-slate-400" size={18} />
+                  <Search className="absolute left-4 top-3.5 text-surface-400" size={18} />
                   <input
                     value={search}
                     onChange={(event) => setSearch(event.target.value)}
                     placeholder="Buscar plan o persona"
-                    className="w-full rounded-2xl border border-slate-200 py-3 pl-11 pr-4 outline-none transition focus:border-slate-950"
+                    className="w-full rounded-2xl border border-surface-200 py-3 pl-11 pr-4 outline-none transition focus:border-brand-600"
                   />
                 </div>
 
                 <select
                   value={estadoFiltro}
                   onChange={(event) => setEstadoFiltro(event.target.value as FiltroEstado)}
-                  className="rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                  className="rounded-2xl border border-surface-200 px-4 py-3 outline-none"
                 >
                   <option value="todos">Todos los estados</option>
                   <option value="sugerido">Sugerido</option>
@@ -247,7 +249,7 @@ export function EntrenamientoPage({ personas, planes, onCreatePlan }: Props) {
                 const persona = personas.find((item) => item.id === plan.personaId)
 
                 return (
-                  <article key={plan.id} className="rounded-[2rem] border border-slate-200 p-5">
+                  <article key={plan.id} className="rounded-[2rem] border border-surface-200 p-5">
                     <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-start">
                       <div>
                         <div className="flex flex-wrap items-center gap-2">
@@ -255,13 +257,13 @@ export function EntrenamientoPage({ personas, planes, onCreatePlan }: Props) {
                           <EstadoBadge estado={plan.estado} />
                         </div>
 
-                        <p className="mt-2 text-sm text-slate-500">
+                        <p className="mt-2 text-sm text-surface-500">
                           {persona
                             ? `${persona.nombres} ${persona.apellidos}`
                             : 'Persona no encontrada'}
                         </p>
 
-                        <p className="mt-4 text-sm leading-6 text-slate-600">
+                        <p className="mt-4 text-sm leading-6 text-surface-600">
                           {plan.descripcion}
                         </p>
                       </div>
@@ -280,15 +282,16 @@ export function EntrenamientoPage({ personas, planes, onCreatePlan }: Props) {
               })}
 
               {planesFiltrados.length === 0 && (
-                <div className="rounded-[2rem] border border-dashed border-slate-300 p-12 text-center">
-                  <p className="font-black text-slate-700">No hay planes para mostrar</p>
-                  <p className="mt-2 text-sm text-slate-500">
+                <div className="rounded-[2rem] border border-dashed border-surface-300 p-12 text-center">
+                  <p className="font-black text-surface-700">No hay planes para mostrar</p>
+                  <p className="mt-2 text-sm text-surface-500">
                     Crea un plan o ajusta el filtro de búsqueda.
                   </p>
                 </div>
               )}
             </div>
           </section>
+
 
           <section className="grid gap-4 md:grid-cols-2">
             <InfoCard
@@ -321,13 +324,13 @@ function Input({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-bold text-slate-700">{label}</span>
+      <span className="text-sm font-bold text-surface-700">{label}</span>
       <input
         type={type}
         value={value}
         placeholder={placeholder}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+        className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none transition focus:border-brand-600"
       />
     </label>
   )
@@ -344,10 +347,10 @@ function Metric({
 }) {
   return (
     <div className="rounded-[2rem] bg-white p-6 shadow-sm">
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100">
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-surface-100">
         <Icon size={22} />
       </div>
-      <p className="mt-5 text-sm font-bold text-slate-500">{title}</p>
+      <p className="mt-5 text-sm font-bold text-surface-500">{title}</p>
       <p className="mt-1 text-2xl font-black">{value}</p>
     </div>
   )
@@ -355,9 +358,9 @@ function Metric({
 
 function Mini({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl bg-slate-50 p-4">
-      <p className="text-xs font-black uppercase tracking-wide text-slate-400">{label}</p>
-      <p className="mt-1 font-black text-slate-900">{value}</p>
+    <div className="rounded-2xl bg-surface-50 p-4">
+      <p className="text-xs font-black uppercase tracking-wide text-surface-400">{label}</p>
+      <p className="mt-1 font-black text-surface-900">{value}</p>
     </div>
   )
 }
@@ -371,7 +374,7 @@ function EstadoBadge({ estado }: { estado: EstadoPlan }) {
   }
 
   return (
-    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-700">
+    <span className="rounded-full bg-surface-100 px-3 py-1 text-xs font-black text-surface-700">
       {labelByEstado[estado]}
     </span>
   )
@@ -381,7 +384,9 @@ function InfoCard({ title, description }: { title: string; description: string }
   return (
     <div className="rounded-[2rem] bg-white p-6 shadow-sm">
       <p className="text-lg font-black">{title}</p>
-      <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
+      <p className="mt-2 text-sm leading-6 text-surface-500">{description}</p>
     </div>
   )
 }
+
+

@@ -34,10 +34,11 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
-        <p className="text-sm text-slate-300">Configuración</p>
+      <section className="rounded-[2rem] border border-surface-800 bg-surface-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(28,25,23,0.35)] sm:p-8">
+        <p className="text-sm text-surface-300">Configuración</p>
         <h1 className="mt-3 text-4xl font-black">Personaliza ORIGEN</h1>
-        <p className="mt-4 max-w-3xl text-slate-300">
+        <p className="mt-4 max-w-3xl text-surface-300">
+
           Define cómo se verá y cómo hablará el sistema dentro del gimnasio.
         </p>
       </section>
@@ -45,10 +46,11 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
       <section className="grid gap-6 xl:grid-cols-[1fr_420px]">
         <section className="rounded-[2rem] bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-black">Datos del gimnasio</h2>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-surface-500">
             Esta información se usa en el panel administrativo y luego podrá aparecer en reportes,
             mensajes, recibos y portal de personas.
           </p>
+
 
           <form onSubmit={guardarConfiguracion} className="mt-6 grid gap-4">
             <Input
@@ -76,7 +78,7 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
             />
 
             <label className="block">
-              <span className="text-sm font-bold text-slate-700">
+              <span className="text-sm font-bold text-surface-700">
                 ¿Cómo llamar a las personas?
               </span>
               <select
@@ -84,7 +86,8 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
                 onChange={(event) =>
                   setForm({ ...form, terminoPersonas: event.target.value })
                 }
-                className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
+
               >
                 {terminosPersonas.map((termino) => (
                   <option key={termino} value={termino}>
@@ -95,11 +98,12 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
             </label>
 
             <label className="block">
-              <span className="text-sm font-bold text-slate-700">Tono de comunicación</span>
+              <span className="text-sm font-bold text-surface-700">Tono de comunicación</span>
               <select
                 value={form.tono}
                 onChange={(event) => setForm({ ...form, tono: event.target.value })}
-                className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+                className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
+
               >
                 {tonos.map((tono) => (
                   <option key={tono} value={tono}>
@@ -109,18 +113,19 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
               </select>
             </label>
 
-            <button className="mt-2 rounded-2xl bg-slate-950 px-5 py-3 font-black text-white hover:bg-slate-800">
+            <button className="mt-2 rounded-2xl bg-surface-950 px-5 py-3 font-black text-white hover:bg-surface-800">
               Guardar configuración
             </button>
+
           </form>
         </section>
 
         <aside className="space-y-6">
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Vista previa</h2>
 
-            <div className="mt-5 rounded-[2rem] bg-slate-950 p-6 text-white">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-2xl font-black text-slate-950">
+            <div className="mt-5 rounded-[2rem] bg-surface-950 p-6 text-white">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-2xl font-black text-surface-950">
                 {form.nombre.trim().charAt(0).toUpperCase() || 'O'}
               </div>
 
@@ -128,14 +133,15 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
                 {form.nombre || 'Nombre del gimnasio'}
               </h3>
 
-              <p className="mt-2 text-sm text-slate-300">
+              <p className="mt-2 text-sm text-surface-300">
                 {form.lema || 'Lema del gimnasio'}
               </p>
             </div>
           </section>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Lenguaje ORIGEN</h2>
+
 
             <div className="mt-5 space-y-3">
               <Line label="Término principal" value={form.terminoPersonas} />
@@ -145,9 +151,10 @@ export function ConfiguracionPage({ configuracion, onUpdateConfiguracion }: Prop
             </div>
           </section>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-xl font-black">Mensaje ejemplo</h2>
-            <p className="mt-3 text-sm leading-6 text-slate-500">
+            <p className="mt-3 text-sm leading-6 text-surface-500">
+
               Bienvenido a {form.nombre || 'ORIGEN'}. Aquí cada{' '}
               {form.terminoPersonas.toLowerCase()} importa, cada hábito cuenta y cada logro merece
               ser celebrado.
@@ -170,11 +177,11 @@ function Input({
 }) {
   return (
     <label className="block">
-      <span className="text-sm font-bold text-slate-700">{label}</span>
+      <span className="text-sm font-bold text-surface-700">{label}</span>
       <input
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none"
+        className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none"
       />
     </label>
   )
@@ -182,8 +189,9 @@ function Input({
 
 function Line({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3">
-      <span className="text-sm font-bold text-slate-600">{label}</span>
+    <div className="flex items-center justify-between gap-4 rounded-2xl bg-surface-50 px-4 py-3">
+      <span className="text-sm font-bold text-surface-600">{label}</span>
+
       <span className="text-right text-sm font-black">{value}</span>
     </div>
   )

@@ -292,28 +292,28 @@ export function ReportesPage({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] sm:p-8">
-        <p className="text-sm text-slate-300">Reportes</p>
+      <section className="rounded-[2rem] border border-surface-800 bg-surface-950 p-6 text-white shadow-[0_20px_70px_-25px_rgba(28,25,23,0.35)] sm:p-8">
+        <p className="text-sm text-surface-300">Reportes</p>
 
         <h1 className="mt-3 text-4xl font-black">Indicadores de ORIGEN</h1>
 
-        <p className="mt-4 max-w-3xl text-slate-300">
+        <p className="mt-4 max-w-3xl text-surface-300">
           Consulta ingresos, gastos, ganancias y actividad del gimnasio filtrando por rango de
           fechas.
         </p>
       </section>
 
       {/* Filtro por rango de fechas */}
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-white">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-600 text-white">
               <CalendarRange size={20} />
             </div>
 
             <div>
               <h2 className="text-xl font-black">Filtrar por fechas</h2>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-surface-500">
                 Consulta ingresos y ganancias de un período específico.
               </p>
             </div>
@@ -322,7 +322,7 @@ export function ReportesPage({
           <button
             type="button"
             onClick={exportarCSV}
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 text-sm font-black text-white transition hover:bg-slate-800"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-3 text-sm font-black text-white transition hover:bg-brand-700"
           >
             <Download size={16} />
             Exportar CSV
@@ -341,8 +341,8 @@ export function ReportesPage({
               }}
               className={`rounded-2xl px-4 py-2.5 text-sm font-black transition ${
                 preset === p.id && !fechaDesde && !fechaHasta
-                  ? 'bg-slate-950 text-white'
-                  : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
+                  ? 'bg-brand-600 text-white'
+                  : 'border border-surface-200 bg-white text-surface-600 hover:bg-surface-50'
               }`}
             >
               {p.label}
@@ -352,7 +352,7 @@ export function ReportesPage({
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:max-w-xl">
           <label className="block">
-            <span className="text-sm font-bold text-slate-700">Desde</span>
+            <span className="text-sm font-bold text-surface-700">Desde</span>
             <input
               type="date"
               value={fechaDesde}
@@ -360,12 +360,12 @@ export function ReportesPage({
                 setFechaDesde(e.target.value)
                 setPreset('todo')
               }}
-              className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+              className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none transition focus:border-brand-600"
             />
           </label>
 
           <label className="block">
-            <span className="text-sm font-bold text-slate-700">Hasta</span>
+            <span className="text-sm font-bold text-surface-700">Hasta</span>
             <input
               type="date"
               value={fechaHasta}
@@ -373,18 +373,19 @@ export function ReportesPage({
                 setFechaHasta(e.target.value)
                 setPreset('todo')
               }}
-              className="mt-1 w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-slate-950"
+              className="mt-1 w-full rounded-2xl border border-surface-200 px-4 py-3 outline-none transition focus:border-brand-600"
             />
           </label>
         </div>
 
-        <p className="mt-4 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-600">
+        <p className="mt-4 rounded-2xl bg-surface-50 px-4 py-3 text-sm font-bold text-surface-600">
           Período consultado:{' '}
-          <span className="text-slate-950">
+          <span className="text-surface-950">
             {formatDate(rango.desde)} — {formatDate(rango.hasta)}
           </span>
         </p>
       </section>
+
 
       {/* Métricas del período */}
       <section className="grid gap-4 md:grid-cols-4">
@@ -416,10 +417,10 @@ export function ReportesPage({
 
       {/* Ingresos por método de pago y concepto */}
       <section className="grid gap-6 xl:grid-cols-2">
-        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-2xl font-black">Ingresos por método de pago</h2>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-surface-500">
             Cómo se recibieron los pagos en el período.
           </p>
 
@@ -434,15 +435,15 @@ export function ReportesPage({
                 return (
                   <div key={item.metodo}>
                     <div className="mb-1 flex items-center justify-between gap-4">
-                      <span className="text-sm font-black text-slate-700">{item.metodo}</span>
-                      <span className="text-sm font-black text-slate-500">
+                      <span className="text-sm font-black text-surface-700">{item.metodo}</span>
+                      <span className="text-sm font-black text-surface-500">
                         {formatMoney(item.total)} · {percent}%
                       </span>
                     </div>
 
-                    <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
+                    <div className="h-2.5 overflow-hidden rounded-full bg-surface-100">
                       <div
-                        className="h-full rounded-full bg-emerald-500"
+                        className="h-full rounded-full bg-success-500"
                         style={{ width: `${percent}%` }}
                       />
                     </div>
@@ -453,10 +454,10 @@ export function ReportesPage({
           </div>
         </section>
 
-        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-2xl font-black">Ingresos por concepto</h2>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-surface-500">
             Los conceptos que más generaron ingresos en el período.
           </p>
 
@@ -467,10 +468,10 @@ export function ReportesPage({
               ingresosPorConcepto.map((item) => (
                 <div
                   key={item.concepto}
-                  className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3"
+                  className="flex items-center justify-between gap-4 rounded-2xl bg-surface-50 px-4 py-3"
                 >
-                  <span className="text-sm font-black text-slate-700">{item.concepto}</span>
-                  <span className="text-sm font-black text-emerald-700">
+                  <span className="text-sm font-black text-surface-700">{item.concepto}</span>
+                  <span className="text-sm font-black text-success-700">
                     {formatMoney(item.total)}
                   </span>
                 </div>
@@ -480,12 +481,13 @@ export function ReportesPage({
         </section>
       </section>
 
+
       {/* Personas nuevas y ranking de aportes */}
       <section className="grid gap-6 xl:grid-cols-2">
-        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-2xl font-black">Personas nuevas en el período</h2>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-surface-500">
             Registros de personas creados entre {formatDate(rango.desde)} y{' '}
             {formatDate(rango.hasta)}.
           </p>
@@ -497,16 +499,16 @@ export function ReportesPage({
               personasNuevas.map((persona) => (
                 <div
                   key={persona.id}
-                  className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3"
+                  className="flex items-center justify-between gap-4 rounded-2xl bg-surface-50 px-4 py-3"
                 >
                   <div className="min-w-0">
                     <p className="truncate font-black">
                       {persona.nombres} {persona.apellidos}
                     </p>
-                    <p className="text-xs text-slate-500">{persona.documento}</p>
+                    <p className="text-xs text-surface-500">{persona.documento}</p>
                   </div>
 
-                  <span className="shrink-0 rounded-full bg-white px-3 py-1 text-xs font-black text-slate-700">
+                  <span className="shrink-0 rounded-full bg-white px-3 py-1 text-xs font-black text-surface-700">
                     {formatDate(persona.fechaRegistro)}
                   </span>
                 </div>
@@ -515,10 +517,10 @@ export function ReportesPage({
           </div>
         </section>
 
-        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-2xl font-black">Personas que más aportan</h2>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-surface-500">
             Quiénes generaron más ingresos en el período.
           </p>
 
@@ -529,10 +531,10 @@ export function ReportesPage({
               ingresosPorPersona.map((item, index) => (
                 <div
                   key={item.persona!.id}
-                  className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3"
+                  className="flex items-center justify-between gap-4 rounded-2xl bg-surface-50 px-4 py-3"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-950 text-sm font-black text-white">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-sm font-black text-white">
                       {index + 1}
                     </div>
 
@@ -540,11 +542,11 @@ export function ReportesPage({
                       <p className="truncate font-black">
                         {item.persona!.nombres} {item.persona!.apellidos}
                       </p>
-                      <p className="text-xs text-slate-500">{item.persona!.objetivo}</p>
+                      <p className="text-xs text-surface-500">{item.persona!.objetivo}</p>
                     </div>
                   </div>
 
-                  <span className="shrink-0 text-sm font-black text-emerald-700">
+                  <span className="shrink-0 text-sm font-black text-success-700">
                     {formatMoney(item.total)}
                   </span>
                 </div>
@@ -553,6 +555,7 @@ export function ReportesPage({
           </div>
         </section>
       </section>
+
 
       {/* Actividad del período */}
       <section className="grid gap-4 md:grid-cols-4">
@@ -564,10 +567,10 @@ export function ReportesPage({
 
       {/* Entrenamiento, bienestar y servicios */}
       <section className="grid gap-6 xl:grid-cols-3">
-        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-2xl font-black">Planes de entrenamiento</h2>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-surface-500">
             Estado actual de los planes asignados.
           </p>
 
@@ -580,10 +583,10 @@ export function ReportesPage({
           </div>
         </section>
 
-        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-2xl font-black">Bienestar en el período</h2>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-surface-500">
             Registros de bienestar entre {formatDate(rango.desde)} y {formatDate(rango.hasta)}.
           </p>
 
@@ -595,10 +598,10 @@ export function ReportesPage({
           </div>
         </section>
 
-        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-2xl font-black">Servicios</h2>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-surface-500">
             Catálogo de servicios del gimnasio.
           </p>
 
@@ -612,20 +615,21 @@ export function ReportesPage({
         </section>
       </section>
 
+
       {/* Movimientos del período */}
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
         <h2 className="text-2xl font-black">Movimientos del período</h2>
 
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-surface-500">
           Todos los ingresos y gastos registrados entre {formatDate(rango.desde)} y{' '}
           {formatDate(rango.hasta)}.
         </p>
 
         <div className="mt-6">
           {/* Tabla en desktop */}
-          <div className="hidden overflow-hidden rounded-2xl border border-slate-200 md:block">
+          <div className="hidden overflow-hidden rounded-2xl border border-surface-200 md:block">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50 text-slate-500">
+              <thead className="bg-surface-50 text-surface-500">
                 <tr>
                   <th className="px-4 py-3">Fecha</th>
                   <th className="px-4 py-3">Concepto</th>
@@ -637,13 +641,13 @@ export function ReportesPage({
 
               <tbody>
                 {movimientosRango.map((movimiento) => (
-                  <tr key={movimiento.id} className="border-t border-slate-100">
+                  <tr key={movimiento.id} className="border-t border-surface-100">
                     <td className="px-4 py-4">{formatDate(movimiento.fecha)}</td>
 
                     <td className="px-4 py-4">
                       <p className="font-black">{movimiento.concepto}</p>
                       {movimiento.observacion && (
-                        <p className="text-xs text-slate-500">{movimiento.observacion}</p>
+                        <p className="text-xs text-surface-500">{movimiento.observacion}</p>
                       )}
                     </td>
 
@@ -651,8 +655,8 @@ export function ReportesPage({
                       <span
                         className={`rounded-full px-3 py-1 text-xs font-black ${
                           movimiento.tipo === 'ingreso'
-                            ? 'bg-emerald-50 text-emerald-700'
-                            : 'bg-rose-50 text-rose-700'
+                            ? 'bg-success-50 text-success-700'
+                            : 'bg-danger-50 text-danger-700'
                         }`}
                       >
                         {movimiento.tipo}
@@ -663,7 +667,7 @@ export function ReportesPage({
 
                     <td
                       className={`px-4 py-4 text-right font-black ${
-                        movimiento.tipo === 'ingreso' ? 'text-emerald-700' : 'text-rose-700'
+                        movimiento.tipo === 'ingreso' ? 'text-success-700' : 'text-danger-700'
                       }`}
                     >
                       {movimiento.tipo === 'ingreso' ? '+' : '-'}
@@ -674,7 +678,7 @@ export function ReportesPage({
 
                 {movimientosRango.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="px-4 py-10 text-center text-slate-500">
+                    <td colSpan={5} className="px-4 py-10 text-center text-surface-500">
                       No hay movimientos en este período.
                     </td>
                   </tr>
@@ -688,12 +692,12 @@ export function ReportesPage({
             {movimientosRango.map((movimiento) => (
               <article
                 key={movimiento.id}
-                className="rounded-[1.5rem] border border-slate-200 bg-white p-4"
+                className="rounded-[1.5rem] border border-surface-200 bg-white p-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-black text-slate-900">{movimiento.concepto}</p>
-                    <p className="mt-0.5 text-xs text-slate-500">
+                    <p className="font-black text-surface-900">{movimiento.concepto}</p>
+                    <p className="mt-0.5 text-xs text-surface-500">
                       {formatDate(movimiento.fecha)} · {movimiento.metodoPago || 'Sin método'}
                     </p>
                   </div>
@@ -701,8 +705,8 @@ export function ReportesPage({
                   <span
                     className={`shrink-0 rounded-full px-3 py-1 text-xs font-black ${
                       movimiento.tipo === 'ingreso'
-                        ? 'bg-emerald-50 text-emerald-700'
-                        : 'bg-rose-50 text-rose-700'
+                        ? 'bg-success-50 text-success-700'
+                        : 'bg-danger-50 text-danger-700'
                     }`}
                   >
                     {movimiento.tipo}
@@ -711,7 +715,7 @@ export function ReportesPage({
 
                 <p
                   className={`mt-3 text-right font-black ${
-                    movimiento.tipo === 'ingreso' ? 'text-emerald-700' : 'text-rose-700'
+                    movimiento.tipo === 'ingreso' ? 'text-success-700' : 'text-danger-700'
                   }`}
                 >
                   {movimiento.tipo === 'ingreso' ? '+' : '-'}
@@ -721,7 +725,7 @@ export function ReportesPage({
             ))}
 
             {movimientosRango.length === 0 && (
-              <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-slate-500">
+              <div className="rounded-2xl border border-dashed border-surface-300 p-8 text-center text-surface-500">
                 No hay movimientos en este período.
               </div>
             )}
@@ -729,13 +733,14 @@ export function ReportesPage({
         </div>
       </section>
 
+
       {/* Resumen general del sistema */}
       <section className="grid gap-6 xl:grid-cols-[1fr_420px]">
         <section className="space-y-6">
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Estado de personas</h2>
 
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-surface-500">
               Distribución actual de personas según su estado.
             </p>
 
@@ -751,10 +756,10 @@ export function ReportesPage({
             </div>
           </section>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Ranking de constancia</h2>
 
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-surface-500">
               Personas con mayor número de constancias registradas.
             </p>
 
@@ -762,10 +767,10 @@ export function ReportesPage({
               {rankingConstancia.map((item, index) => (
                 <div
                   key={item.persona.id}
-                  className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-4"
+                  className="flex items-center justify-between gap-4 rounded-2xl bg-surface-50 px-4 py-4"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 text-sm font-black text-white">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600 text-sm font-black text-white">
                       {index + 1}
                     </div>
 
@@ -773,11 +778,11 @@ export function ReportesPage({
                       <p className="font-black">
                         {item.persona.nombres} {item.persona.apellidos}
                       </p>
-                      <p className="text-xs text-slate-500">{item.persona.objetivo}</p>
+                      <p className="text-xs text-surface-500">{item.persona.objetivo}</p>
                     </div>
                   </div>
 
-                  <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-slate-700">
+                  <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-surface-700">
                     {item.total} constancias
                   </span>
                 </div>
@@ -791,7 +796,7 @@ export function ReportesPage({
         </section>
 
         <aside className="space-y-6">
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Resumen financiero total</h2>
 
             <div className="mt-5 space-y-3">
@@ -801,7 +806,7 @@ export function ReportesPage({
             </div>
           </section>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Inventario</h2>
 
             <div className="mt-5 space-y-3">
@@ -817,7 +822,7 @@ export function ReportesPage({
             </div>
           </section>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Constancia</h2>
 
             <div className="mt-5 space-y-3">
@@ -828,10 +833,10 @@ export function ReportesPage({
             </div>
           </section>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="rounded-[2rem] border border-surface-200 bg-white p-5 shadow-sm sm:p-6">
             <h2 className="text-2xl font-black">Lectura rápida</h2>
 
-            <div className="mt-5 rounded-2xl bg-slate-50 p-5 text-sm leading-6 text-slate-600">
+            <div className="mt-5 rounded-2xl bg-surface-50 p-5 text-sm leading-6 text-surface-600">
               <p>
                 En el período consultado se registraron{' '}
                 <strong>{formatMoney(ingresosRango)}</strong> en ingresos y{' '}
@@ -847,6 +852,7 @@ export function ReportesPage({
           </section>
         </aside>
       </section>
+
     </div>
   )
 }
@@ -863,15 +869,15 @@ function Metric({
   tone?: 'slate' | 'emerald' | 'rose'
 }) {
   const toneClasses: Record<string, string> = {
-    slate: 'bg-slate-950 text-white',
-    emerald: 'bg-emerald-600 text-white',
-    rose: 'bg-rose-600 text-white',
+    slate: 'bg-surface-950 text-white',
+    emerald: 'bg-success-600 text-white',
+    rose: 'bg-danger-600 text-white',
   }
 
   return (
     <div className="rounded-[2rem] bg-white p-6 shadow-sm">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-sm font-bold text-slate-500">{title}</p>
+        <p className="text-sm font-bold text-surface-500">{title}</p>
         {icon && (
           <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${toneClasses[tone]}`}>
             {icon}
@@ -898,14 +904,14 @@ function Progress({
   return (
     <div>
       <div className="mb-2 flex items-center justify-between gap-4">
-        <span className="text-sm font-black text-slate-700">{label}</span>
-        <span className="text-sm font-black text-slate-500">
+        <span className="text-sm font-black text-surface-700">{label}</span>
+        <span className="text-sm font-black text-surface-500">
           {value} / {total}
         </span>
       </div>
 
-      <div className="h-3 overflow-hidden rounded-full bg-slate-100">
-        <div className="h-full rounded-full bg-slate-950" style={{ width: `${percent}%` }} />
+      <div className="h-3 overflow-hidden rounded-full bg-surface-100">
+        <div className="h-full rounded-full bg-brand-600" style={{ width: `${percent}%` }} />
       </div>
     </div>
   )
@@ -913,8 +919,8 @@ function Progress({
 
 function Line({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3">
-      <span className="text-sm font-bold text-slate-600">{label}</span>
+    <div className="flex items-center justify-between gap-4 rounded-2xl bg-surface-50 px-4 py-3">
+      <span className="text-sm font-bold text-surface-600">{label}</span>
       <span className="text-right text-sm font-black">{value}</span>
     </div>
   )
@@ -922,11 +928,12 @@ function Line({ label, value }: { label: string; value: string }) {
 
 function Empty({ message }: { message: string }) {
   return (
-    <div className="rounded-2xl border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500">
+    <div className="rounded-2xl border border-dashed border-surface-300 p-6 text-center text-sm text-surface-500">
       {message}
     </div>
   )
 }
+
 
 function formatDate(date: string) {
   return new Date(`${date.slice(0, 10)}T00:00:00`).toLocaleDateString('es-CO', {
